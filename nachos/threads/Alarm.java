@@ -70,6 +70,7 @@ public class Alarm {
 	 * should be run.
 	 */
 	public void timerInterrupt() {
+<<<<<<< HEAD
 		
 		for (ThreadNode k : pq) {
 			k.setTime(k.getTime() - 2);
@@ -81,6 +82,9 @@ public class Alarm {
 		}
 		// make sure KThread.currentThread().yield() stay at the end of this method
 		KThread.currentThread().yield();
+=======
+//		KThread.currentThread().yield();
+>>>>>>> db2e167968361923041beb9bfaebc1b58420d446
 	}
 
 	public void printPQ(PriorityQueue<ThreadNode> pq) {
