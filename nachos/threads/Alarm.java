@@ -1,12 +1,53 @@
 package nachos.threads;
 
 import nachos.machine.*;
-
+import java.util.PriorityQueue;
+import java.util.Comparator;
 /**
  * Uses the hardware timer to provide preemption, and to allow threads to sleep
  * until a certain time.
  */
 public class Alarm {
+
+	PriorityQueue<ThreadNode> pq = new PriorityQueue<ThreadNode> (10, new Comparator<ThreadNode>() {
+		public int compare(ThreadNode n1, ThreadNode n2) {
+			if (n1.getTime() - n2.getTime() > 0) {
+				return -1;
+			}
+			else if (n1.getTime() - n2.getTime() < 0) {
+				return 1;
+			}
+			else {
+				return 0;
+			}
+		}
+	});
+	// create a node 
+	private class ThreadNode{
+		KThread thread;
+		long remainingTime;
+
+		public ThreadNode(KThread thread, long remainingTime) {
+			this.thread = thread;
+			this.remainingTime = remainingTime;
+		}
+
+		public long getTime() {
+			return remainingTime;
+		}
+
+		public KThread getThread() {
+			return thread;
+		}
+
+		public void setTime(long x) {
+			remainingTime = x;
+		}
+	}
+
+
+
+
 	/**
 	 * Allocate a new Alarm. Set the machine's timer interrupt handler to this
 	 * alarm's callback.
@@ -29,8 +70,25 @@ public class Alarm {
 	 * should be run.
 	 */
 	public void timerInterrupt() {
+		
+		for (ThreadNode k : pq) {
+			k.setTime(k.getTime() - 2);
+		}
+		printPQ(pq);
+		while(pq.peek().getTime() <= 0) {
+			ThreadNode nextNode = pq.poll();
+			nextNode.thread.ready();
+		}
+		// make sure KThread.currentThread().yield() stay at the end of this method
 		KThread.currentThread().yield();
 	}
+
+	public void printPQ(PriorityQueue<ThreadNode> pq) {
+		for (ThreadNode k : pq) {
+			System.out.println(k.getTime());
+		}
+	}
+
 
 	/**
 	 * Put the current thread to sleep for at least <i>x</i> ticks, waking it up
@@ -46,8 +104,43 @@ public class Alarm {
 	 */
 	public void waitUntil(long x) {
 		// for now, cheat just to get something working (busy waiting is bad)
-		long wakeTime = Machine.timer().getTime() + x;
-		while (wakeTime > Machine.timer().getTime())
-			KThread.yield();
+		pq.add(new ThreadNode(KThread.currentThread(), x));
+		KThread pre = KThread.currentThread();
+		KThread.yield();
+		pre.sleep();
 	}
+
+
+
+	    // Add Alarm testing code to the Alarm class
+    
+    public static void alarmTest1() {
+		int durations[] = {1000, 10*1000, 100*1000};
+		long t0, t1;
+
+		for (int d : durations) {
+		    t0 = Machine.timer().getTime();
+		    ThreadedKernel.alarm.waitUntil (d);
+		    t1 = Machine.timer().getTime();
+		    System.out.println ("alarmTest1: waited for " + (t1 - t0) + " ticks");
+		}
+    }
+
+    // Implement more test methods here ...
+
+    // Invoke Alarm.selfTest() from ThreadedKernel.selfTest()
+    public static void selfTest() {
+		alarmTest1();
+	// Invoke your other test methods here ...
+    }
+
+
+
+
+
+
+
+
+
+
 }
