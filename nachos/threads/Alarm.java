@@ -72,12 +72,14 @@ public class Alarm {
 	public void timerInterrupt() {
 		
 		for (ThreadNode k : pq) {
-			k.setTime(k.getTime() - 2);
+			k.setTime(k.getTime() - 500);
 		}
-		printPQ(pq);
-		while(pq.peek().getTime() <= 0) {
+		//printPQ(pq);
+		while(!pq.isEmpty() && pq.peek().getTime() <= 0) {
+				//Machine.interrupt().enable();
 			ThreadNode nextNode = pq.poll();
 			nextNode.thread.ready();
+			//System.out.println("unblock");
 		}
 		// make sure KThread.currentThread().yield() stay at the end of this method
 		KThread.currentThread().yield();
@@ -106,7 +108,8 @@ public class Alarm {
 		// for now, cheat just to get something working (busy waiting is bad)
 		pq.add(new ThreadNode(KThread.currentThread(), x));
 		KThread pre = KThread.currentThread();
-		KThread.yield();
+		//KThread.yield();
+		Machine.interrupt().disable();
 		pre.sleep();
 	}
 
