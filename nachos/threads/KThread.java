@@ -428,7 +428,32 @@ public class KThread {
 
 		new KThread(new PingTest(1)).setName("forked thread").fork();
 		new PingTest(0).run();
+
+                joinTest1();
 	}
+
+        private static void joinTest1()
+        {
+          KThread child1 = new KThread( new Runnable () {
+              public void run() {
+                System.out.println(" I (heart) Nachos! ");
+              }
+          });
+
+          child1.setName("child1").fork();
+
+          for (int i = 0; i < 5; i++)
+          {
+            System.out.println ("busy...");
+
+            KThread.currentThread().yield();
+          }
+
+          child1.join();
+          System.out.println("After joining, child1 should be finished.");
+          System.out.println("is it? " + (child1.status == statusFinished));
+          Lib.assertTrue((child1.status == statusFinished), "Expected child1 to be finished. ");
+        }
 
 	private static final char dbgThread = 't';
 
