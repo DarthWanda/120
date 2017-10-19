@@ -285,6 +285,19 @@ public class KThread {
 
 		Lib.assertTrue(this != currentThread);
 
+                boolean status = Machine.interrupt().disable();
+
+                if(this.status == statusFinished)
+                {
+                  Machine.interrupt().restore(status);
+                  return;
+                }
+
+                waitThread = currentThread;
+
+                waitThread.sleep();
+
+                Machine.interrupt().restore(status);
 	}
 
 	/**
@@ -465,4 +478,7 @@ public class KThread {
 	private static KThread toBeDestroyed = null;
 
 	private static KThread idleThread = null;
+
+        // variable added
+        private KThread waitThread = null;
 }
