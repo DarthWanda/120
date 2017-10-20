@@ -109,8 +109,9 @@ public class Alarm {
 		pq.add(new ThreadNode(KThread.currentThread(), x));
 		KThread pre = KThread.currentThread();
 		//KThread.yield();
-		Machine.interrupt().disable();
+		boolean initStatus = Machine.interrupt().disable();
 		pre.sleep();
+		Machine.interrupt().restore(initStatus);
 	}
 
 
