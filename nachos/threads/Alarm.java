@@ -109,7 +109,7 @@ public class Alarm {
 		pq.add(new ThreadNode(KThread.currentThread(), x));
 		KThread pre = KThread.currentThread();
 		//KThread.yield();
-		Machine.interrupt().disable();
+		boolean initStatus = Machine.interrupt().disable();
 		pre.sleep();
 		//Machine.interrupt().restore(initStatus);
 	}
@@ -134,6 +134,7 @@ public class Alarm {
 
     // Invoke Alarm.selfTest() from ThreadedKernel.selfTest()
     public static void selfTest() {
+    	System.out.println("begin alarm test");
 		alarmTest1();
 	// Invoke your other test methods here ...
     }

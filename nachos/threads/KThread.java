@@ -54,11 +54,7 @@ public class KThread {
 	 * create an idle thread as well.
 	 */
 	public KThread() {
-		Machine.timer().setInterruptHandler(new Runnable() {
-			public void run() {
-				joinListClean();
-			}
-		});
+		
 
 		if (currentThread != null) {
 			tcb = new TCB();
@@ -208,7 +204,7 @@ public class KThread {
 		toBeDestroyed = currentThread;
 
 		currentThread.status = statusFinished;
-
+		joinListClean(currentThread);
 		sleep();
 	}
 
@@ -332,12 +328,12 @@ public class KThread {
 		return true;
 	}
 
-	public void joinListClean() {
+	private static void joinListClean(KThread cd) {
 		for(int i = 0; i < joinList.size(); i++) {
 			joinNode n = joinList.get(i);
 			KThread parent = n.parent;
 			KThread child = n.child;
-			if(child.status == statusFinished) {
+			if(cd.equals(child)) {
 				parent.ready();
 				KThread.joinList.remove(i);
 				joinedSet.add(n);
@@ -528,7 +524,8 @@ public class KThread {
 
 		// asserts ??
 		child1.join();
-		
+		//child1.join();
+		//child1.join();
 
 		System.out.println("After joining, child1 should be finished.");
 		System.out.println("is it? " + (child1.status == statusFinished));
