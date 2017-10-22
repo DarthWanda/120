@@ -25,15 +25,15 @@ public class Alarm {
 	// create a node 
 	private class ThreadNode{
 		KThread thread;
-		long remainingTime;
+		long wakeTime;
 
-		public ThreadNode(KThread thread, long remainingTime) {
+		public ThreadNode(KThread thread, long wakeTime) {
 			this.thread = thread;
-			this.remainingTime = remainingTime;
+			this.wakeTime = wakeTime;
 		}
 
 		public long getTime() {
-			return remainingTime;
+			return wakeTime;
 		}
 
 		public KThread getThread() {
@@ -41,7 +41,7 @@ public class Alarm {
 		}
 
 		public void setTime(long x) {
-			remainingTime = x;
+			wakeTime = x;
 		}
 	}
 
@@ -71,11 +71,11 @@ public class Alarm {
 	 */
 	public void timerInterrupt() {
 		
-		for (ThreadNode k : pq) {
-			k.setTime(k.getTime() - 500);
-		}
+		// for (ThreadNode k : pq) {
+		// 	k.setTime(k.getTime() - 500);
+		// }
 		//printPQ(pq);
-		while(!pq.isEmpty() && pq.peek().getTime() <= 0) {
+		while(!pq.isEmpty() && pq.peek().getTime() <= Machine.timer().getTime()) {
 			//Machine.interrupt().enable();
 			ThreadNode nextNode = pq.poll();
 			nextNode.thread.ready();
@@ -106,20 +106,48 @@ public class Alarm {
 	 */
 	public void waitUntil(long x) {
 		// for now, cheat just to get something working (busy waiting is bad)
-		pq.add(new ThreadNode(KThread.currentThread(), x));
-		KThread pre = KThread.currentThread();
+		if(x <= 0) {
+			return;
+		}
+	
 		//KThread.yield();
 		boolean initStatus = Machine.interrupt().disable();
+		pq.add(new ThreadNode(KThread.currentThread(), x + Machine.timer().getTime()));
+		KThread pre = KThread.currentThread();
 		pre.sleep();
-		//Machine.interrupt().restore(initStatus);
+		Machine.interrupt().restore(initStatus);
 	}
 
 
 
 	    // Add Alarm testing code to the Alarm class
     
+	public static void alarmTest2() {
+		KThread[] c = new KThread[1000];
+		for(int i = 0; i < 10; i++) {
+			
+			c[i] = new KThread(new Runnable () {
+			public void run() {
+					int w = (int) Math.floor(Math.random() * 10000);
+					long t0 = Machine.timer().getTime();
+				   ThreadedKernel.alarm.waitUntil (w);
+				   long t1 = Machine.timer().getTime();
+		    		System.out.println (w + ": waited for " + (t1 - t0) + " ticks");
+				}
+			});
+			System.out.println("create thread" + i);
+			c[i].setName("thread" + i).fork();
+		}
+		//boolean initStatus = Machine.interrupt().disable();
+		long t0 = Machine.timer().getTime();
+		ThreadedKernel.alarm.waitUntil (1000);
+		long t1 = Machine.timer().getTime();
+		System.out.println ("mainthread"+ ": waited for " + (t1 - t0) + " ticks");
+    }
+
+
     public static void alarmTest1() {
-		int durations[] = {1000, 10*1000, 100*1000};
+		int durations[] = {-1000,0,1000, 10*1000, 100*1000};
 		long t0, t1;
 
 		for (int d : durations) {
@@ -135,7 +163,7 @@ public class Alarm {
     // Invoke Alarm.selfTest() from ThreadedKernel.selfTest()
     public static void selfTest() {
     	System.out.println("begin alarm test");
-		alarmTest1();
+		alarmTest2();
 	// Invoke your other test methods here ...
     }
 

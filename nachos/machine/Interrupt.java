@@ -46,7 +46,7 @@ public final class Interrupt {
 	 * @param privilege encapsulates privileged access to the Nachos machine.
 	 */
 	public Interrupt(Privilege privilege) {
-		System.out.print(" interrupt");
+		System.out.print("interrupt");
 
 		this.privilege = privilege;
 		privilege.interrupt = new InterruptPrivilege();
