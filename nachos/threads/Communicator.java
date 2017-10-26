@@ -129,9 +129,42 @@ public class Communicator {
 
     // Invoke
 
+    public static void commTest1() {
+    	final Communicator com = new Communicator();
+      	final long times[] = new long[4];
+      	final int words[] = new int[2];
+    	KThread speak1 = new KThread( new Runnable() {
+    		public void run() {
+    			times[0] = Machine.timer().getTime();
+    			com.speak(10);
+    			times[1] = Machine.timer().getTime();
+    		}
+    	});
+
+    	KThread listen1 = new KThread( new Runnable() {
+    		public void run() {
+    			ThreadedKernel.alarm.waitUntil (10000);
+    			times[2] = Machine.timer().getTime();
+    			words[0] = com.listen();
+    			times[3] = Machine.timer().getTime();
+    		}
+    	});
+
+    	speak1.fork(); listen1.fork();
+    	speak1.join(); listen1.join();
+		Lib.assertTrue(words[0] == 10, "Didn't listen back spoken word.");
+      	Lib.assertTrue(times[1] > times[3], "speak didn't block");
+      	//Lib.assertTrue(times[1] > times[3], "speak() returned before listen() called.");
+      	System.out.println("commTest1 successful!");
+
+    }
+
+
+
+
     public static void selfTest()
     {
-      commTest6();
+      commTest1();
     }
 
 }

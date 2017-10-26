@@ -41,6 +41,9 @@ public class RoundRobinScheduler extends Scheduler {
 			waitQueue.add(thread);
 		}
 
+		public boolean isEmpty() {
+			return waitQueue.isEmpty();
+		}
 		/**
 		 * Remove a thread from the beginning of the queue.
 		 * 

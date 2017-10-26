@@ -480,6 +480,7 @@ public class KThread {
 		new PingTest(0).run();
 
         KThread.joinTest2();
+        KThread.selfTest2();
 	}
 
     private static void joinTest1 () {
@@ -532,7 +533,34 @@ public class KThread {
 		Lib.assertTrue((child1.status == statusFinished), " Expected child1 to be finished.");
     }
 
+	private static class A implements Runnable {
+				
+   			public void run() {
+   				KThread t2 = new KThread (new B()).setName ("B");
+				System.out.println ("foo");
+				t2.fork ();
+				System.out.println ("far");
+				t2.join ();
+				System.out.println ("fum");
+   			}
+	}   
 
+	private static class B implements Runnable {
+    
+	    public void run () {
+	        System.out.println ("fie");
+	    }
+	}
+
+
+	public static void selfTest2() {
+	    KThread t1 = new KThread (new A()).setName ("A");
+	    System.out.println ("fee");
+	    t1.fork ();
+	    System.out.println ("foe");
+	    t1.join ();
+	    System.out.println ("fun");
+	}
 
 	private static final char dbgThread = 't';
 
