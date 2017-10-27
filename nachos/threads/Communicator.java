@@ -242,7 +242,7 @@ public class Communicator {
     
     public static void selfTest()
     {
-      commTest3();
+      //commTest1();
     }
 
 }
