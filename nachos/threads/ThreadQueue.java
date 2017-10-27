@@ -58,9 +58,12 @@ public abstract class ThreadQueue {
 	 * 
 	 * @param thread the thread waiting for access.
 	 */
+
 	public abstract void waitForAccess(KThread thread);
 
-	public abstract boolean isEmpty();
+	public boolean isEmpty() {
+		return true;
+	};
 	/**
 	 * Notify this thread queue that another thread can receive access. Choose
 	 * and return the next thread to receive access, or <tt>null</tt> if there

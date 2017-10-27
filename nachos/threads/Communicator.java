@@ -13,8 +13,8 @@ public class Communicator {
 
         ArrayList<Integer> buf;
         private Lock commLock;
-        private Condition2 speakCondition;
-        private Condition2 listenCondition;
+        private Condition speakCondition;
+        private Condition listenCondition;
         //private Condition2 retCondition;
         //private Integer buffer;
 	/**
@@ -24,9 +24,9 @@ public class Communicator {
 	
           commLock = new Lock();
 
-          speakCondition = new Condition2(commLock);
+          speakCondition = new Condition(commLock);
 
-          listenCondition = new Condition2(commLock);
+          listenCondition = new Condition(commLock);
           buf = new ArrayList<Integer>();
         }
 
@@ -242,7 +242,7 @@ public class Communicator {
     
     public static void selfTest()
     {
-      //commTest1();
+      commTest6();
     }
 
 }
