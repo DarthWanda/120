@@ -160,11 +160,89 @@ public class Communicator {
     }
 
 
+    public static void commTest2() {
+    	final Communicator com = new Communicator();
+      	final long times[] = new long[4];
+      	final int words[] = new int[2];
+    	KThread speak1 = new KThread( new Runnable() {
+    		public void run() {
+    			times[0] = Machine.timer().getTime();
+    			com.speak(10);
+    			times[1] = Machine.timer().getTime();
+    		}
+    	});
+
+    	KThread listen1 = new KThread( new Runnable() {
+    		public void run() {
+    			ThreadedKernel.alarm.waitUntil (10000);
+    			times[2] = Machine.timer().getTime();
+    			words[0] = com.listen();
+    			times[3] = Machine.timer().getTime();
+    		}
+    	});
+
+    	speak1.fork(); listen1.fork();listen1.join();
+    	speak1.join();
+    	// will never arrive here
+		Lib.assertTrue(words[0] == 10, "Didn't listen back spoken word.");
+      	Lib.assertTrue(times[1] > times[3], "speak didn't block");
+      	//Lib.assertTrue(times[1] > times[3], "speak() returned before listen() called.");
+      	System.out.println("commTest1 successful!");
+
+    }
+
+    public static void commTest3() {
+    	final Communicator com1 = new Communicator();
+    	final Communicator com2 = new Communicator();
+      	final long times[] = new long[4];
+      	final int words[] = new int[2];
+    	KThread speak1 = new KThread( new Runnable() {
+    		public void run() {
+    			
+    			com1.speak(10);
+    			
+    		}
+    	});
+
+    	KThread listen1 = new KThread( new Runnable() {
+    		public void run() {
+    			ThreadedKernel.alarm.waitUntil (10000);
+    			words[0] = com1.listen();
+    			System.out.println("listen1 completed");
+    		}
+    	});
 
 
+
+    	KThread speak2 = new KThread( new Runnable() {
+    		public void run() {
+    			com2.speak(20);
+    			
+    		}
+    	});
+
+    	KThread listen2 = new KThread( new Runnable() {
+    		public void run() {
+    			
+    			words[1] = com2.listen();
+    			System.out.println("listen2 completed");
+    		
+    		}
+    	});
+
+    	speak1.fork(); ; listen2.fork(); speak2.fork();listen1.fork();
+    	listen1.join(); speak1.join(); listen2.join(); speak2.join();
+    	// will never arrive here
+		Lib.assertTrue(words[0] == 10, "Didn't listen back spoken word from listen1.");
+		Lib.assertTrue(words[1] == 20, "Didn't listen back spoken word from listen2.");
+      	//Lib.assertTrue(times[1] > times[3], "speak() returned before listen() called.");
+      	System.out.println("commTest3 successful!");
+
+    }
+    
     public static void selfTest()
     {
-      commTest1();
+      commTest3();
     }
 
 }
