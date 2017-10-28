@@ -1,69 +1,69 @@
-------[ Wed Oct 18 19:30:23 2017 ]------
+------[ Sun Oct 15 21:57:16 2017 ]------
 FAIL : CV2 - N sleepers, N wakers
 FAIL : COMM - 1 message, 1 speak, 1 listen
 FAIL : JOIN - before thread finishes
 FAIL : ALARM - Tests waitUntil to ensure it waits at least minimum amount of time
-------[ Wed Oct 18 21:00:36 2017 ]------
+------[ Sun Oct 15 22:14:06 2017 ]------
 FAIL : CV2 - N sleepers, N wakers
 FAIL : COMM - 1 message, 1 speak, 1 listen
 FAIL : JOIN - before thread finishes
-PASS : ALARM - Tests waitUntil to ensure it waits at least minimum amount of time
-------[ Fri Oct 20 01:30:16 2017 ]------
-FAIL : CV2 - N sleepers, N wakers
-FAIL : COMM - 1 message, 1 speak, 1 listen
-PASS : JOIN - before thread finishes
 FAIL : ALARM - Tests waitUntil to ensure it waits at least minimum amount of time
-------[ Fri Oct 20 02:00:16 2017 ]------
+------[ Sun Oct 15 23:00:21 2017 ]------
 FAIL : CV2 - N sleepers, N wakers
 FAIL : COMM - 1 message, 1 speak, 1 listen
-PASS : JOIN - before thread finishes
+FAIL : JOIN - before thread finishes
 FAIL : ALARM - Tests waitUntil to ensure it waits at least minimum amount of time
-------[ Fri Oct 20 02:30:16 2017 ]------
+------[ Mon Oct 16 11:00:20 2017 ]------
 FAIL : CV2 - N sleepers, N wakers
 FAIL : COMM - 1 message, 1 speak, 1 listen
-PASS : JOIN - before thread finishes
+FAIL : JOIN - before thread finishes
 FAIL : ALARM - Tests waitUntil to ensure it waits at least minimum amount of time
-------[ Fri Oct 20 11:30:17 2017 ]------
+------[ Wed Oct 25 19:42:44 2017 ]------
 FAIL : CV2 - N sleepers, N wakers
 FAIL : COMM - 1 message, 1 speak, 1 listen
 PASS : JOIN - before thread finishes
+PASS : ALARM - Tests waitUntil to ensure it waits at least minimum amount of time
+------[ Wed Oct 25 20:31:08 2017 ]------
+FAIL : CV2 - N sleepers, N wakers
+FAIL : COMM - 1 message, 1 speak, 1 listen
+PASS : JOIN - before thread finishes
+PASS : ALARM - Tests waitUntil to ensure it waits at least minimum amount of time
+------[ Thu Oct 26 08:55:49 2017 ]------
+FAIL : CV2 - N sleepers, N wakers
+FAIL : COMM - 1 message, 1 speak, 1 listen
+PASS : JOIN - before thread finishes
+PASS : ALARM - Tests waitUntil to ensure it waits at least minimum amount of time
+------[ Thu Oct 26 17:00:41 2017 ]------
+FAIL : CV2 - N sleepers, N wakers
+FAIL : COMM - 1 message, 1 speak, 1 listen
+PASS : JOIN - before thread finishes
+PASS : ALARM - Tests waitUntil to ensure it waits at least minimum amount of time
+------[ Fri Oct 27 11:06:33 2017 ]------
+FAIL : CV2 - N sleepers, N wakers
+FAIL : COMM - 1 message, 1 speak, 1 listen
+PASS : JOIN - before thread finishes
+PASS : ALARM - Tests waitUntil to ensure it waits at least minimum amount of time
+------[ Fri Oct 27 20:29:22 2017 ]------
+FAIL : CV2 - N sleepers, N wakers
+FAIL : COMM - 1 message, 1 speak, 1 listen
+FAIL : JOIN - before thread finishes
 FAIL : ALARM - Tests waitUntil to ensure it waits at least minimum amount of time
-------[ Fri Oct 20 13:00:23 2017 ]------
+------[ Fri Oct 27 21:06:27 2017 ]------
+FAIL : CV2 - N sleepers, N wakers
+FAIL : COMM - 1 message, 1 speak, 1 listen
+FAIL : JOIN - before thread finishes
+FAIL : ALARM - Tests waitUntil to ensure it waits at least minimum amount of time
+------[ Fri Oct 27 21:07:22 2017 ]------
 FAIL : CV2 - N sleepers, N wakers
 FAIL : COMM - 1 message, 1 speak, 1 listen
 PASS : JOIN - before thread finishes
 PASS : ALARM - Tests waitUntil to ensure it waits at least minimum amount of time
-------[ Fri Oct 20 18:00:21 2017 ]------
+------[ Fri Oct 27 21:09:27 2017 ]------
 FAIL : CV2 - N sleepers, N wakers
-FAIL : COMM - 1 message, 1 speak, 1 listen
-PASS : JOIN - before thread finishes
-PASS : ALARM - Tests waitUntil to ensure it waits at least minimum amount of time
-------[ Sat Oct 21 17:00:27 2017 ]------
-FAIL : CV2 - N sleepers, N wakers
-FAIL : COMM - 1 message, 1 speak, 1 listen
-PASS : JOIN - before thread finishes
-PASS : ALARM - Tests waitUntil to ensure it waits at least minimum amount of time
-------[ Sun Oct 22 01:00:22 2017 ]------
-PASS : CV2 - N sleepers, N wakers
-FAIL : COMM - 1 message, 1 speak, 1 listen
-PASS : JOIN - before thread finishes
-PASS : ALARM - Tests waitUntil to ensure it waits at least minimum amount of time
-------[ Sun Oct 22 18:30:22 2017 ]------
-PASS : CV2 - N sleepers, N wakers
-FAIL : COMM - 1 message, 1 speak, 1 listen
-PASS : JOIN - before thread finishes
-PASS : ALARM - Tests waitUntil to ensure it waits at least minimum amount of time
-------[ Mon Oct 23 12:00:23 2017 ]------
-PASS : CV2 - N sleepers, N wakers
-FAIL : COMM - 1 message, 1 speak, 1 listen
-PASS : JOIN - before thread finishes
-PASS : ALARM - Tests waitUntil to ensure it waits at least minimum amount of time
-------[ Fri Oct 27 13:30:36 2017 ]------
-PASS : CV2 - N sleepers, N wakers
 PASS : COMM - 1 message, 1 speak, 1 listen
 PASS : JOIN - before thread finishes
 PASS : ALARM - Tests waitUntil to ensure it waits at least minimum amount of time
-------[ Fri Oct 27 16:01:08 2017 ]------
+------[ Fri Oct 27 21:15:56 2017 ]------
 PASS : CV2 - N sleepers, N wakers
 PASS : COMM - 1 message, 1 speak, 1 listen
 PASS : JOIN - before thread finishes
