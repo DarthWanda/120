@@ -381,6 +381,7 @@ public class UserProcess {
 	private int handleOpen(int a0) {
 		String path = readVirtualMemoryString(a0, 255);
 		System.out.println(path);
+		return 1;
 	}
 
 	/**
