@@ -1,4 +1,4 @@
-ls#include "syscall.h"
+#include "syscall.h"
 
 int
 main()
