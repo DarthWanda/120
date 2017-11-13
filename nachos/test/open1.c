@@ -4,6 +4,6 @@ int
 main()
 {
 	char *path = "open1.txt";
-    open(path);
+    open(pa);
     /* not reached */
 }
