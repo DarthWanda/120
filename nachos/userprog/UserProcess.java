@@ -24,6 +24,10 @@ public class UserProcess {
 	 * Allocate a new process.
 	 */
 	public UserProcess() {
+		// initialize stdin stdout fd
+		fileTable[0] = UserKernel.console.openForReading()
+		fileTable[1] = UserKernel.console.openForWriting()
+
 		int numPhysPages = Machine.processor().getNumPhysPages();
 		pageTable = new TranslationEntry[numPhysPages];
 		for (int i = 0; i < numPhysPages; i++)
@@ -371,6 +375,14 @@ public class UserProcess {
 			syscallRead = 6, syscallWrite = 7, syscallClose = 8,
 			syscallUnlink = 9;
 
+	/*
+		Handle the open() system call
+	*/
+	private int handleOpen(int a0) {
+		String path = readVirtualMemoryString(a0, 255);
+		System.out.println(path);
+	}
+
 	/**
 	 * Handle a syscall exception. Called by <tt>handleException()</tt>. The
 	 * <i>syscall</i> argument identifies which syscall the user executed:
@@ -438,7 +450,8 @@ public class UserProcess {
 			return handleHalt();
 		case syscallExit:
 			return handleExit(a0);
-
+		case syscallOpen:
+			return handleOpen(a0);
 		default:
 			Lib.debug(dbgProcess, "Unknown syscall " + syscall);
 			Lib.assertNotReached("Unknown system call!");
@@ -493,4 +506,8 @@ public class UserProcess {
 	private static final int pageSize = Processor.pageSize;
 
 	private static final char dbgProcess = 'a';
+
+	private OpenFile[] fileTable = new OpenFile[16]
+
+
 }
