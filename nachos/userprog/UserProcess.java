@@ -398,6 +398,7 @@ public class UserProcess {
 		}
 		// add to fileTable
 		fileTable[nextPos] = fd;
+		System.out.println(nextPos);
 		return nextPos;
 	}
 
@@ -407,9 +408,9 @@ public class UserProcess {
 	private int handleClose(int a0) {
 		byte[] data = new byte[4];
 		int nByte = readVirtualMemory(a0, data);
-		for(Byte b : data) {
-			System.out.println(b);
-		}
+		int x = java.nio.ByteBuffer.wrap(data).order(java.nio.ByteOrder.LITTLE_ENDIAN).getInt();
+
+		System.out.println(x);
 		return 1;
 	}
 
@@ -525,7 +526,7 @@ public class UserProcess {
 	*/
 	private int nextAvailable() {
 		for(int i = 0; i < fileTable.length; i++) {
-			if(fileTable[i] != null) {
+			if(fileTable[i] == null) {
 				return i;
 			}
 		}
