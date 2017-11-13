@@ -507,7 +507,7 @@ public class UserProcess {
 
 	private static final char dbgProcess = 'a';
 
-	private OpenFile[] fileTable = new OpenFile[16]
+	private OpenFile[] fileTable = new OpenFile[16];
 
 
 }
