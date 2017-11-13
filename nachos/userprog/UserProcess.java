@@ -25,8 +25,8 @@ public class UserProcess {
 	 */
 	public UserProcess() {
 		// initialize stdin stdout fd
-		fileTable[0] = UserKernel.console.openForReading()
-		fileTable[1] = UserKernel.console.openForWriting()
+		fileTable[0] = UserKernel.console.openForReading();
+		fileTable[1] = UserKernel.console.openForWriting();
 
 		int numPhysPages = Machine.processor().getNumPhysPages();
 		pageTable = new TranslationEntry[numPhysPages];
