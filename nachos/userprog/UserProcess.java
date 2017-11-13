@@ -25,9 +25,12 @@ public class UserProcess {
 	 */
 	public UserProcess() {
 		// initialize stdin stdout fd
+		
+		for(int i = 0; i < fileTable.length; i++) {
+			fileTable[i] = null;
+		}
 		fileTable[0] = UserKernel.console.openForReading();
 		fileTable[1] = UserKernel.console.openForWriting();
-
 		int numPhysPages = Machine.processor().getNumPhysPages();
 		pageTable = new TranslationEntry[numPhysPages];
 		for (int i = 0; i < numPhysPages; i++)
@@ -379,10 +382,25 @@ public class UserProcess {
 		Handle the open() system call
 	*/
 	private int handleOpen(int a0) {
+		int nextPos = nextAvailable();
+		if (nextPos == -1) {
+			return -1;
+		}
+		//if invalid string
 		String path = readVirtualMemoryString(a0, 255);
-		System.out.println(path);
-		return 1;
+		if(path == null) {
+			return -1;
+		}
+		//if open fail
+		OpenFile fd = ThreadedKernel.fileSystem.open(path, false);
+		if(fd == null) {
+			return -1;
+		}
+		// add to fileTable
+		fileTable[nextPos] = fd;
+		return nextPos;
 	}
+
 
 	/**
 	 * Handle a syscall exception. Called by <tt>handleException()</tt>. The
@@ -487,6 +505,20 @@ public class UserProcess {
 			Lib.assertNotReached("Unexpected exception");
 		}
 	}
+
+	/*
+		get next available filetable, return -1 if it is full
+	*/
+	private int nextAvailable() {
+		for(int i = 0; i < fileTable.length; i++) {
+			if(fileTable[i] != null) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+
 
 	/** The program being run by this process. */
 	protected Coff coff;
