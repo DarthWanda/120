@@ -401,6 +401,18 @@ public class UserProcess {
 		return nextPos;
 	}
 
+	/*
+		Handle the close() system call
+	*/
+	private int handleClose(int a0) {
+		byte[] data = new byte[4];
+		int nByte = readVirtualMemory(a0, data);
+		for(Byte b : data) {
+			System.out.println(b);
+		}
+		return 1;
+	}
+
 
 	/**
 	 * Handle a syscall exception. Called by <tt>handleException()</tt>. The
@@ -471,6 +483,8 @@ public class UserProcess {
 			return handleExit(a0);
 		case syscallOpen:
 			return handleOpen(a0);
+		case syscallClose:
+			return handleClose(a0);
 		default:
 			Lib.debug(dbgProcess, "Unknown syscall " + syscall);
 			Lib.assertNotReached("Unknown system call!");
