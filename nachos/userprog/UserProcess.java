@@ -6,7 +6,7 @@ import nachos.userprog.*;
 import nachos.vm.*;
 
 import java.io.EOFException;
-
+import java.util.*;
 /**
  * Encapsulates the state of a user process that is not contained in its user
  * thread (or threads). This includes its address translation state, a file
@@ -383,6 +383,7 @@ public class UserProcess {
 		Handle the open() system call
 	*/
 	private int handleOpen(int a0) {
+
 		int nextPos = nextAvailable();
 		if (nextPos == -1) {
 			return -1;
@@ -390,6 +391,9 @@ public class UserProcess {
 		//if invalid string
 		String path = readVirtualMemoryString(a0, 255);
 		if(path == null) {
+			return -1;
+		}
+		if(fileUnlinkHold.contains(path)) {
 			return -1;
 		}
 		//if open fail
@@ -418,7 +422,7 @@ public class UserProcess {
 
 		f.close();
 		fileTable[a0] = null;
-		return 1;
+		return 0;
 	}
 	/*
 		Handle the write() system call
@@ -465,7 +469,9 @@ public class UserProcess {
 		if(path == null) {
 			return -1;
 		}
-
+		if(fileUnlinkHold.contains(path)) {
+			return -1;
+		}
 		OpenFile fd = ThreadedKernel.fileSystem.open(path, false);
 		if(fd == null) {
 			fd = ThreadedKernel.fileSystem.open(path, true);
@@ -478,6 +484,18 @@ public class UserProcess {
 		System.out.println(nextPos);
 		return nextPos;
 	}
+
+	private int handleUnlink(int a0) {
+		String path = readVirtualMemoryString(a0, 255);
+		if(path == null) {
+			return -1;
+		}
+		fileUnlinkHold.add(path);
+		boolean status = ThreadedKernel.fileSystem.remove(path);
+		fileUnlinkHold.remove(path);
+		return status == true ? 0 : -1;
+	}
+
 	/**
 	 * Handle a syscall exception. Called by <tt>handleException()</tt>. The
 	 * <i>syscall</i> argument identifies which syscall the user executed:
@@ -553,6 +571,8 @@ public class UserProcess {
 			return handleWrite(a0, a1, a2);
 		case syscallCreate:
 			return handleCreat(a0);
+		case syscallUnlink:
+			return handleUnlink(a0);
 		default:
 			Lib.debug(dbgProcess, "Unknown syscall " + syscall);
 			Lib.assertNotReached("Unknown system call!");
@@ -625,5 +645,6 @@ public class UserProcess {
 
 	private OpenFile[] fileTable = new OpenFile[16];
 	private int[] filePos = new int[16];
+	private HashSet<String> fileUnlinkHold = new HashSet<String>();
 
 }
