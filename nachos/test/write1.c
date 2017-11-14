@@ -23,6 +23,6 @@ main (int argc, char *argv[])
 	}
 	str++;
     }
-
+    printf ("finished");
     return 0;
 }

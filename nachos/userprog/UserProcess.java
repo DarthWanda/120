@@ -431,11 +431,12 @@ public class UserProcess {
 		if(f == null) {
 			return -1;
 		}
-		byte[] localBuf = new byte[pageSize];
+		
+		byte[] localBuf = new byte[pageSize * 2];
 		readVirtualMemory(a1, localBuf, 0, a2);
-		// stdin stdou;
+		// stdin stdout;
 		if(a0 == 0 || a0 ==1) {
-			return  f.write(localBuf, 0, localBuf.length);
+			return  f.write(localBuf, 0, a2);
 			
 		}
 		else {
