@@ -431,13 +431,12 @@ public class UserProcess {
 		if(f == null) {
 			return -1;
 		}
-		
-		byte[] localBuf = new byte[pageSize * 2];
-		readVirtualMemory(a1, localBuf, 0, a2);
+
+		byte[] localBuf = new byte[a2];
+		readVirtualMemory(a1, localBuf);
 		// stdin stdout;
 		if(a0 == 0 || a0 ==1) {
-			return  f.write(localBuf, 0, a2);
-			
+			return  f.write(localBuf, 0, a2);			
 		}
 		else {
 			int pos = filePos[a0];
@@ -452,7 +451,30 @@ public class UserProcess {
 			}
 		}
 	}
+	/*
+		Handle the create() system call
+	*/
+	private int handleCreate(int a0) {
+		
+		
+		int nextPos = nextAvailable();
+		if(nextPos == -1) {
+			return -1;
+		}
+		String path = readVirtualMemoryString(a0, 255);
+		if(path == null) {
+			return -1;
+		}
 
+		OpenFile fd = ThreadedKernel.fileSystem.open(path, false);
+		if(fd == null) {
+			return -1;
+		}
+		// add to fileTable
+		fileTable[nextPos] = fd;
+		System.out.println(nextPos);
+		return nextPos;
+	}
 	/**
 	 * Handle a syscall exception. Called by <tt>handleException()</tt>. The
 	 * <i>syscall</i> argument identifies which syscall the user executed:
@@ -526,6 +548,8 @@ public class UserProcess {
 			return handleClose(a0);
 		case syscallWrite:
 			return handleWrite(a0, a1, a2);
+		case syscallCreate:
+			return handleCreate(a0);
 		default:
 			Lib.debug(dbgProcess, "Unknown syscall " + syscall);
 			Lib.assertNotReached("Unknown system call!");
