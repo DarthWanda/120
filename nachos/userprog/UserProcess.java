@@ -468,7 +468,10 @@ public class UserProcess {
 
 		OpenFile fd = ThreadedKernel.fileSystem.open(path, false);
 		if(fd == null) {
-			return -1;
+			fd = ThreadedKernel.fileSystem.open(path, true);
+			if(fd == null) {
+				return -1;
+			}
 		}
 		// add to fileTable
 		fileTable[nextPos] = fd;
