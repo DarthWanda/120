@@ -28,6 +28,7 @@ public class UserProcess {
 		
 		for(int i = 0; i < fileTable.length; i++) {
 			fileTable[i] = null;
+			filePos[i] = 0;
 		}
 		fileTable[0] = UserKernel.console.openForReading();
 		fileTable[1] = UserKernel.console.openForWriting();
@@ -396,7 +397,7 @@ public class UserProcess {
 		if(fd == null) {
 			return -1;
 		}
-		
+
 		// add to fileTable
 		fileTable[nextPos] = fd;
 		System.out.println(nextPos);
@@ -407,14 +408,49 @@ public class UserProcess {
 		Handle the close() system call
 	*/
 	private int handleClose(int a0) {
-		byte[] data = new byte[4];
-		int nByte = readVirtualMemory(a0, data);
-		int x = java.nio.ByteBuffer.wrap(data).order(java.nio.ByteOrder.LITTLE_ENDIAN).getInt();
+		if(a0 >= 16) {
+			return -1;
+		}
+		OpenFile f = fileTable[a0];
+		if(f == null) {
+			return -1;
+		}
 
-		System.out.println(x);
+		f.close();
+		fileTable[a0] = null;
 		return 1;
 	}
-
+	/*
+		Handle the write() system call
+	*/
+	private int handleWrite(int a0, int a1, int a2) {
+		if(a0 >= 16) {
+			return -1;
+		}
+		OpenFile f = fileTable[a0];
+		if(f == null) {
+			return -1;
+		}
+		byte[] localBuf = new byte[pageSize];
+		readVirtualMemory(a1, localBuf, 0, a2);
+		// stdin stdou;
+		if(a0 == 0 || a0 ==1) {
+			return  f.write(localBuf, 0, localBuf.length);
+			
+		}
+		else {
+			int pos = filePos[a0];
+			//write(int pos, byte[] buf, int offset, int length)
+			int flag = f.write(pos, localBuf, 0, localBuf.length);
+			if(flag == -1) {
+				return flag;
+			}
+			else {
+				filePos[a0] += flag;
+				return flag;
+			}
+		}
+	}
 
 	/**
 	 * Handle a syscall exception. Called by <tt>handleException()</tt>. The
@@ -487,6 +523,8 @@ public class UserProcess {
 			return handleOpen(a0);
 		case syscallClose:
 			return handleClose(a0);
+		case syscallWrite:
+			return handleWrite(a0, a1, a2);
 		default:
 			Lib.debug(dbgProcess, "Unknown syscall " + syscall);
 			Lib.assertNotReached("Unknown system call!");
@@ -558,6 +596,6 @@ public class UserProcess {
 	private static final char dbgProcess = 'a';
 
 	private OpenFile[] fileTable = new OpenFile[16];
-
+	private int[] filePos = new int[16];
 
 }
