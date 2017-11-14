@@ -22,3 +22,9 @@ FAIL : tests write10.c
 PASS : tests exit1.c
 FAIL : tests exec1.c
 FAIL : tests join1.c
+------[ Mon Nov 13 21:30:18 2017 ]------
+PASS : tests write1.c
+FAIL : tests write10.c
+PASS : tests exit1.c
+FAIL : tests exec1.c
+FAIL : tests join1.c
