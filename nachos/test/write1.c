@@ -25,4 +25,5 @@ main (int argc, char *argv[])
     }
     printf ("finished");
     return 0;
+    printf ("finished");
 }
