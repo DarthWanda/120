@@ -466,7 +466,7 @@ public class UserProcess {
 			return -1;
 		}
 
-		OpenFile fd = ThreadedKernel.fileSystem.open(path, false);
+		OpenFile fd = ThreadedKernel.fileSystem.open(path, true);
 		if(fd == null) {
 			return -1;
 		}
