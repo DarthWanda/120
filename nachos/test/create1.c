@@ -3,6 +3,6 @@
 int
 main (int argc, char *argv[])
 {
-    int fd = create("open1.txt");
+    int fd = creat("open1.txt");
     printf("%d\n", fd);
 }
