@@ -454,7 +454,7 @@ public class UserProcess {
 	/*
 		Handle the create() system call
 	*/
-	private int handleCreate(int a0) {
+	private int handleCreat(int a0) {
 		
 		
 		int nextPos = nextAvailable();
@@ -549,7 +549,7 @@ public class UserProcess {
 		case syscallWrite:
 			return handleWrite(a0, a1, a2);
 		case syscallCreate:
-			return handleCreate(a0);
+			return handleCreat(a0);
 		default:
 			Lib.debug(dbgProcess, "Unknown syscall " + syscall);
 			Lib.assertNotReached("Unknown system call!");
