@@ -396,6 +396,7 @@ public class UserProcess {
 		if(fd == null) {
 			return -1;
 		}
+		
 		// add to fileTable
 		fileTable[nextPos] = fd;
 		System.out.println(nextPos);
@@ -512,6 +513,7 @@ public class UserProcess {
 					processor.readRegister(Processor.regA3));
 			processor.writeRegister(Processor.regV0, result);
 			processor.advancePC();
+
 			break;
 
 		default:
