@@ -505,13 +505,31 @@ public class UserProcess {
 		if(f == null) {
 			return -1;
 		}
-		byte[] localBuf = new byte[count];
 
+		
+		byte[] localBuf = new byte[count];
+		// char c;
+		// SynchConsole console = new SynchConsole(Machine.console());
+		// do {
+		// 	c = (char) console.readByte(true);
+		// 	console.writeByte(c);
+		// } while (c != 'q');
+
+		// System.out.println("");
+
+		// f.read(localBuf, 0, 1000);
 
 		if(fd == 0 || fd ==1) {
-			int cnt =  f.read(localBuf, 0, count);
+			int nBytes;
+			int pos = 0;
+			do {
+				nBytes = f.read(localBuf, pos, count);
+				count -= nBytes;
+				pos += nBytes;
+			}while(count>0 && nBytes != -1);
+
 			writeVirtualMemory(buffer, localBuf);
-			return cnt;
+			return pos;
 		}
 		else {
 			int pos = fileReadPos[fd];
