@@ -28,7 +28,8 @@ public class UserProcess {
 		
 		for(int i = 0; i < fileTable.length; i++) {
 			fileTable[i] = null;
-			filePos[i] = 0;
+			fileWritePos[i] = 0;
+			fileReadPos[i] = 0;
 		}
 		fileTable[0] = UserKernel.console.openForReading();
 		fileTable[1] = UserKernel.console.openForWriting();
@@ -443,14 +444,14 @@ public class UserProcess {
 			return  f.write(localBuf, 0, a2);			
 		}
 		else {
-			int pos = filePos[a0];
+			int pos = fileWritePos[a0];
 			//write(int pos, byte[] buf, int offset, int length)
 			int flag = f.write(pos, localBuf, 0, localBuf.length);
 			if(flag == -1) {
 				return flag;
 			}
 			else {
-				filePos[a0] += flag;
+				fileWritePos[a0] += flag;
 				return flag;
 			}
 		}
@@ -494,6 +495,39 @@ public class UserProcess {
 		boolean status = ThreadedKernel.fileSystem.remove(path);
 		fileUnlinkHold.remove(path);
 		return status == true ? 0 : -1;
+	}
+
+	private int handleRead(int fd, int buffer, int count) {
+		if(fd >= 16) {
+			return -1;
+		}
+		OpenFile f = fileTable[fd];
+		if(f == null) {
+			return -1;
+		}
+		byte[] localBuf = new byte[count];
+
+
+		if(fd == 0 || fd ==1) {
+			int cnt =  f.read(localBuf, 0, count);
+			writeVirtualMemory(buffer, localBuf);
+			return cnt;
+		}
+		else {
+			int pos = fileReadPos[fd];
+			//write(int pos, byte[] buf, int offset, int length)
+			int flag = f.read(pos, localBuf, 0, localBuf.length);
+			if(flag == -1) {
+				return flag;
+			}
+			else {
+				writeVirtualMemory(buffer, localBuf);
+				fileReadPos[fd] += flag;
+				return flag;
+			}
+		}
+
+
 	}
 
 	/**
@@ -644,7 +678,8 @@ public class UserProcess {
 	private static final char dbgProcess = 'a';
 
 	private OpenFile[] fileTable = new OpenFile[16];
-	private int[] filePos = new int[16];
+	private int[] fileReadPos = new int[16];
+	private int[] fileWritePos = new int[16];
 	private HashSet<String> fileUnlinkHold = new HashSet<String>();
 
 }
