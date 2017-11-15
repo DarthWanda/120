@@ -3,7 +3,7 @@
 int
 main (int argc, char *argv[])
 {
-    char* buf = malloc(10 * sizeof(char));
+    char buf[200];
     read(0, buf, 5);
     return 0;
 }
