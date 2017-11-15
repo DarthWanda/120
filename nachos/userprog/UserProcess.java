@@ -413,7 +413,7 @@ public class UserProcess {
 		Handle the close() system call
 	*/
 	private int handleClose(int a0) {
-		if(a0 >= 16) {
+		if(a0 >= 16 || a0 < 0) {
 			return -1;
 		}
 		OpenFile f = fileTable[a0];
@@ -429,7 +429,7 @@ public class UserProcess {
 		Handle the write() system call
 	*/
 	private int handleWrite(int a0, int a1, int a2) {
-		if(a0 >= 16) {
+		if(a0 >= 16 || a0 < 0) {
 			return -1;
 		}
 		OpenFile f = fileTable[a0];
@@ -441,7 +441,7 @@ public class UserProcess {
 		readVirtualMemory(a1, localBuf);
 		// stdin stdout;
 		if(a0 == 0 || a0 ==1) {
-			return  f.write(localBuf, 0, a2);			
+			return f.write(localBuf, 0, a2);			
 		}
 		else {
 			int pos = fileWritePos[a0];
@@ -498,7 +498,7 @@ public class UserProcess {
 	}
 
 	private int handleRead(int fd, int buffer, int count) {
-		if(fd >= 16) {
+		if(fd >= 16 || fd < 0) {
 			return -1;
 		}
 		OpenFile f = fileTable[fd];
