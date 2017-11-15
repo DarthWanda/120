@@ -1,4 +1,4 @@
-------[ Tue Nov 14 14:00:28 2017 ]------
+------[ Wed Nov 15 15:00:21 2017 ]------
 --[ tests write1.c ]--
 stty: standard input: Inappropriate ioctl for device
 stty: standard input: Inappropriate ioctl for device
@@ -26,12 +26,168 @@ opening write.out...
 2
 ...passed (fd = 2)
 reading write.out into buffer...
+...success
+validating write.out...
+...passed
+closing 2...
+creating write.out...
+2
+...passed (fd = 2)
+writing 59 bytes to file, 8 bytes at a time...
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 3 bytes)
+closing 2...
+opening write.out...
+2
+...passed (fd = 2)
+reading write.out into buffer...
+...success
+validating write.out...
+...passed
+closing 2...
+creating write.out...
+2
+...passed (fd = 2)
+writing 59 bytes to file, 1 bytes at a time...
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+closing 2...
+opening write.out...
+2
+...passed (fd = 2)
+reading write.out into buffer...
+...success
+validating write.out...
+...passed
+closing 2...
+creating binary.out...
+2
+...passed (fd = 2)
+writing 4096 bytes to file, 4096 bytes at a time...
+...passed (wrote 4096 bytes)
+closing 2...
+opening binary.out...
+2
+...passed (fd = 2)
+reading binary.out into buffer...
+...success
+validating binary.out...
+...passed
+closing 2...
+creating binary.out...
+2
+...passed (fd = 2)
+writing 4096 bytes to file, 128 bytes at a time...
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+closing 2...
+opening binary.out...
+2
+...passed (fd = 2)
+reading binary.out into buffer...
+...success
+validating binary.out...
+...passed
+closing 2...
+writing to an invalid fd (-10)...
 
-nachos.machine.AssertionFailureError: Unknown system call!
-	at nachos.machine.Lib.assertTrue(Lib.java:89)
-	at nachos.machine.Lib.assertNotReached(Lib.java:106)
-	at nachos.userprog.UserProcess.handleSyscall(UserProcess.java:578)
-	at nachos.userprog.UserProcess.handleException(UserProcess.java:595)
+java.lang.ArrayIndexOutOfBoundsException: -10
+	at nachos.userprog.UserProcess.handleWrite(UserProcess.java:435)
+	at nachos.userprog.UserProcess.handleSyscall(UserProcess.java:623)
+	at nachos.userprog.UserProcess.handleException(UserProcess.java:649)
 	at nachos.userprog.UserKernel.exceptionHandler(UserKernel.java:83)
 	at nachos.userprog.UserKernel$1.run(UserKernel.java:29)
 	at nachos.machine.Processor$MipsException.handle(Processor.java:619)
@@ -62,8 +218,8 @@ nachos 5.0j initializing... config interrupt timer processor console user-check 
 nachos.machine.AssertionFailureError: Unknown system call!
 	at nachos.machine.Lib.assertTrue(Lib.java:89)
 	at nachos.machine.Lib.assertNotReached(Lib.java:106)
-	at nachos.userprog.UserProcess.handleSyscall(UserProcess.java:578)
-	at nachos.userprog.UserProcess.handleException(UserProcess.java:595)
+	at nachos.userprog.UserProcess.handleSyscall(UserProcess.java:632)
+	at nachos.userprog.UserProcess.handleException(UserProcess.java:649)
 	at nachos.userprog.UserKernel.exceptionHandler(UserKernel.java:83)
 	at nachos.userprog.UserKernel$1.run(UserKernel.java:29)
 	at nachos.machine.Processor$MipsException.handle(Processor.java:619)
@@ -88,8 +244,8 @@ execing exit1.coff...
 nachos.machine.AssertionFailureError: Unknown system call!
 	at nachos.machine.Lib.assertTrue(Lib.java:89)
 	at nachos.machine.Lib.assertNotReached(Lib.java:106)
-	at nachos.userprog.UserProcess.handleSyscall(UserProcess.java:578)
-	at nachos.userprog.UserProcess.handleException(UserProcess.java:595)
+	at nachos.userprog.UserProcess.handleSyscall(UserProcess.java:632)
+	at nachos.userprog.UserProcess.handleException(UserProcess.java:649)
 	at nachos.userprog.UserKernel.exceptionHandler(UserKernel.java:83)
 	at nachos.userprog.UserKernel$1.run(UserKernel.java:29)
 	at nachos.machine.Processor$MipsException.handle(Processor.java:619)
