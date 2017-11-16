@@ -371,6 +371,8 @@ public class UserProcess {
 	 */
 	private int handleExit(int status) {
 		Machine.autoGrader().finishingCurrentProcess(status);
+		UserProcess currentProcess = UserKernel.currentProcess();
+		currentProcess.closeAllFd();
 
 		return 0;
 	}
@@ -682,7 +684,11 @@ public class UserProcess {
 		return -1;
 	}
 
-
+	private void closeAllFd() {
+		for(OpenFile f : fileTable) {
+			f.close();
+		}
+	}
 
 	/** The program being run by this process. */
 	protected Coff coff;
