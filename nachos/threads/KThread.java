@@ -632,6 +632,8 @@ public class KThread {
     	KThread.joinList.add(nd);
     }
 
-
+    public int getID() {
+		return this.id;
+	}
 
 }

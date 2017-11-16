@@ -72,4 +72,8 @@ public class UThread extends KThread {
 	 * The process to which this thread belongs.
 	 */
 	public UserProcess process;
+
+	
+
+
 }

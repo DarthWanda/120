@@ -71,13 +71,14 @@ public class UserProcess {
 	 * @param args the arguments to pass to the executable.
 	 * @return <tt>true</tt> if the program was successfully executed.
 	 */
-	public boolean execute(String name, String[] args) {
+	public int execute(String name, String[] args) {
 		if (!load(name, args))
-			return false;
+			return -1;
 
-		new UThread(this).setName(name).fork();
+		KThread UT = new UThread(this).setName(name);
+		UT.fork();
 
-		return true;
+		return UT.getID();
 	}
 
 	/**
@@ -392,7 +393,7 @@ public class UserProcess {
 			return -1;
 		}
 		//if invalid string
-		String path = readVirtualMemoryString(a0, 255);
+		String path = readVirtualMemoryString(a0, 256);
 		if(path == null) {
 			return -1;
 		}
@@ -475,7 +476,7 @@ public class UserProcess {
 		if(nextPos == -1) {
 			return -1;
 		}
-		String path = readVirtualMemoryString(a0, 255);
+		String path = readVirtualMemoryString(a0, 256);
 		if(path == null) {
 			return -1;
 		}
@@ -496,7 +497,7 @@ public class UserProcess {
 	}
 
 	private int handleUnlink(int a0) {
-		String path = readVirtualMemoryString(a0, 255);
+		String path = readVirtualMemoryString(a0, 256);
 		if(path == null) {
 			return -1;
 		}
@@ -553,8 +554,27 @@ public class UserProcess {
 				return flag;
 			}
 		}
-
-
+	}
+	private int handleExec(int fName, int argc, int argv) {
+		System.out.println("fuck");
+		if(argc < 0) {
+			return -1;
+		}
+		String path = readVirtualMemoryString(fName, 256);
+		if(path == null) {
+			return -1;
+		}
+		int len = path.length();
+		String lastFive = path.substring(len-5);
+		if(!lastFive.equals(".coff")) {
+			return -1;
+		}
+		String[] args = new String[argc];
+		for(int i = 0; i < argc; i++) {
+			args[i] = readVirtualMemoryString(argv+i, 256);
+		}
+		System.out.println("fuck");
+		return execute(path, args);
 	}
 
 	/**
@@ -636,6 +656,9 @@ public class UserProcess {
 			return handleUnlink(a0);
 		case syscallRead:
 			return handleRead(a0, a1, a2);
+		case syscallExec:
+			System.out.println("syscallExec");
+			return handleExec(a0, a1, a2);
 		default:
 			Lib.debug(dbgProcess, "Unknown syscall " + syscall);
 			Lib.assertNotReached("Unknown system call!");

@@ -12,8 +12,9 @@ main (int argc, char *argv[])
 {
     char *prog = "exit1.coff";
     int pid;
-
-    pid = exec (prog, 0, 0);
+    printf("%s\n", "ready to exec");
+    pid = exec(prog, 0, 0);
+    printf("%s\n", "finish exec");
     // the exit status of this process is the pid of the child process
-        exit (pid);
+    exit (pid);
 }
