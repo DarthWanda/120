@@ -438,6 +438,7 @@ public class UserProcess {
 		}
 		int memoryLength = Machine.processor().getMemory().length;
 		if (a1 + a2 >= memoryLength) {
+			//System.out.println("invalid buffer:");
 			return -1;
 		}
 
