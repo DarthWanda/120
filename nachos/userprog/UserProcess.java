@@ -429,16 +429,22 @@ public class UserProcess {
 		Handle the write() system call
 	*/
 	private int handleWrite(int a0, int a1, int a2) {
-		if(a0 >= 16 || a0 < 0) {
+		if(a0 >= 16 || a0 < 0 || a2 < 0) {
 			return -1;
 		}
 		OpenFile f = fileTable[a0];
 		if(f == null) {
 			return -1;
 		}
+		int memoryLength = Machine.processor().getMemory().length;
+		if (a1 + a2 >= memoryLength) {
+			return -1;
+		}
 
 		byte[] localBuf = new byte[a2];
+		
 		readVirtualMemory(a1, localBuf);
+		
 		// stdin stdout;
 		if(a0 == 0 || a0 ==1) {
 			return f.write(localBuf, 0, a2);			
