@@ -1,4 +1,4 @@
-------[ Wed Nov 15 16:00:25 2017 ]------
+------[ Wed Nov 15 16:30:33 2017 ]------
 --[ tests write1.c ]--
 stty: standard input: Inappropriate ioctl for device
 stty: standard input: Inappropriate ioctl for device
@@ -183,10 +183,24 @@ validating binary.out...
 ...passed
 closing 2...
 writing to an invalid fd (-10)...
+...passed (r = -1)
+writing to an invalid fd (256)...
+...passed (r = -1)
+writing to an unopened fd (8)...
+...passed (r = -1)
+creating bad.out...
+2
+...passed (fd = 2)
+writing count = 0 bytes...
+...passed
+writing with an invalid buffer (should not crash, only return an error)...
+...failed (r = 10)
 
-java.lang.ArrayIndexOutOfBoundsException: -10
-	at nachos.userprog.UserProcess.handleWrite(UserProcess.java:435)
-	at nachos.userprog.UserProcess.handleSyscall(UserProcess.java:623)
+nachos.machine.AssertionFailureError: ExitGrader: expected exit status of 0, but program actually exited with -6000
+	at nachos.machine.Lib.assertTrue(Lib.java:89)
+	at nachos.ag.UCSDExitGrader.finishingCurrentProcess(UCSDExitGrader.java:26)
+	at nachos.userprog.UserProcess.handleExit(UserProcess.java:373)
+	at nachos.userprog.UserProcess.handleSyscall(UserProcess.java:617)
 	at nachos.userprog.UserProcess.handleException(UserProcess.java:649)
 	at nachos.userprog.UserKernel.exceptionHandler(UserKernel.java:83)
 	at nachos.userprog.UserKernel$1.run(UserKernel.java:29)
