@@ -71,14 +71,14 @@ public class UserProcess {
 	 * @param args the arguments to pass to the executable.
 	 * @return <tt>true</tt> if the program was successfully executed.
 	 */
-	public int execute(String name, String[] args) {
+	public boolean execute(String name, String[] args) {
 		if (!load(name, args))
-			return -1;
+			return false;
 
-		KThread UT = new UThread(this).setName(name);
-		UT.fork();
+		new UThread(this).setName(name).fork();
 
-		return UT.getID();
+
+		return true;
 	}
 
 	/**
@@ -574,7 +574,13 @@ public class UserProcess {
 			args[i] = readVirtualMemoryString(argv+i, 256);
 		}
 		System.out.println("fuck");
-		return execute(path, args);
+		if (!load(path, args))
+			return -1;
+
+		KThread newProcess = new UThread(this).setName(path);
+		newProcess.fork();
+
+		return newProcess.getID();
 	}
 
 	/**
@@ -709,7 +715,8 @@ public class UserProcess {
 
 	private void closeAllFd() {
 		for(OpenFile f : fileTable) {
-			f.close();
+			if(f != null)
+				f.close();
 		}
 	}
 
