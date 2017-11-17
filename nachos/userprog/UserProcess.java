@@ -31,6 +31,11 @@ public class UserProcess {
 			fileWritePos[i] = 0;
 			fileReadPos[i] = 0;
 		}
+		this.pid = UserKernel.nextPid();
+		UserKernel.addProcess(pid, this);
+
+
+
 		fileTable[0] = UserKernel.console.openForReading();
 		fileTable[1] = UserKernel.console.openForWriting();
 		int numPhysPages = Machine.processor().getNumPhysPages();
@@ -51,11 +56,17 @@ public class UserProcess {
 
 		// If Lib.constructObject is used, it quickly runs out
 		// of file descriptors and throws an exception in
-		// createClassLoader.  Hack around it by hard-coding
+		// createClassLoader.  Handleck around it by hard-coding
 		// creating new processes of the appropriate type.
 
+
+
 		if (name.equals ("nachos.userprog.UserProcess")) {
-		    return new UserProcess ();
+		    UserProcess newProcess =  new UserProcess ();
+		    int nPid = newProcess.getPid();
+		    UserKernel.addProcess(nPid, newProcess);
+		    return newProcess;
+
 		} else if (name.equals ("nachos.vm.VMProcess")) {
 		    return new VMProcess ();
 		} else {
@@ -556,7 +567,7 @@ public class UserProcess {
 		}
 	}
 	private int handleExec(int fName, int argc, int argv) {
-		System.out.println("fuck");
+		//System.out.println("fuck");
 		if(argc < 0) {
 			return -1;
 		}
@@ -573,14 +584,38 @@ public class UserProcess {
 		for(int i = 0; i < argc; i++) {
 			args[i] = readVirtualMemoryString(argv+i, 256);
 		}
-		System.out.println("fuck");
-		if (!load(path, args))
+		//System.out.println("fuck");
+		// if (!load(path, args))
+		// 	return -1;
+
+		// KThread newProcess = new UThread(this).setName(path);
+		// newProcess.fork();
+		// System.out.println( newProcess.getID());
+		int cPid = UserKernel.currentProcess().forkAndExec(path, args);
+
+		if(cPid == -1) {
 			return -1;
+		}
 
-		KThread newProcess = new UThread(this).setName(path);
-		newProcess.fork();
+		if(cPid == this.pid) {
+			return pid;
+		}
+		else {
+			return 0;
+		}
+	}
 
-		return newProcess.getID();
+	private static int forkAndExec(String path, String[] args) {
+		UserProcess child = UserProcess.newUserProcess();
+
+		if(!child.execute(path, args)) {
+			UserKernel.remove(child.getPid());
+			child = null;
+			return -1;
+		}
+		else {
+			return child.getPid();
+		}
 	}
 
 	/**
@@ -663,7 +698,7 @@ public class UserProcess {
 		case syscallRead:
 			return handleRead(a0, a1, a2);
 		case syscallExec:
-			System.out.println("syscallExec");
+			//System.out.println("syscallExec");
 			return handleExec(a0, a1, a2);
 		default:
 			Lib.debug(dbgProcess, "Unknown syscall " + syscall);
@@ -744,5 +779,18 @@ public class UserProcess {
 	private int[] fileReadPos = new int[16];
 	private int[] fileWritePos = new int[16];
 	private HashSet<String> fileUnlinkHold = new HashSet<String>();
+
+	private int pid;
+	private ArrayList<Integer> childrens = new ArrayList<Integer>();
+	private int parrentPid = -1;
+
+
+	public int getPid() {
+		return pid;
+	}
+	public int getParentPid() {
+		return parrentPid;
+	}
+
 
 }

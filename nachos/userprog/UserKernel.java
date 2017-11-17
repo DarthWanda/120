@@ -3,7 +3,7 @@ package nachos.userprog;
 import nachos.machine.*;
 import nachos.threads.*;
 import nachos.userprog.*;
-
+import java.util.*;
 /**
  * A kernel that can support multiple user processes.
  */
@@ -113,4 +113,24 @@ public class UserKernel extends ThreadedKernel {
 
 	// dummy variables to make javac smarter
 	private static Coff dummy1 = null;
+	private static HashMap<Integer, UserProcess> processMap = new HashMap<Integer, UserProcess>();
+
+	public static int nextPid() {
+		for(int i = 0;; i++) {
+			if(!processMap.containsKey(i)) {
+				return i;
+			}
+		}
+	}
+
+	public static void addProcess(int pid, UserProcess up) {
+		processMap.put(pid, up);
+	}
+
+	public static void remove(Integer pid) {
+		if(processMap.containsKey(pid))
+			processMap.remove(pid);
+	}
+
+
 }

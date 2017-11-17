@@ -14,7 +14,7 @@ main (int argc, char *argv[])
     int pid;
     printf("%s\n", "ready to exec");
     pid = exec(prog, 0, 0);
-    printf("%s\n", "finish exec");
+    printf("%d\n", d);
     // the exit status of this process is the pid of the child process
     exit (pid);
 }
