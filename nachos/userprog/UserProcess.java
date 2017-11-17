@@ -83,8 +83,9 @@ public class UserProcess {
 	 * @return <tt>true</tt> if the program was successfully executed.
 	 */
 	public boolean execute(String name, String[] args) {
-		if (!load(name, args))
+		if (!load(name, args)){
 			return false;
+		}
 
 		new UThread(this).setName(name).fork();
 
@@ -234,6 +235,7 @@ public class UserProcess {
 
 		OpenFile executable = ThreadedKernel.fileSystem.open(name, false);
 		if (executable == null) {
+			System.out.println("omg fuck your mom");
 			Lib.debug(dbgProcess, "\topen failed");
 			return false;
 		}
@@ -592,7 +594,7 @@ public class UserProcess {
 		// newProcess.fork();
 		// System.out.println( newProcess.getID());
 		int cPid = UserKernel.currentProcess().forkAndExec(path, args);
-
+		System.out.println(cPid);
 		if(cPid == -1) {
 			return -1;
 		}
@@ -609,6 +611,7 @@ public class UserProcess {
 		UserProcess child = UserProcess.newUserProcess();
 
 		if(!child.execute(path, args)) {
+			System.out.println("fuck you" + child.getPid());
 			UserKernel.remove(child.getPid());
 			child = null;
 			return -1;
