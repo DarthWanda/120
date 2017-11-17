@@ -24,6 +24,8 @@ public class UserProcess {
 	 * Allocate a new process.
 	 */
 	public UserProcess() {
+		// UserProcess.cnt++;
+		// System.out.println("created " + cnt + " processes");
 		// initialize stdin stdout fd
 		
 		for(int i = 0; i < fileTable.length; i++) {
@@ -64,6 +66,7 @@ public class UserProcess {
 		if (name.equals ("nachos.userprog.UserProcess")) {
 		    UserProcess newProcess =  new UserProcess ();
 		    int nPid = newProcess.getPid();
+		    
 		    UserKernel.addProcess(nPid, newProcess);
 		    return newProcess;
 
@@ -73,6 +76,32 @@ public class UserProcess {
 		    return (UserProcess) Lib.constructObject(Machine.getProcessClassName());
 		}
 	}
+
+	public static UserProcess newUserProcess(int parentPid) {
+	        String name = Machine.getProcessClassName ();
+
+		// If Lib.constructObject is used, it quickly runs out
+		// of file descriptors and throws an exception in
+		// createClassLoader.  Handleck around it by hard-coding
+		// creating new processes of the appropriate type.
+
+
+
+		if (name.equals ("nachos.userprog.UserProcess")) {
+		    UserProcess newProcess =  new UserProcess ();
+		    System.out.println("Process " + newProcess.getPid() + " created ");
+		    int nPid = newProcess.getPid();
+		    newProcess.setParent(parentPid);
+		    UserKernel.addProcess(nPid, newProcess);
+		    return newProcess;
+
+		} else if (name.equals ("nachos.vm.VMProcess")) {
+		    return new VMProcess ();
+		} else {
+		    return (UserProcess) Lib.constructObject(Machine.getProcessClassName());
+		}
+	}
+
 
 	/**
 	 * Execute the specified program with the specified arguments. Attempts to
@@ -235,7 +264,6 @@ public class UserProcess {
 
 		OpenFile executable = ThreadedKernel.fileSystem.open(name, false);
 		if (executable == null) {
-			System.out.println("omg fuck your mom");
 			Lib.debug(dbgProcess, "\topen failed");
 			return false;
 		}
@@ -380,16 +408,7 @@ public class UserProcess {
 		return 0;
 	}
 
-	/**
-	 * Handle the exit() system call.
-	 */
-	private int handleExit(int status) {
-		Machine.autoGrader().finishingCurrentProcess(status);
-		UserProcess currentProcess = UserKernel.currentProcess();
-		currentProcess.closeAllFd();
-
-		return 0;
-	}
+	
 
 	private static final int syscallHalt = 0, syscallExit = 1, syscallExec = 2,
 			syscallJoin = 3, syscallCreate = 4, syscallOpen = 5,
@@ -586,29 +605,29 @@ public class UserProcess {
 		for(int i = 0; i < argc; i++) {
 			args[i] = readVirtualMemoryString(argv+i, 256);
 		}
-		//System.out.println("fuck");
-		// if (!load(path, args))
-		// 	return -1;
-
-		// KThread newProcess = new UThread(this).setName(path);
-		// newProcess.fork();
-		// System.out.println( newProcess.getID());
+		
 		int cPid = UserKernel.currentProcess().forkAndExec(path, args);
-		System.out.println(cPid);
+		
+
 		if(cPid == -1) {
 			return -1;
 		}
+		return cPid;
+	}
+	/**
+	 * Handle the exit() system call.
+	 */
+	private int handleExit(int status) {
 
-		if(cPid == this.pid) {
-			return pid;
-		}
-		else {
-			return 0;
-		}
+		System.out.println(parrentPid + " pid " + pid + "  status: " + status);
+		UserProcess currentProcess = UserKernel.currentProcess();
+		currentProcess.closeAllFd();
+		Machine.autoGrader().finishingCurrentProcess(status);
+		return 0;
 	}
 
 	private static int forkAndExec(String path, String[] args) {
-		UserProcess child = UserProcess.newUserProcess();
+		UserProcess child = UserProcess.newUserProcess(UserKernel.currentProcess().getPid());
 
 		if(!child.execute(path, args)) {
 			System.out.println("fuck you" + child.getPid());
@@ -783,7 +802,7 @@ public class UserProcess {
 	private int[] fileWritePos = new int[16];
 	private HashSet<String> fileUnlinkHold = new HashSet<String>();
 
-	private int pid;
+	private final int pid;
 	private ArrayList<Integer> childrens = new ArrayList<Integer>();
 	private int parrentPid = -1;
 
@@ -794,6 +813,10 @@ public class UserProcess {
 	public int getParentPid() {
 		return parrentPid;
 	}
+	public void setParent(int parrentPid) {
+		this.parrentPid = parrentPid;
+	}
 
+	private static int cnt = 0;
 
 }

@@ -13,6 +13,7 @@ public class UserKernel extends ThreadedKernel {
 	 */
 	public UserKernel() {
 		super();
+
 	}
 
 	/**
@@ -21,7 +22,7 @@ public class UserKernel extends ThreadedKernel {
 	 */
 	public void initialize(String[] args) {
 		super.initialize(args);
-
+		mapLock = new Semaphore(1);
 		console = new SynchConsole(Machine.console());
 
 		Machine.processor().setExceptionHandler(new Runnable() {
@@ -116,21 +117,36 @@ public class UserKernel extends ThreadedKernel {
 	private static HashMap<Integer, UserProcess> processMap = new HashMap<Integer, UserProcess>();
 
 	public static int nextPid() {
+		if(mapLock == null) {
+			System.out.println("wtf");
+		}
 		for(int i = 0;; i++) {
+
+			mapLock.P();
 			if(!processMap.containsKey(i)) {
+				processMap.put(i, null);
+				mapLock.V();
 				return i;
 			}
+			mapLock.V();
 		}
 	}
 
 	public static void addProcess(int pid, UserProcess up) {
+		mapLock.P();
 		processMap.put(pid, up);
+		mapLock.V();
 	}
 
 	public static void remove(Integer pid) {
+		//System.out.println(lock);
+
+		mapLock.P();
 		if(processMap.containsKey(pid))
 			processMap.remove(pid);
+		mapLock.V();
 	}
 
+	public static Semaphore mapLock;
 
 }
