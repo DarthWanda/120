@@ -9,6 +9,7 @@
 int
 main (int argc, char *argv[])
 {
+    printf("begin exit1.c test ");
     exit (123);
     printf("never reach here");
 }
