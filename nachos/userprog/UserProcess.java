@@ -41,9 +41,8 @@ public class UserProcess {
 		fileTable[0] = UserKernel.console.openForReading();
 		fileTable[1] = UserKernel.console.openForWriting();
 		int numPhysPages = Machine.processor().getNumPhysPages();
-		pageTable = new TranslationEntry[numPhysPages];
-		for (int i = 0; i < numPhysPages; i++)
-			pageTable[i] = new TranslationEntry(i, i, true, false, false, false);
+		
+		
 	}
 
 	/**
@@ -171,11 +170,22 @@ public class UserProcess {
 		// for now, just assume that virtual addresses equal physical addresses
 		if (vaddr < 0 || vaddr >= memory.length)
 			return 0;
+		int remain = length;
+		while(remain > 0) {
+			int vpn = vaddr / Processor.pageSize;
+			int ptr = vaddr - (vaddr / Processor.pageSize) * Processor.pageSize;
+			int ppn = pageTable[vpn].ppn;
+			for(int i = 0; i + ptr < Processor.pageSize && remain > 0; i++) {
+				data[i] = memory[ppn*Processor.pageSize + i + ptr];
+				remain--;
+				vaddr++;
+			}
+		}
 
-		int amount = Math.min(length, memory.length - vaddr);
-		System.arraycopy(memory, vaddr, data, offset, amount);
 
-		return amount;
+		// int amount = Math.min(length, memory.length - vaddr);
+		// System.arraycopy(memory, vaddr, data, offset, amount);
+		return length - remain;
 	}
 
 	/**
@@ -259,7 +269,7 @@ public class UserProcess {
 			}
 			numPages += section.getLength();
 		}
-
+			
 		// make sure the argv array will fit in one page
 		byte[][] argv = new byte[args.length][];
 		int argsSize = 0;
@@ -303,7 +313,7 @@ public class UserProcess {
 			Lib.assertTrue(writeVirtualMemory(stringOffset, new byte[] { 0 }) == 1);
 			stringOffset += 1;
 		}
-
+		
 		return true;
 	}
 
@@ -321,7 +331,12 @@ public class UserProcess {
 			return false;
 		}
 
-		// load sections
+		/*
+			initialize pageTable.
+		*/
+		pageTable = new TranslationEntry[numPages];
+		int numSec = 0;
+		//System.out.println(numPages);
 		for (int s = 0; s < coff.getNumSections(); s++) {
 			CoffSection section = coff.getSection(s);
 
@@ -329,13 +344,19 @@ public class UserProcess {
 					+ " section (" + section.getLength() + " pages)");
 
 			for (int i = 0; i < section.getLength(); i++) {
+				numSec++;
 				int vpn = section.getFirstVPN() + i;
-
+				pageTable[vpn] = new TranslationEntry(vpn, UserKernel.getNextPage(), true, section.isReadOnly(), false, false);
 				// for now, just assume virtual addresses=physical addresses
-				section.loadPage(i, vpn);
+				TranslationEntry Trans = pageTable[vpn];
+				int ppn = Trans.ppn;
+				section.loadPage(i, ppn);
 			}
 		}
-
+		System.out.println(numSec);
+		for(int i = 0; i + numSec < numPages; i++) {
+			pageTable[i + numSec] = new TranslationEntry(i + numSec, UserKernel.getNextPage(), true, false, false, false);
+		}
 		return true;
 	}
 
@@ -699,7 +720,7 @@ public class UserProcess {
 	 */
 	public void handleException(int cause) {
 		Processor processor = Machine.processor();
-
+		//System.out.println(cause);
 		switch (cause) {
 		case Processor.exceptionSyscall:
 			int result = handleSyscall(processor.readRegister(Processor.regV0),

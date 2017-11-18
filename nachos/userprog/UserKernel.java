@@ -24,6 +24,13 @@ public class UserKernel extends ThreadedKernel {
 		super.initialize(args);
 		mapLock = new Semaphore(1);
 		console = new SynchConsole(Machine.console());
+		int numPhysPages = Machine.processor().getNumPhysPages();
+
+		//initialize pageList
+		for(int i = 0; i < numPhysPages; i++) {
+			pageList.add(i);
+		}
+
 
 		Machine.processor().setExceptionHandler(new Runnable() {
 			public void run() {
@@ -81,6 +88,7 @@ public class UserKernel extends ThreadedKernel {
 
 		UserProcess process = ((UThread) KThread.currentThread()).process;
 		int cause = Machine.processor().readRegister(Processor.regCause);
+		
 		process.handleException(cause);
 	}
 
@@ -150,5 +158,25 @@ public class UserKernel extends ThreadedKernel {
 	}
 
 	public static Semaphore mapLock;
+
+	/*
+	 *************************************************************************
+		virtual memory support!!
+	*/
+
+	public static LinkedList<Integer> pageList = new LinkedList<Integer>();
+
+	public static int getNextPage() {
+		return pageList.removeLast();
+	}
+
+	public static void addFreePage(int pageNum) {
+		pageList.add(pageNum);
+	}
+
+
+
+
+
 
 }
