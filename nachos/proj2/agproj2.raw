@@ -1,4 +1,4 @@
-------[ Fri Nov 17 11:00:21 2017 ]------
+------[ Fri Nov 17 20:30:19 2017 ]------
 --[ tests write1.c ]--
 stty: standard input: Inappropriate ioctl for device
 stty: standard input: Inappropriate ioctl for device
@@ -9,7 +9,6 @@ violets are blue
 I love Nachos
 and so do you
 
--1 pid 0  status: 0
 
 success
 stty: standard input: Inappropriate ioctl for device
@@ -201,7 +200,6 @@ writing with an invalid count (should not crash, only return an error)...
 writing with a buffer that extends beyond the end of the
 address space.  write should return an error.
 ...passed (r = -1)
--1 pid 0  status: 0
 
 success
 stty: standard input: Inappropriate ioctl for device
@@ -209,7 +207,6 @@ stty: standard input: Inappropriate ioctl for device
 stty: standard input: Inappropriate ioctl for device
 stty: standard input: Inappropriate ioctl for device
 nachos 5.0j initializing... config interrupt timer processor console user-check grader
--1 pid 0  status: 123
 
 success
 stty: standard input: Inappropriate ioctl for device
@@ -217,16 +214,14 @@ stty: standard input: Inappropriate ioctl for device
 stty: standard input: Inappropriate ioctl for device
 stty: standard input: Inappropriate ioctl for device
 nachos 5.0j initializing... config interrupt timer processor console user-check grader
-Process 1 created 
--1 pid 0  status: 123
 
 nachos.machine.AssertionFailureError: ParentChildGrader: expected parent status of 0, but parent actually exited with 123
 	at nachos.machine.Lib.assertTrue(Lib.java:89)
 	at nachos.ag.UCSDParentChildGrader.exitCalled(UCSDParentChildGrader.java:59)
 	at nachos.ag.UCSDParentChildGrader.finishingCurrentProcess(UCSDParentChildGrader.java:49)
-	at nachos.userprog.UserProcess.handleExit(UserProcess.java:625)
-	at nachos.userprog.UserProcess.handleSyscall(UserProcess.java:709)
-	at nachos.userprog.UserProcess.handleException(UserProcess.java:744)
+	at nachos.userprog.UserProcess.handleExit(UserProcess.java:599)
+	at nachos.userprog.UserProcess.handleSyscall(UserProcess.java:671)
+	at nachos.userprog.UserProcess.handleException(UserProcess.java:705)
 	at nachos.userprog.UserKernel.exceptionHandler(UserKernel.java:84)
 	at nachos.userprog.UserKernel$1.run(UserKernel.java:30)
 	at nachos.machine.Processor$MipsException.handle(Processor.java:619)
@@ -247,13 +242,12 @@ stty: standard input: Inappropriate ioctl for device
 stty: standard input: Inappropriate ioctl for device
 nachos 5.0j initializing... config interrupt timer processor console user-check grader
 execing exit1.coff...
-Process 1 created 
 Warning: encountered unimplemented inst
 
 nachos.machine.AssertionFailureError: Unexpected exception
 	at nachos.machine.Lib.assertTrue(Lib.java:89)
 	at nachos.machine.Lib.assertNotReached(Lib.java:106)
-	at nachos.userprog.UserProcess.handleException(UserProcess.java:757)
+	at nachos.userprog.UserProcess.handleException(UserProcess.java:718)
 	at nachos.userprog.UserKernel.exceptionHandler(UserKernel.java:84)
 	at nachos.userprog.UserKernel$1.run(UserKernel.java:30)
 	at nachos.machine.Processor$MipsException.handle(Processor.java:619)
