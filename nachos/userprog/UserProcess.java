@@ -580,6 +580,7 @@ public class UserProcess {
 		UserProcess newProcess = UserProcess.newUserProcess();
 		newProcess.setParent(UserKernel.currentProcess().getPid());
 		int cPid = newProcess.getPid();
+		addChild(cPid);
 		if(!newProcess.execute(path, args)) {
 			//System.out.println("omg");
 			return -1;
