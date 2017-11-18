@@ -117,11 +117,7 @@ public class UserKernel extends ThreadedKernel {
 	private static HashMap<Integer, UserProcess> processMap = new HashMap<Integer, UserProcess>();
 
 	public static int nextPid() {
-		if(mapLock == null) {
-			System.out.println("wtf");
-		}
-		for(int i = 0;; i++) {
-
+		for(int i = 0;; i++) {	
 			mapLock.P();
 			if(!processMap.containsKey(i)) {
 				processMap.put(i, null);
@@ -131,8 +127,14 @@ public class UserKernel extends ThreadedKernel {
 			mapLock.V();
 		}
 	}
+	public static UserProcess getProcessByPid(int pid) {
+		mapLock.P();
+		UserProcess process = processMap.get(pid);
+		mapLock.V();
+		return process;
+	}
 
-	public static void addProcess(int pid, UserProcess up) {
+	public static void addProcess(int pid,UserProcess up) {
 		mapLock.P();
 		processMap.put(pid, up);
 		mapLock.V();

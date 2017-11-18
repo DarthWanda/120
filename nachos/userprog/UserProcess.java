@@ -34,8 +34,8 @@ public class UserProcess {
 			fileReadPos[i] = 0;
 		}
 		this.pid = UserKernel.nextPid();
-		UserKernel.addProcess(pid, this);
-
+		UserKernel.addProcess(this.pid, this);
+		//System.out.println("created process " + this.pid);
 
 
 		fileTable[0] = UserKernel.console.openForReading();
@@ -64,10 +64,7 @@ public class UserProcess {
 
 
 		if (name.equals ("nachos.userprog.UserProcess")) {
-		    UserProcess newProcess =  new UserProcess ();
-		    int nPid = newProcess.getPid();
-		    
-		    UserKernel.addProcess(nPid, newProcess);
+		    UserProcess newProcess =  new UserProcess ();   
 		    return newProcess;
 
 		} else if (name.equals ("nachos.vm.VMProcess")) {
@@ -76,32 +73,6 @@ public class UserProcess {
 		    return (UserProcess) Lib.constructObject(Machine.getProcessClassName());
 		}
 	}
-
-	public static UserProcess newUserProcess(int parentPid) {
-	        String name = Machine.getProcessClassName ();
-
-		// If Lib.constructObject is used, it quickly runs out
-		// of file descriptors and throws an exception in
-		// createClassLoader.  Handleck around it by hard-coding
-		// creating new processes of the appropriate type.
-
-
-
-		if (name.equals ("nachos.userprog.UserProcess")) {
-		    UserProcess newProcess =  new UserProcess ();
-		    System.out.println("Process " + newProcess.getPid() + " created ");
-		    int nPid = newProcess.getPid();
-		    newProcess.setParent(parentPid);
-		    UserKernel.addProcess(nPid, newProcess);
-		    return newProcess;
-
-		} else if (name.equals ("nachos.vm.VMProcess")) {
-		    return new VMProcess ();
-		} else {
-		    return (UserProcess) Lib.constructObject(Machine.getProcessClassName());
-		}
-	}
-
 
 	/**
 	 * Execute the specified program with the specified arguments. Attempts to
@@ -606,12 +577,14 @@ public class UserProcess {
 			args[i] = readVirtualMemoryString(argv+i, 256);
 		}
 		
-		int cPid = UserKernel.currentProcess().forkAndExec(path, args);
-		
-
-		if(cPid == -1) {
+		UserProcess newProcess = UserProcess.newUserProcess();
+		newProcess.setParent(UserKernel.currentProcess().getPid());
+		int cPid = newProcess.getPid();
+		if(!newProcess.execute(path, args)) {
+			//System.out.println("omg");
 			return -1;
 		}
+
 		return cPid;
 	}
 	/**
@@ -619,26 +592,14 @@ public class UserProcess {
 	 */
 	private int handleExit(int status) {
 
-		System.out.println(parrentPid + " pid " + pid + "  status: " + status);
+		
 		UserProcess currentProcess = UserKernel.currentProcess();
 		currentProcess.closeAllFd();
 		Machine.autoGrader().finishingCurrentProcess(status);
 		return 0;
 	}
 
-	private static int forkAndExec(String path, String[] args) {
-		UserProcess child = UserProcess.newUserProcess(UserKernel.currentProcess().getPid());
-
-		if(!child.execute(path, args)) {
-			System.out.println("fuck you" + child.getPid());
-			UserKernel.remove(child.getPid());
-			child = null;
-			return -1;
-		}
-		else {
-			return child.getPid();
-		}
-	}
+	
 
 	/**
 	 * Handle a syscall exception. Called by <tt>handleException()</tt>. The
@@ -720,7 +681,6 @@ public class UserProcess {
 		case syscallRead:
 			return handleRead(a0, a1, a2);
 		case syscallExec:
-			//System.out.println("syscallExec");
 			return handleExec(a0, a1, a2);
 		default:
 			Lib.debug(dbgProcess, "Unknown syscall " + syscall);
@@ -810,11 +770,17 @@ public class UserProcess {
 	public int getPid() {
 		return pid;
 	}
+
 	public int getParentPid() {
 		return parrentPid;
 	}
+
 	public void setParent(int parrentPid) {
 		this.parrentPid = parrentPid;
+	}
+
+	public void addChild(int pid) {
+		childrens.add(pid);
 	}
 
 	private static int cnt = 0;
