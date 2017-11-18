@@ -10,4 +10,5 @@ int
 main (int argc, char *argv[])
 {
     exit (123);
+    printf("never reach here");
 }
