@@ -6,7 +6,7 @@ import nachos.userprog.*;
 import nachos.vm.*;
 
 import java.io.EOFException;
-
+import java.util.*;
 /**
  * Encapsulates the state of a user process that is not contained in its user
  * thread (or threads). This includes its address translation state, a file
@@ -24,10 +24,25 @@ public class UserProcess {
 	 * Allocate a new process.
 	 */
 	public UserProcess() {
+		// UserProcess.cnt++;
+		// System.out.println("created " + cnt + " processes");
+		// initialize stdin stdout fd
+		
+		for(int i = 0; i < fileTable.length; i++) {
+			fileTable[i] = null;
+			fileWritePos[i] = 0;
+			fileReadPos[i] = 0;
+		}
+		this.pid = UserKernel.nextPid();
+		UserKernel.addProcess(this.pid, this);
+		//System.out.println("created process " + this.pid);
+
+
+		fileTable[0] = UserKernel.console.openForReading();
+		fileTable[1] = UserKernel.console.openForWriting();
 		int numPhysPages = Machine.processor().getNumPhysPages();
-		pageTable = new TranslationEntry[numPhysPages];
-		for (int i = 0; i < numPhysPages; i++)
-			pageTable[i] = new TranslationEntry(i, i, true, false, false, false);
+		
+		
 	}
 
 	/**
@@ -42,11 +57,15 @@ public class UserProcess {
 
 		// If Lib.constructObject is used, it quickly runs out
 		// of file descriptors and throws an exception in
-		// createClassLoader.  Hack around it by hard-coding
+		// createClassLoader.  Handleck around it by hard-coding
 		// creating new processes of the appropriate type.
 
+
+
 		if (name.equals ("nachos.userprog.UserProcess")) {
-		    return new UserProcess ();
+		    UserProcess newProcess =  new UserProcess ();   
+		    return newProcess;
+
 		} else if (name.equals ("nachos.vm.VMProcess")) {
 		    return new VMProcess ();
 		} else {
@@ -63,10 +82,12 @@ public class UserProcess {
 	 * @return <tt>true</tt> if the program was successfully executed.
 	 */
 	public boolean execute(String name, String[] args) {
-		if (!load(name, args))
+		if (!load(name, args)){
 			return false;
+		}
 
 		new UThread(this).setName(name).fork();
+
 
 		return true;
 	}
@@ -149,11 +170,22 @@ public class UserProcess {
 		// for now, just assume that virtual addresses equal physical addresses
 		if (vaddr < 0 || vaddr >= memory.length)
 			return 0;
+		int remain = length;
+		while(remain > 0) {
+			int vpn = vaddr / Processor.pageSize;
+			int ptr = vaddr - (vaddr / Processor.pageSize) * Processor.pageSize;
+			int ppn = pageTable[vpn].ppn;
+			for(int i = 0; i + ptr < Processor.pageSize && remain > 0; i++) {
+				data[i] = memory[ppn*Processor.pageSize + i + ptr];
+				remain--;
+				vaddr++;
+			}
+		}
 
-		int amount = Math.min(length, memory.length - vaddr);
-		System.arraycopy(memory, vaddr, data, offset, amount);
 
-		return amount;
+		// int amount = Math.min(length, memory.length - vaddr);
+		// System.arraycopy(memory, vaddr, data, offset, amount);
+		return length - remain;
 	}
 
 	/**
@@ -237,7 +269,7 @@ public class UserProcess {
 			}
 			numPages += section.getLength();
 		}
-
+			
 		// make sure the argv array will fit in one page
 		byte[][] argv = new byte[args.length][];
 		int argsSize = 0;
@@ -281,7 +313,7 @@ public class UserProcess {
 			Lib.assertTrue(writeVirtualMemory(stringOffset, new byte[] { 0 }) == 1);
 			stringOffset += 1;
 		}
-
+		
 		return true;
 	}
 
@@ -299,7 +331,12 @@ public class UserProcess {
 			return false;
 		}
 
-		// load sections
+		/*
+			initialize pageTable.
+		*/
+		pageTable = new TranslationEntry[numPages];
+		int numSec = 0;
+		//System.out.println(numPages);
 		for (int s = 0; s < coff.getNumSections(); s++) {
 			CoffSection section = coff.getSection(s);
 
@@ -307,13 +344,19 @@ public class UserProcess {
 					+ " section (" + section.getLength() + " pages)");
 
 			for (int i = 0; i < section.getLength(); i++) {
+				numSec++;
 				int vpn = section.getFirstVPN() + i;
-
+				pageTable[vpn] = new TranslationEntry(vpn, UserKernel.getNextPage(), true, section.isReadOnly(), false, false);
 				// for now, just assume virtual addresses=physical addresses
-				section.loadPage(i, vpn);
+				TranslationEntry Trans = pageTable[vpn];
+				int ppn = Trans.ppn;
+				section.loadPage(i, ppn);
 			}
 		}
-
+		System.out.println(numSec);
+		for(int i = 0; i + numSec < numPages; i++) {
+			pageTable[i + numSec] = new TranslationEntry(i + numSec, UserKernel.getNextPage(), true, false, false, false);
+		}
 		return true;
 	}
 
@@ -357,19 +400,228 @@ public class UserProcess {
 		return 0;
 	}
 
-	/**
-	 * Handle the exit() system call.
-	 */
-	private int handleExit(int status) {
-		Machine.autoGrader().finishingCurrentProcess(status);
-
-		return 0;
-	}
+	
 
 	private static final int syscallHalt = 0, syscallExit = 1, syscallExec = 2,
 			syscallJoin = 3, syscallCreate = 4, syscallOpen = 5,
 			syscallRead = 6, syscallWrite = 7, syscallClose = 8,
 			syscallUnlink = 9;
+
+	/*
+		Handle the open() system call
+	*/
+	private int handleOpen(int a0) {
+
+		int nextPos = nextAvailable();
+		if (nextPos == -1) {
+			return -1;
+		}
+		//if invalid string
+		String path = readVirtualMemoryString(a0, 256);
+		if(path == null) {
+			return -1;
+		}
+		if(fileUnlinkHold.contains(path)) {
+			return -1;
+		}
+		//if open fail
+		OpenFile fd = ThreadedKernel.fileSystem.open(path, false);
+		if(fd == null) {
+			return -1;
+		}
+
+		// add to fileTable
+		fileTable[nextPos] = fd;
+		System.out.println(nextPos);
+		return nextPos;
+	}
+
+	/*
+		Handle the close() system call
+	*/
+	private int handleClose(int a0) {
+		if(a0 >= 16 || a0 < 0) {
+			return -1;
+		}
+		OpenFile f = fileTable[a0];
+		if(f == null) {
+			return -1;
+		}
+
+		f.close();
+		fileTable[a0] = null;
+		return 0;
+	}
+	/*
+		Handle the write() system call
+	*/
+	private int handleWrite(int a0, int a1, int a2) {
+		if(a0 >= 16 || a0 < 0 || a2 < 0) {
+			return -1;
+		}
+		OpenFile f = fileTable[a0];
+		if(f == null) {
+			return -1;
+		}
+		int memoryLength = Machine.processor().getMemory().length;
+		if (a1 + a2 >= memoryLength) {
+			//System.out.println("invalid buffer:");
+			return -1;
+		}
+
+		byte[] localBuf = new byte[a2];
+		
+		readVirtualMemory(a1, localBuf);
+		
+		// stdin stdout;
+		if(a0 == 0 || a0 ==1) {
+			return f.write(localBuf, 0, a2);			
+		}
+		else {
+			int pos = fileWritePos[a0];
+			//write(int pos, byte[] buf, int offset, int length)
+			int flag = f.write(pos, localBuf, 0, localBuf.length);
+			if(flag == -1) {
+				return flag;
+			}
+			else {
+				fileWritePos[a0] += flag;
+				return flag;
+			}
+		}
+	}
+	/*
+		Handle the create() system call
+	*/
+	private int handleCreat(int a0) {
+		
+		
+		int nextPos = nextAvailable();
+		if(nextPos == -1) {
+			return -1;
+		}
+		String path = readVirtualMemoryString(a0, 256);
+		if(path == null) {
+			return -1;
+		}
+		if(fileUnlinkHold.contains(path)) {
+			return -1;
+		}
+		OpenFile fd = ThreadedKernel.fileSystem.open(path, false);
+		if(fd == null) {
+			fd = ThreadedKernel.fileSystem.open(path, true);
+			if(fd == null) {
+				return -1;
+			}
+		}
+		// add to fileTable
+		fileTable[nextPos] = fd;
+		System.out.println(nextPos);
+		return nextPos;
+	}
+
+	private int handleUnlink(int a0) {
+		String path = readVirtualMemoryString(a0, 256);
+		if(path == null) {
+			return -1;
+		}
+		fileUnlinkHold.add(path);
+		boolean status = ThreadedKernel.fileSystem.remove(path);
+		fileUnlinkHold.remove(path);
+		return status == true ? 0 : -1;
+	}
+
+	private int handleRead(int fd, int buffer, int count) {
+		if(fd >= 16 || fd < 0) {
+			return -1;
+		}
+		OpenFile f = fileTable[fd];
+		if(f == null) {
+			return -1;
+		}
+
+		
+		byte[] localBuf = new byte[count];
+		// char c;
+		// SynchConsole console = new SynchConsole(Machine.console());
+		// do {
+		// 	c = (char) console.readByte(true);
+		// 	console.writeByte(c);
+		// } while (c != 'q');
+
+		// System.out.println("");
+
+		// f.read(localBuf, 0, 1000);
+
+		if(fd == 0 || fd ==1) {
+			int nBytes;
+			int pos = 0;
+			do {
+				nBytes = f.read(localBuf, pos, count);
+				count -= nBytes;
+				pos += nBytes;
+			}while(count>0 && nBytes != -1);
+
+			writeVirtualMemory(buffer, localBuf);
+			return pos;
+		}
+		else {
+			int pos = fileReadPos[fd];
+			//write(int pos, byte[] buf, int offset, int length)
+			int flag = f.read(pos, localBuf, 0, localBuf.length);
+			if(flag == -1) {
+				return flag;
+			}
+			else {
+				writeVirtualMemory(buffer, localBuf);
+				fileReadPos[fd] += flag;
+				return flag;
+			}
+		}
+	}
+	private int handleExec(int fName, int argc, int argv) {
+		//System.out.println("fuck");
+		if(argc < 0) {
+			return -1;
+		}
+		String path = readVirtualMemoryString(fName, 256);
+		if(path == null) {
+			return -1;
+		}
+		int len = path.length();
+		String lastFive = path.substring(len-5);
+		if(!lastFive.equals(".coff")) {
+			return -1;
+		}
+		String[] args = new String[argc];
+		for(int i = 0; i < argc; i++) {
+			args[i] = readVirtualMemoryString(argv+i, 256);
+		}
+		
+		UserProcess newProcess = UserProcess.newUserProcess();
+		newProcess.setParent(UserKernel.currentProcess().getPid());
+		int cPid = newProcess.getPid();
+		addChild(cPid);
+		if(!newProcess.execute(path, args)) {
+			//System.out.println("omg");
+			return -1;
+		}
+
+		return cPid;
+	}
+	/**
+	 * Handle the exit() system call.
+	 */
+	private int handleExit(int status) {
+
+		
+		UserProcess currentProcess = UserKernel.currentProcess();
+		currentProcess.closeAllFd();
+		Machine.autoGrader().finishingCurrentProcess(status);
+		return 0;
+	}
+
+	
 
 	/**
 	 * Handle a syscall exception. Called by <tt>handleException()</tt>. The
@@ -438,7 +690,20 @@ public class UserProcess {
 			return handleHalt();
 		case syscallExit:
 			return handleExit(a0);
-
+		case syscallOpen:
+			return handleOpen(a0);
+		case syscallClose:
+			return handleClose(a0);
+		case syscallWrite:
+			return handleWrite(a0, a1, a2);
+		case syscallCreate:
+			return handleCreat(a0);
+		case syscallUnlink:
+			return handleUnlink(a0);
+		case syscallRead:
+			return handleRead(a0, a1, a2);
+		case syscallExec:
+			return handleExec(a0, a1, a2);
 		default:
 			Lib.debug(dbgProcess, "Unknown syscall " + syscall);
 			Lib.assertNotReached("Unknown system call!");
@@ -455,7 +720,7 @@ public class UserProcess {
 	 */
 	public void handleException(int cause) {
 		Processor processor = Machine.processor();
-
+		//System.out.println(cause);
 		switch (cause) {
 		case Processor.exceptionSyscall:
 			int result = handleSyscall(processor.readRegister(Processor.regV0),
@@ -465,12 +730,32 @@ public class UserProcess {
 					processor.readRegister(Processor.regA3));
 			processor.writeRegister(Processor.regV0, result);
 			processor.advancePC();
+
 			break;
 
 		default:
 			Lib.debug(dbgProcess, "Unexpected exception: "
 					+ Processor.exceptionNames[cause]);
 			Lib.assertNotReached("Unexpected exception");
+		}
+	}
+
+	/*
+		get next available filetable, return -1 if it is full
+	*/
+	private int nextAvailable() {
+		for(int i = 0; i < fileTable.length; i++) {
+			if(fileTable[i] == null) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	private void closeAllFd() {
+		for(OpenFile f : fileTable) {
+			if(f != null)
+				f.close();
 		}
 	}
 
@@ -493,4 +778,33 @@ public class UserProcess {
 	private static final int pageSize = Processor.pageSize;
 
 	private static final char dbgProcess = 'a';
+
+	private OpenFile[] fileTable = new OpenFile[16];
+	private int[] fileReadPos = new int[16];
+	private int[] fileWritePos = new int[16];
+	private HashSet<String> fileUnlinkHold = new HashSet<String>();
+
+	private final int pid;
+	private ArrayList<Integer> childrens = new ArrayList<Integer>();
+	private int parrentPid = -1;
+
+
+	public int getPid() {
+		return pid;
+	}
+
+	public int getParentPid() {
+		return parrentPid;
+	}
+
+	public void setParent(int parrentPid) {
+		this.parrentPid = parrentPid;
+	}
+
+	public void addChild(int pid) {
+		childrens.add(pid);
+	}
+
+	private static int cnt = 0;
+
 }

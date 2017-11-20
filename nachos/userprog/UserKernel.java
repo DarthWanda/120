@@ -3,7 +3,7 @@ package nachos.userprog;
 import nachos.machine.*;
 import nachos.threads.*;
 import nachos.userprog.*;
-
+import java.util.*;
 /**
  * A kernel that can support multiple user processes.
  */
@@ -13,6 +13,7 @@ public class UserKernel extends ThreadedKernel {
 	 */
 	public UserKernel() {
 		super();
+
 	}
 
 	/**
@@ -21,8 +22,15 @@ public class UserKernel extends ThreadedKernel {
 	 */
 	public void initialize(String[] args) {
 		super.initialize(args);
-
+		mapLock = new Semaphore(1);
 		console = new SynchConsole(Machine.console());
+		int numPhysPages = Machine.processor().getNumPhysPages();
+
+		//initialize pageList
+		for(int i = 0; i < numPhysPages; i++) {
+			pageList.add(i);
+		}
+
 
 		Machine.processor().setExceptionHandler(new Runnable() {
 			public void run() {
@@ -35,19 +43,19 @@ public class UserKernel extends ThreadedKernel {
 	 * Test the console device.
 	 */
 	public void selfTest() {
-		super.selfTest();
+		// super.selfTest();
 
-		System.out.println("Testing the console device. Typed characters");
-		System.out.println("will be echoed until q is typed.");
+		// System.out.println("Testing the console device. Typed characters");
+		// System.out.println("will be echoed until q is typed.");
 
-		char c;
+		// char c;
 
-		do {
-			c = (char) console.readByte(true);
-			console.writeByte(c);
-		} while (c != 'q');
+		// do {
+		// 	c = (char) console.readByte(true);
+		// 	console.writeByte(c);
+		// } while (c != 'q');
 
-		System.out.println("");
+		// System.out.println("");
 	}
 
 	/**
@@ -80,6 +88,7 @@ public class UserKernel extends ThreadedKernel {
 
 		UserProcess process = ((UThread) KThread.currentThread()).process;
 		int cause = Machine.processor().readRegister(Processor.regCause);
+		
 		process.handleException(cause);
 	}
 
@@ -113,4 +122,61 @@ public class UserKernel extends ThreadedKernel {
 
 	// dummy variables to make javac smarter
 	private static Coff dummy1 = null;
+	private static HashMap<Integer, UserProcess> processMap = new HashMap<Integer, UserProcess>();
+
+	public static int nextPid() {
+		for(int i = 0;; i++) {	
+			mapLock.P();
+			if(!processMap.containsKey(i)) {
+				processMap.put(i, null);
+				mapLock.V();
+				return i;
+			}
+			mapLock.V();
+		}
+	}
+	public static UserProcess getProcessByPid(int pid) {
+		mapLock.P();
+		UserProcess process = processMap.get(pid);
+		mapLock.V();
+		return process;
+	}
+
+	public static void addProcess(int pid,UserProcess up) {
+		mapLock.P();
+		processMap.put(pid, up);
+		mapLock.V();
+	}
+
+	public static void remove(Integer pid) {
+		//System.out.println(lock);
+
+		mapLock.P();
+		if(processMap.containsKey(pid))
+			processMap.remove(pid);
+		mapLock.V();
+	}
+
+	public static Semaphore mapLock;
+
+	/*
+	 *************************************************************************
+		virtual memory support!!
+	*/
+
+	public static LinkedList<Integer> pageList = new LinkedList<Integer>();
+
+	public static int getNextPage() {
+		return pageList.removeLast();
+	}
+
+	public static void addFreePage(int pageNum) {
+		pageList.add(pageNum);
+	}
+
+
+
+
+
+
 }
