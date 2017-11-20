@@ -25,6 +25,9 @@ public class UserKernel extends ThreadedKernel {
 		mapLock = new Semaphore(1);
 		console = new SynchConsole(Machine.console());
 		int numPhysPages = Machine.processor().getNumPhysPages();
+                
+                pLock = new Lock();
+                memLock = new Lock();
 
 		//initialize pageList
 		for(int i = 0; i < numPhysPages; i++) {
@@ -176,7 +179,7 @@ public class UserKernel extends ThreadedKernel {
 
 
 
-
-
+  public static Lock memLock;
+  public static Lock pLock;
 
 }

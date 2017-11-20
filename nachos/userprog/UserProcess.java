@@ -364,7 +364,10 @@ public class UserProcess {
 	 * Release any resources allocated by <tt>loadSections()</tt>.
 	 */
 	protected void unloadSections() {
-	}
+          for (int i=0; i < pageTabble.length; i++)
+            UserKernel.freePages(new Integer(pageTable[i].ppn));
+        
+        }
 
 	/**
 	 * Initialize the processor's registers in preparation for running the
@@ -614,7 +617,6 @@ public class UserProcess {
 	 */
 	private int handleExit(int status) {
 
-		
 		UserProcess currentProcess = UserKernel.currentProcess();
 		currentProcess.closeAllFd();
 		Machine.autoGrader().finishingCurrentProcess(status);
