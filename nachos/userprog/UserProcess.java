@@ -42,6 +42,12 @@ public class UserProcess {
 		fileTable[1] = UserKernel.console.openForWriting();
 		int numPhysPages = Machine.processor().getNumPhysPages();
 		
+////		//initialize pageTable, vpn = ppn
+//		pageTable = new TranslationEntry[numPhysPages];
+//		//set virtual address = physical address
+//		for (int i = 0; i < numPhysPages; i++)
+//			pageTable[i] = new TranslationEntry(i, i, true, false, false, false);
+//		
 		
 	}
 
@@ -170,6 +176,8 @@ public class UserProcess {
 		// for now, just assume that virtual addresses equal physical addresses
 		if (vaddr < 0 || vaddr >= memory.length)
 			return 0;
+		
+		//added
 		int remain = length;
 		while(remain > 0) {
 			int vpn = vaddr / Processor.pageSize;
@@ -182,6 +190,7 @@ public class UserProcess {
 			}
 		}
 
+		
 
 		// int amount = Math.min(length, memory.length - vaddr);
 		// System.arraycopy(memory, vaddr, data, offset, amount);
@@ -223,11 +232,25 @@ public class UserProcess {
 		// for now, just assume that virtual addresses equal physical addresses
 		if (vaddr < 0 || vaddr >= memory.length)
 			return 0;
+		
+		//added
+		int remain = length;
+		while(remain > 0) {
+			int vpn = vaddr / Processor.pageSize;
+			int ptr = vaddr - (vaddr / Processor.pageSize) * Processor.pageSize;
+			int ppn = pageTable[vpn].ppn;
+			for(int i = 0; i + ptr < Processor.pageSize && remain > 0; i++) {
+				memory[ppn*Processor.pageSize + i + ptr] =data[i] ;
+				remain--;
+				vaddr++;
+			}
+		}
 
-		int amount = Math.min(length, memory.length - vaddr);
-		System.arraycopy(data, offset, memory, vaddr, amount);
+		
 
-		return amount;
+		// int amount = Math.min(length, memory.length - vaddr);
+		// System.arraycopy(memory, vaddr, data, offset, amount);
+		return length - remain;
 	}
 
 	/**
@@ -364,11 +387,11 @@ public class UserProcess {
 	 * Release any resources allocated by <tt>loadSections()</tt>.
 	 */
 	protected void unloadSections() {
-          for (int i=0; i < pageTable.length; i++)
-            UserKernel.addFreePage(new Integer(pageTable[i].ppn));
-            
-        
-        }
+		//release those pages to Userkernel
+//		for (int i = 0; i < numPages; i++){
+//			UserKernel.addFreePage(pageTable[i].ppn);
+//		}
+	}
 
 	/**
 	 * Initialize the processor's registers in preparation for running the
@@ -600,35 +623,25 @@ public class UserProcess {
 		String[] args = new String[argc];
 		for(int i = 0; i < argc; i++) {
 			args[i] = readVirtualMemoryString(argv+i, 256);
-                        if (args[i] == null)
-                          return -1;
-                
-                }
+		}
 		
 		UserProcess newProcess = UserProcess.newUserProcess();
-		
-                newProcess.setParent(UserKernel.currentProcess().getPid());
-		
-                int result = -1;
-                UserKernel.pLock.acquire();
+		newProcess.setParent(UserKernel.currentProcess().getPid());
+		int cPid = newProcess.getPid();
+		addChild(cPid);
+		if(!newProcess.execute(path, args)) {
+			//System.out.println("omg");
+			return -1;
+		}
 
-		if(newProcess.execute(path, args)) {
-		
-                  result = newProcess.getPid();
-
-                  addChild(result);
-
-                }
-
-                UserKernel.pLock.release();
-		
-                return result;
+		return cPid;
 	}
 	/**
 	 * Handle the exit() system call.
 	 */
 	private int handleExit(int status) {
 
+		
 		UserProcess currentProcess = UserKernel.currentProcess();
 		currentProcess.closeAllFd();
 		Machine.autoGrader().finishingCurrentProcess(status);

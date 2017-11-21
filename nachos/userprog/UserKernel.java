@@ -23,11 +23,9 @@ public class UserKernel extends ThreadedKernel {
 	public void initialize(String[] args) {
 		super.initialize(args);
 		mapLock = new Semaphore(1);
+		pageLock = new Semaphore(1);
 		console = new SynchConsole(Machine.console());
 		int numPhysPages = Machine.processor().getNumPhysPages();
-                
-                pLock = new Lock();
-                memLock = new Lock();
 
 		//initialize pageList
 		for(int i = 0; i < numPhysPages; i++) {
@@ -167,19 +165,27 @@ public class UserKernel extends ThreadedKernel {
 		virtual memory support!!
 	*/
 
+	//
 	public static LinkedList<Integer> pageList = new LinkedList<Integer>();
 
+	public static Semaphore pageLock;
+	
 	public static int getNextPage() {
-		return pageList.removeLast();
+		pageLock.P();
+        int nextPage = pageList.removeLast();
+		pageLock.V();
+		return nextPage;
 	}
 
 	public static void addFreePage(int pageNum) {
+		pageLock.P();
 		pageList.add(pageNum);
+		pageLock.V();
 	}
 
 
 
-  public static Lock memLock;
-  public static Lock pLock;
+
+
 
 }
