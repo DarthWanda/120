@@ -364,8 +364,9 @@ public class UserProcess {
 	 * Release any resources allocated by <tt>loadSections()</tt>.
 	 */
 	protected void unloadSections() {
-          for (int i=0; i < pageTabble.length; i++)
-            UserKernel.freePages(new Integer(pageTable[i].ppn));
+          for (int i=0; i < pageTable.length; i++)
+            UserKernel.addFreePage(new Integer(pageTable[i].ppn));
+            
         
         }
 
