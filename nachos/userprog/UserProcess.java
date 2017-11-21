@@ -599,18 +599,29 @@ public class UserProcess {
 		String[] args = new String[argc];
 		for(int i = 0; i < argc; i++) {
 			args[i] = readVirtualMemoryString(argv+i, 256);
-		}
+                        if (args[i] == null)
+                          return -1;
+                
+                }
 		
 		UserProcess newProcess = UserProcess.newUserProcess();
-		newProcess.setParent(UserKernel.currentProcess().getPid());
-		int cPid = newProcess.getPid();
-		addChild(cPid);
-		if(!newProcess.execute(path, args)) {
-			//System.out.println("omg");
-			return -1;
-		}
+		
+                newProcess.setParent(UserKernel.currentProcess().getPid());
+		
+                int result = -1;
+                UserKernel.pLock.acquire();
 
-		return cPid;
+		if(newProcess.execute(path, args)) {
+		
+                  result = newProcess.getPid();
+
+                  addChild(result);
+
+                }
+
+                UserKernel.pLock.release();
+		
+                return result;
 	}
 	/**
 	 * Handle the exit() system call.
