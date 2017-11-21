@@ -643,6 +643,16 @@ public class UserProcess {
 		Machine.autoGrader().finishingCurrentProcess(status);
 		return 0;
 	}
+	
+	/**
+	 * Handle the join() system call.
+	 */
+	private int handleJoin(int pid, int status){
+		//a process should be able to join only it's child process
+
+		return 0;
+	}
+	
 
 	
 
@@ -727,6 +737,8 @@ public class UserProcess {
 			return handleRead(a0, a1, a2);
 		case syscallExec:
 			return handleExec(a0, a1, a2);
+		case syscallJoin:
+			return handleJoin(a0,a1);
 		default:
 			Lib.debug(dbgProcess, "Unknown syscall " + syscall);
 			Lib.assertNotReached("Unknown system call!");
