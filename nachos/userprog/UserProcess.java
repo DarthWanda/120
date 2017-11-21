@@ -179,16 +179,23 @@ public class UserProcess {
 		
 		//added
 		int remain = length;
-		while(remain > 0) {
+//		while(remain > 0) {
 			int vpn = vaddr / Processor.pageSize;
 			int ptr = vaddr - (vaddr / Processor.pageSize) * Processor.pageSize;
 			int ppn = pageTable[vpn].ppn;
-			for(int i = 0; i + ptr < Processor.pageSize && remain > 0; i++) {
-				data[i] = memory[ppn*Processor.pageSize + i + ptr];
+			int i = 0;
+			for(;remain > 0; ptr++) {
+				data[i+offset] = memory[ppn*Processor.pageSize + ptr];
 				remain--;
 				vaddr++;
+				i++;
+				if (ptr == Processor.pageSize ){
+					ptr = 0;
+					vpn ++;
+					ppn = pageTable[vpn].ppn;
+				}
 			}
-		}
+//		}
 
 		
 
@@ -235,16 +242,23 @@ public class UserProcess {
 		
 		//added
 		int remain = length;
-		while(remain > 0) {
+//		while(remain > 0) {
 			int vpn = vaddr / Processor.pageSize;
 			int ptr = vaddr - (vaddr / Processor.pageSize) * Processor.pageSize;
 			int ppn = pageTable[vpn].ppn;
-			for(int i = 0; i + ptr < Processor.pageSize && remain > 0; i++) {
-				memory[ppn*Processor.pageSize + i + ptr] =data[i] ;
+			int i = 0;
+			for(;remain > 0; ptr++) {
+				memory[ppn*Processor.pageSize + ptr] = data[i+offset];
 				remain--;
 				vaddr++;
+				i++;
+				if (ptr == Processor.pageSize ){
+					ptr = 0;
+					vpn ++;
+					ppn = pageTable[vpn].ppn;
+				}
 			}
-		}
+//		}
 
 		
 
