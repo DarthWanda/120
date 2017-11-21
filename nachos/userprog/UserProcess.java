@@ -173,18 +173,24 @@ public class UserProcess {
 
 		byte[] memory = Machine.processor().getMemory();
 
-		// for now, just assume that virtual addresses equal physical addresses
-		if (vaddr < 0 || vaddr >= memory.length)
-			return 0;
+//		// for now, just assume that virtual addresses equal physical addresses
+//		if (vaddr < 0 || vaddr >= memory.length)
+//			return 0;
 		
 		//added
 		int remain = length;
 //		while(remain > 0) {
 			int vpn = vaddr / Processor.pageSize;
-			int ptr = vaddr - (vaddr / Processor.pageSize) * Processor.pageSize;
+			int ptr = vaddr % Processor.pageSize;
 			int ppn = pageTable[vpn].ppn;
+			pageTable[vpn].used = true;
+			pageTable[vpn].dirty = true;
 			int i = 0;
 			for(;remain > 0; ptr++) {
+				if (vpn >= pageTable.length || vpn < 0)
+					break;
+				if (!pageTable[vpn].valid)
+					break;
 				data[i+offset] = memory[ppn*Processor.pageSize + ptr];
 				remain--;
 				vaddr++;
@@ -193,14 +199,9 @@ public class UserProcess {
 					ptr = 0;
 					vpn ++;
 					ppn = pageTable[vpn].ppn;
+					pageTable[vpn].used = true;
 				}
 			}
-//		}
-
-		
-
-		// int amount = Math.min(length, memory.length - vaddr);
-		// System.arraycopy(memory, vaddr, data, offset, amount);
 		return length - remain;
 	}
 
@@ -236,18 +237,24 @@ public class UserProcess {
 
 		byte[] memory = Machine.processor().getMemory();
 
-		// for now, just assume that virtual addresses equal physical addresses
-		if (vaddr < 0 || vaddr >= memory.length)
-			return 0;
+//		// for now, just assume that virtual addresses equal physical addresses
+//		if (vaddr < 0 || vaddr >= memory.length)
+//			return 0;
 		
 		//added
 		int remain = length;
 //		while(remain > 0) {
 			int vpn = vaddr / Processor.pageSize;
-			int ptr = vaddr - (vaddr / Processor.pageSize) * Processor.pageSize;
+			int ptr = vaddr % Processor.pageSize;
 			int ppn = pageTable[vpn].ppn;
+			pageTable[vpn].used = true;
+			pageTable[vpn].dirty = true;
 			int i = 0;
 			for(;remain > 0; ptr++) {
+				if (vpn >= pageTable.length || vpn < 0)
+					break;
+				if (!pageTable[vpn].valid)
+					break;
 				memory[ppn*Processor.pageSize + ptr] = data[i+offset];
 				remain--;
 				vaddr++;
@@ -256,14 +263,9 @@ public class UserProcess {
 					ptr = 0;
 					vpn ++;
 					ppn = pageTable[vpn].ppn;
+					pageTable[vpn].used = true;
 				}
 			}
-//		}
-
-		
-
-		// int amount = Math.min(length, memory.length - vaddr);
-		// System.arraycopy(memory, vaddr, data, offset, amount);
 		return length - remain;
 	}
 
@@ -401,10 +403,10 @@ public class UserProcess {
 	 * Release any resources allocated by <tt>loadSections()</tt>.
 	 */
 	protected void unloadSections() {
-		//release those pages to Userkernel
-//		for (int i = 0; i < numPages; i++){
-//			UserKernel.addFreePage(pageTable[i].ppn);
-//		}
+//		release those pages to Userkernel
+		for (int i = 0; i < numPages; i++){
+			UserKernel.addFreePage(pageTable[i].ppn);
+		}
 	}
 
 	/**
