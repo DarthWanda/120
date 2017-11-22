@@ -7,6 +7,7 @@ import nachos.vm.*;
 
 import java.io.EOFException;
 import java.util.*;
+import java.nio.ByteBuffer;
 /**
  * Encapsulates the state of a user process that is not contained in its user
  * thread (or threads). This includes its address translation state, a file
@@ -673,10 +674,18 @@ public class UserProcess {
 		joinProcess.currentThread.join();
 		UserKernel.remove(pid);
 
-		if(joinProcess.exitStatus!=0)
-			return 0;
+		if(joinProcess.exitStatus != null){
+			byte exit[] = new byte[4];
+			exit = ByteBuffer.allocate(4).putInt(joinProcess.exitStatus).array();
+			int write = writeVirtualMemory(status,exit);
+			//if write successfully
+			if(write == 4){
+				return 1;
+			}
+				return 0;
+		}
 
-		return 1;
+		return 0;
 	}
 	
 
@@ -868,5 +877,5 @@ public class UserProcess {
 
 	private static int cnt = 0;
 	private UThread currentThread;
-	private Integer exitStatus = -999;
+	private Integer exitStatus = null;
 }
