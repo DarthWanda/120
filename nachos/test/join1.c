@@ -24,7 +24,7 @@ main (int argc, char *argv[])
 	printf ("...failed (pid = %d)\n", pid); 
 	exit (-1);
     }
-
+    printf("1111111111111\n");
     printf ("joining %d...\n", pid);
     r = join (pid, &status);
     if (r > 0) {
