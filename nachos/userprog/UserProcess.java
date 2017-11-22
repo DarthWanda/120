@@ -452,7 +452,7 @@ public class UserProcess {
 		if(fd == null) {
 			return -1;
 		}
-
+		
 		// add to fileTable
 		fileTable[nextPos] = fd;
 		System.out.println(nextPos);
@@ -641,6 +641,7 @@ public class UserProcess {
 
 		UserProcess currentProcess = UserKernel.currentProcess();
 		currentProcess.closeAllFd();
+		
 		unloadSections();
 		Machine.autoGrader().finishingCurrentProcess(status);
 
