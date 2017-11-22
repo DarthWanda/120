@@ -668,7 +668,6 @@ public class UserProcess {
 
 		if (joinProcess.getParentPid()!=currentProcess.getPid())
 			return -1;
-		System.out.println("exitStatu41241241s:           " + int(null));
 
 		joinProcess.currentThread.join();
 		UserKernel.remove(pid);
