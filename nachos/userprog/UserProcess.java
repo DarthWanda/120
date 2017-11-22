@@ -643,6 +643,10 @@ public class UserProcess {
 		Machine.autoGrader().finishingCurrentProcess(status);
 		exitStatus = status;
 		System.out.println("exitStatus is " + status);
+		//
+		if(UserKernel.checkIfOnlyOneElement()){
+			UserKernel.kernel.terminate();
+		}
 		return 0;
 	}
 	
