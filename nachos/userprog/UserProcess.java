@@ -637,16 +637,17 @@ public class UserProcess {
 	 */
 	private int handleExit(int status) {
 
-		
-		UserProcess currentProcess = UserKernel.currentProcess();
-		currentProcess.closeAllFd();
-		Machine.autoGrader().finishingCurrentProcess(status);
 		exitStatus = status;
-		System.out.println("exitStatus is " + status);
-		//
 		if(UserKernel.checkIfOnlyOneElement()){
 			UserKernel.kernel.terminate();
 		}
+		UserProcess currentProcess = UserKernel.currentProcess();
+		currentProcess.closeAllFd();
+		Machine.autoGrader().finishingCurrentProcess(status);
+
+		System.out.println("exitStatus is " + status);
+		//
+
 		return 0;
 	}
 	
