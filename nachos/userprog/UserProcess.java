@@ -414,7 +414,8 @@ public class UserProcess {
 	 * Handle the halt() system call.
 	 */
 	private int handleHalt() {
-
+		if(this.pid != UserKernel.rootProcess.pid)
+			return -1;
 		Machine.halt();
 
 		Lib.assertNotReached("Machine.halt() did not halt machine!");
