@@ -158,6 +158,11 @@ public class UserKernel extends ThreadedKernel {
 		mapLock.V();
 	}
 
+	//check if processmap contain this process
+	public static boolean contain(int pid){
+		return processMap.containsKey(pid);
+	}
+	
 	public static Semaphore mapLock;
 
 	/*

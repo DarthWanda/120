@@ -48,7 +48,6 @@ public class UserProcess {
 //		for (int i = 0; i < numPhysPages; i++)
 //			pageTable[i] = new TranslationEntry(i, i, true, false, false, false);
 //		
-		
 	}
 
 	/**
@@ -93,8 +92,7 @@ public class UserProcess {
 		}
 
 		new UThread(this).setName(name).fork();
-
-
+		
 		return true;
 	}
 
@@ -648,8 +646,23 @@ public class UserProcess {
 	 * Handle the join() system call.
 	 */
 	private int handleJoin(int pid, int status){
+        if (pid <0 || status<0){
+            return -1;
+        }
+		//get the process to be joined
+		UserProcess joinProcess;
+		if(UserKernel.contain(pid)){
+			joinProcess = UserKernel.getProcessByPid(pid);
+		}
+		else{
+			return -1;
+		}
+		//get current UserProcess 
+		UserProcess currentProcess = UserKernel.currentProcess();
 		//a process should be able to join only it's child process
-
+		if (joinProcess.getPid()!=currentProcess.getParentPid())
+			return -1;
+		
 		return 0;
 	}
 	
