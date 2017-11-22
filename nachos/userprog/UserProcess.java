@@ -91,8 +91,8 @@ public class UserProcess {
 			return false;
 		}
 
-		new UThread(this).setName(name).fork();
-		
+		currentThread = new UThread(this);
+		currentThread.setName(name).fork();
 		return true;
 	}
 
@@ -639,6 +639,7 @@ public class UserProcess {
 		UserProcess currentProcess = UserKernel.currentProcess();
 		currentProcess.closeAllFd();
 		Machine.autoGrader().finishingCurrentProcess(status);
+		exitStatus = status;
 		return 0;
 	}
 	
@@ -660,10 +661,18 @@ public class UserProcess {
 		//get current UserProcess 
 		UserProcess currentProcess = UserKernel.currentProcess();
 		//a process should be able to join only it's child process
+		/*
+			error!!!!
+		*/
 		if (joinProcess.getPid()!=currentProcess.getParentPid())
 			return -1;
 		
-		return 0;
+		joinProcess.currentThread.join();
+		UserKernel.remove(pid);
+
+
+
+		return joinProcess.exitStatus;
 	}
 	
 
@@ -854,5 +863,6 @@ public class UserProcess {
 	}
 
 	private static int cnt = 0;
-
+	private UThread currentThread;
+	private Integer exitStatus = null;
 }

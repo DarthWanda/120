@@ -1,4 +1,4 @@
-/*
+	/*
  *  * exec1.c
  *   *
  *    * Simple program for testing exec.  It does not pass any arguments to
