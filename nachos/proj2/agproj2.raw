@@ -1,4 +1,4 @@
-------[ Tue Nov 21 19:00:58 2017 ]------
+------[ Tue Nov 21 19:31:36 2017 ]------
 --[ tests write1.c ]--
 stty: standard input: Inappropriate ioctl for device
 stty: standard input: Inappropriate ioctl for device
@@ -236,9 +236,9 @@ nachos.machine.AssertionFailureError: ParentChildGrader: expected child status o
 	at nachos.machine.Lib.assertTrue(Lib.java:89)
 	at nachos.ag.UCSDParentChildGrader.exitCalled(UCSDParentChildGrader.java:65)
 	at nachos.ag.UCSDParentChildGrader.finishingCurrentProcess(UCSDParentChildGrader.java:49)
-	at nachos.userprog.UserProcess.handleExit(UserProcess.java:642)
-	at nachos.userprog.UserProcess.handleSyscall(UserProcess.java:751)
-	at nachos.userprog.UserProcess.handleException(UserProcess.java:787)
+	at nachos.userprog.UserProcess.handleExit(UserProcess.java:643)
+	at nachos.userprog.UserProcess.handleSyscall(UserProcess.java:764)
+	at nachos.userprog.UserProcess.handleException(UserProcess.java:800)
 	at nachos.userprog.UserKernel.exceptionHandler(UserKernel.java:93)
 	at nachos.userprog.UserKernel$1.run(UserKernel.java:38)
 	at nachos.machine.Processor$MipsException.handle(Processor.java:619)
