@@ -654,7 +654,7 @@ public class UserProcess {
 	 * Handle the join() system call.
 	 */
 	private int handleJoin(int pid, int status){
-        if (pid <0 || status<0){
+        if (pid < 0 || status< 0){
             return -1;
         }
 		//get the process to be joined
@@ -680,7 +680,7 @@ public class UserProcess {
 
 		if(joinProcess.exitStatus != null){
 			byte exit[] = new byte[4];
-			exit = ByteBuffer.allocate(4).putInt(joinProcess.exitStatus).array();
+			exit = Lib.bytesFromInt(joinProcess.exitStatus);
 			int write = writeVirtualMemory(status,exit);
 			//if write successfully
 			if(write == 4){
@@ -688,7 +688,6 @@ public class UserProcess {
 			}
 				return 0;
 		}
-
 		return 0;
 	}
 	
