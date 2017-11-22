@@ -635,20 +635,22 @@ public class UserProcess {
 	/**
 	 * Handle the exit() system call.
 	 */
-	private int handleExit(int status) {
+	private void handleExit(int status) {
 
 		exitStatus = status;
+
+		UserProcess currentProcess = UserKernel.currentProcess();
+		currentProcess.closeAllFd();
+		unloadSections();
+		Machine.autoGrader().finishingCurrentProcess(status);
+
+		
+//		System.out.println("exitStatus is " + status);
+//		//
 		if(UserKernel.checkIfOnlyOneElement()){
 			UserKernel.kernel.terminate();
 		}
-		UserProcess currentProcess = UserKernel.currentProcess();
-		currentProcess.closeAllFd();
-		Machine.autoGrader().finishingCurrentProcess(status);
-
-		System.out.println("exitStatus is " + status);
-		//
-
-		return 0;
+		KThread.finish();
 	}
 	
 	/**
@@ -761,7 +763,7 @@ public class UserProcess {
 		case syscallHalt:
 			return handleHalt();
 		case syscallExit:
-			return handleExit(a0);
+			handleExit(a0);
 		case syscallOpen:
 			return handleOpen(a0);
 		case syscallClose:
