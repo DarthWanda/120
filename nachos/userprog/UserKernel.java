@@ -103,10 +103,10 @@ public class UserKernel extends ThreadedKernel {
 	public void run() {
 		super.run();
 
-		UserProcess process = UserProcess.newUserProcess();
+		rootProcess = UserProcess.newUserProcess();
 
 		String shellProgram = Machine.getShellProgramName();
-		Lib.assertTrue(process.execute(shellProgram, new String[] {}));
+		Lib.assertTrue(rootProcess.execute(shellProgram, new String[] {}));
 
 		KThread.currentThread().finish();
 	}
@@ -175,6 +175,7 @@ public class UserKernel extends ThreadedKernel {
 
 	public static Semaphore pageLock;
 	
+	public static UserProcess rootProcess;
 	public static int getNextPage() {
 		pageLock.P();
         int nextPage = pageList.removeLast();

@@ -414,7 +414,8 @@ public class UserProcess {
 	 * Handle the halt() system call.
 	 */
 	private int handleHalt() {
-
+		if(this.pid != UserKernel.rootProcess.pid)
+			return -1;
 		Machine.halt();
 
 		Lib.assertNotReached("Machine.halt() did not halt machine!");
@@ -664,14 +665,16 @@ public class UserProcess {
 		/*
 			error!!!!
 		*/
-		if (joinProcess.getPid()!=currentProcess.getParentPid())
+
+		if (joinProcess.getParentPid()!=currentProcess.getPid())
 			return -1;
-		
+		System.out.println("exitStatu41241241s:           " + int(null));
+
 		joinProcess.currentThread.join();
 		UserKernel.remove(pid);
 
 
-
+		System.out.println("exitStatu41241241s:           " + joinProcess.exitStatus);
 		return joinProcess.exitStatus;
 	}
 	

@@ -25,7 +25,9 @@ main (int argc, char *argv[])
 	exit (-1);
     }
 
+
     printf("11111111111111111\n");
+
     printf ("joining %d...\n", pid);
     r = join (pid, &status);
     if (r > 0) {
