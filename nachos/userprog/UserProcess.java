@@ -641,6 +641,7 @@ public class UserProcess {
 		currentProcess.closeAllFd();
 		Machine.autoGrader().finishingCurrentProcess(status);
 		exitStatus = status;
+		System.out.println("exitStatus is " + status);
 		return 0;
 	}
 	
@@ -672,9 +673,10 @@ public class UserProcess {
 		joinProcess.currentThread.join();
 		UserKernel.remove(pid);
 
+		if(joinProcess.exitStatus!=0)
+			return 0;
 
-		System.out.println("exitStatu41241241s:           " + joinProcess.exitStatus);
-		return joinProcess.exitStatus;
+		return 1;
 	}
 	
 
@@ -866,5 +868,5 @@ public class UserProcess {
 
 	private static int cnt = 0;
 	private UThread currentThread;
-	private Integer exitStatus = null;
+	private Integer exitStatus = -999;
 }
