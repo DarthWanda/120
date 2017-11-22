@@ -158,6 +158,16 @@ public class UserKernel extends ThreadedKernel {
 		mapLock.V();
 	}
 
+	public static boolean checkIfOnlyOneElement(){
+		int remain = processMap.keySet().size();
+		if (remain == 1) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
 	//check if processmap contain this process
 	public static boolean contain(int pid){
 		return processMap.containsKey(pid);
