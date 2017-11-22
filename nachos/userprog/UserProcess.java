@@ -641,7 +641,7 @@ public class UserProcess {
 
 		UserProcess currentProcess = UserKernel.currentProcess();
 		currentProcess.closeAllFd();
-		UserKernel.remove(currentProcess.getPid());
+		
 		unloadSections();
 		Machine.autoGrader().finishingCurrentProcess(status);
 
