@@ -636,14 +636,15 @@ public class UserProcess {
 	 * Handle the exit() system call.
 	 */
 	private void handleExit(int status) {
-
+		Machine.autoGrader().finishingCurrentProcess(status);
 		exitStatus = status;
 
-		UserProcess currentProcess = UserKernel.currentProcess();
-		currentProcess.closeAllFd();
-		
+		// UserProcess currentProcess = UserKernel.currentProcess();
+		// if(currentProcess != null)
+		// 	currentProcess.closeAllFd();
+		closeAllFd();
 		unloadSections();
-		Machine.autoGrader().finishingCurrentProcess(status);
+		
 
 		
 //		System.out.println("exitStatus is " + status);
