@@ -182,7 +182,7 @@ public class UserProcess {
 		while(remain > 0 ) {
 			int vpn = vaddr / Processor.pageSize;
 			if(vpn >= numPages) {
-				return length - remain;
+				return -1;
 			}
 			int ptr = vaddr - (vaddr / Processor.pageSize) * Processor.pageSize;
 			int ppn = pageTable[vpn].ppn;
@@ -240,7 +240,7 @@ public class UserProcess {
 			int vpn = vaddr / Processor.pageSize;
 			int ptr = vaddr - (vaddr / Processor.pageSize) * Processor.pageSize;
 			if(vpn >= numPages) {
-				return length - remain;
+				return -1;
 			}
 			int ppn = pageTable[vpn].ppn;
 			for(int i = 0; i + ptr < Processor.pageSize && remain > 0; i++) {
@@ -294,7 +294,7 @@ public class UserProcess {
 			numPages += section.getLength();
 		}
 			
-		// make sure the argv array will fit in one page
+		// make sure the 	 array will fit in one page
 		byte[][] argv = new byte[args.length][];
 		int argsSize = 0;
 		for (int i = 0; i < args.length; i++) {
@@ -500,7 +500,9 @@ public class UserProcess {
 
 		byte[] localBuf = new byte[a2];
 		
-		readVirtualMemory(a1, localBuf);
+		if(readVirtualMemory(a1, localBuf) == -1) {
+			return -1;
+		}
 		
 		// stdin stdout;
 		if(a0 == 0 || a0 ==1) {
@@ -602,9 +604,13 @@ public class UserProcess {
 				return flag;
 			}
 			else {
-				writeVirtualMemory(buffer, localBuf);
-				fileReadPos[fd] += flag;
-				return flag;
+				if(writeVirtualMemory(buffer, localBuf) == -1 ) {
+					return -1;
+				}
+				else {
+					fileReadPos[fd] += flag;
+					return flag;
+				}
 			}
 		}
 	}
@@ -815,8 +821,7 @@ public class UserProcess {
 			processor.writeRegister(Processor.regV0, result);
 			processor.advancePC();
 
-			break;
-
+			break;	
 		default:
 			Lib.debug(dbgProcess, "Unexpected exception: "
 					+ Processor.exceptionNames[cause]);
@@ -857,7 +862,7 @@ public class UserProcess {
 
 	private int initialPC, initialSP;
 
-	private int argc, argv;
+	protected int argc, argv;
 
 	private static final int pageSize = Processor.pageSize;
 
@@ -889,6 +894,7 @@ public class UserProcess {
 		childrens.add(pid);
 	}
 
+	
 	private static int cnt = 0;
 	private UThread currentThread;
 	private Integer exitStatus = null;
