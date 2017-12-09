@@ -51,3 +51,9 @@ main (int argc, char *argv[])
 {
     write_buf (0);
     validate_buf (0);
+    write_buf (100 * 1000);
+    validate_buf (100 * 1000);
+    write_buf (200 * 1000);
+    validate_buf (200 * 1000);
+    exit (-1000);
+}
