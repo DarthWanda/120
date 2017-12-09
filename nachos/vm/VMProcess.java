@@ -223,7 +223,7 @@ public class VMProcess extends UserProcess {
 			int vpn = vaddr / Processor.pageSize;
 			if(vpn >= numPages) {
 				return -1;
-			}
+			}	
 			TranslationEntry entry = pageTable[vpn];
 			if(!entry.valid) {
 				if(handlePageFault(vaddr) != 1) {
