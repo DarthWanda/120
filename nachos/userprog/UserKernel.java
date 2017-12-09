@@ -199,9 +199,4 @@ public class UserKernel extends ThreadedKernel {
 		pageLock.V();
 	}
 
-
-
-
-
-
 }

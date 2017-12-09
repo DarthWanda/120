@@ -820,7 +820,6 @@ public class UserProcess {
 					processor.readRegister(Processor.regA3));
 			processor.writeRegister(Processor.regV0, result);
 			processor.advancePC();
-
 			break;	
 		default:
 			Lib.debug(dbgProcess, "Unexpected exception: "

@@ -39,7 +39,21 @@ public class VMProcess extends UserProcess {
 	 * @return <tt>true</tt> if successful.
 	 */
 	protected boolean loadSections() {
-		return super.loadSections();
+		//return super.loadSections();
+		if (numPages > Machine.processor().getNumPhysPages()) {
+			coff.close();
+			Lib.debug(dbgProcess, "\tinsufficient physical memory");
+			return false;
+		}
+
+
+		pageTable = new TranslationEntry[numPages];
+		//set all translation entry to invalid
+		for (int i = 0; i < pageTable.length; i++) {
+			pageTable[i] = new TranslationEntry(i, UserKernel.getNextPage(), false, false, false, false);
+
+		}
+		return true;
 	}
 
 	/**
@@ -58,13 +72,59 @@ public class VMProcess extends UserProcess {
 	 */
 	public void handleException(int cause) {
 		Processor processor = Machine.processor();
-
+		
 		switch (cause) {
+		case Processor.exceptionPageFault:
+			System.out.println("exception cause: " + cause);
+			int result = handlePageFault(processor.readRegister(Processor.regBadVAddr));
+			processor.writeRegister(Processor.regV0, result);
+			break;
 		default:
+			System.out.println("exception cause: " + cause);
 			super.handleException(cause);
 			break;
 		}
 	}
+
+	private int handlePageFault(int vaddr) {
+		int vpn = vaddr / Processor.pageSize;
+		TranslationEntry entry = pageTable[vpn];
+		if (vpn >= numPages) {
+			return -1;
+		}
+		entry.valid = true;
+		entry.vpn = vpn;
+		// if is argument;
+		// if (vpn == numPages - 1) {
+
+		// }
+		
+		for (int s = 0; s < coff.getNumSections(); s++) {
+			CoffSection section = coff.getSection(s);
+			Lib.debug(dbgProcess, "\tinitializing " + section.getName()
+					+ " section (" + section.getLength() + " pages)");
+			for (int i = 0; i < section.getLength(); i++) {
+				int secVpn = section.getFirstVPN() + i;
+				if (secVpn == vpn) {	
+					entry.readOnly = section.isReadOnly();
+					section.loadPage(i, entry.ppn);
+					return 1;
+				}			
+			}
+		}
+		flushMemory(entry.ppn);
+		return 0;
+	}
+
+
+	public void flushMemory(int ppn) {
+		int startAdd = Processor.makeAddress(ppn, 0);
+		byte[] mem = Machine.processor().getMemory();
+		for (int i = startAdd; i < startAdd + pageSize; i++) {
+			mem[i] = 0;
+		}
+	}
+
 
 	private static final int pageSize = Processor.pageSize;
 
