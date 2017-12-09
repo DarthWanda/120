@@ -53,6 +53,7 @@ public class VMProcess extends UserProcess {
 			pageTable[i] = new TranslationEntry(i, UserKernel.getNextPage(), false, false, false, false);
 
 		}
+
 		return true;
 	}
 
@@ -75,46 +76,52 @@ public class VMProcess extends UserProcess {
 		
 		switch (cause) {
 		case Processor.exceptionPageFault:
-			System.out.println("exception cause: " + cause);
+			//System.out.println("exception cause: " + cause);
 			int result = handlePageFault(processor.readRegister(Processor.regBadVAddr));
 			processor.writeRegister(Processor.regV0, result);
 			break;
 		default:
-			System.out.println("exception cause: " + cause);
+			//System.out.println("exception cause: " + cause);
 			super.handleException(cause);
 			break;
 		}
 	}
 
 	private int handlePageFault(int vaddr) {
-		int vpn = vaddr / Processor.pageSize;
+		int vpn = Processor.pageFromAddress(vaddr);
+		//see if translage is good
+		//Lib.assertTrue(vpn == vvpn);
+
 		TranslationEntry entry = pageTable[vpn];
 		if (vpn >= numPages) {
 			return -1;
 		}
 		entry.valid = true;
-		entry.vpn = vpn;
+		//entry.vpn = vpn;
 		// if is argument;
 		// if (vpn == numPages - 1) {
 
 		// }
-		
 		for (int s = 0; s < coff.getNumSections(); s++) {
 			CoffSection section = coff.getSection(s);
 			Lib.debug(dbgProcess, "\tinitializing " + section.getName()
 					+ " section (" + section.getLength() + " pages)");
 			for (int i = 0; i < section.getLength(); i++) {
 				int secVpn = section.getFirstVPN() + i;
-				if (secVpn == vpn) {	
+				if (secVpn == vpn) {
+					System.out.println("section  " + secVpn);
 					entry.readOnly = section.isReadOnly();
 					section.loadPage(i, entry.ppn);
 					return 1;
 				}			
 			}
 		}
+		System.out.println("flush memory.........");
 		flushMemory(entry.ppn);
-		return 0;
+		return 1;
 	}
+
+
 
 
 	public void flushMemory(int ppn) {
@@ -123,6 +130,119 @@ public class VMProcess extends UserProcess {
 		for (int i = startAdd; i < startAdd + pageSize; i++) {
 			mem[i] = 0;
 		}
+	}
+
+	public int readVirtualMemory(int vaddr, byte[] data) {
+		return readVirtualMemory(vaddr, data, 0, data.length);
+	}
+
+	/**
+	 * Transfer data from this process's virtual memory to the specified array.
+	 * This method handles address translation details. This method must
+	 * <i>not</i> destroy the current process if an error occurs, but instead
+	 * should return the number of bytes successfully copied (or zero if no data
+	 * could be copied).
+	 * 
+	 * @param vaddr the first byte of virtual memory to read.
+	 * @param data the array where the data will be stored.
+	 * @param offset the first byte to write in the array.
+	 * @param length the number of bytes to transfer from virtual memory to the
+	 * array.
+	 * @return the number of bytes successfully transferred.
+	 */
+	public int readVirtualMemory(int vaddr, byte[] data, int offset, int length) {
+		Lib.assertTrue(offset >= 0 && length >= 0
+				&& offset + length <= data.length);
+
+		byte[] memory = Machine.processor().getMemory();
+
+		// for now, just assume that virtual addresses equal physical addresses
+		if (vaddr < 0 || vaddr >= memory.length)
+			return 0;
+		
+		//added
+		int remain = length;
+		int j = 0;
+		while(remain > 0 ) {
+			int vpn = vaddr / Processor.pageSize;
+			if(vpn >= numPages) {
+				return -1;
+			}
+			TranslationEntry entry = pageTable[vpn];
+			if(!entry.valid) {
+				if(handlePageFault(vaddr) != 1) {
+					System.out.println("encounter handlePageFault error when readVirtualMemory............");
+					return -1;
+				}
+			}
+			
+			int ptr = vaddr - (vaddr / Processor.pageSize) * Processor.pageSize;
+			int ppn = pageTable[vpn].ppn;
+			for(int i = 0; i + ptr < Processor.pageSize && remain > 0; i++) {
+				data[j + offset] = memory[ppn*Processor.pageSize + i + ptr];
+				remain--;
+				vaddr++;
+				j++;
+			}
+		}
+		return length - remain;
+	}
+
+	public int writeVirtualMemory(int vaddr, byte[] data) {
+		return writeVirtualMemory(vaddr, data, 0, data.length);
+	}
+
+	/**
+	 * Transfer data from the specified array to this process's virtual memory.
+	 * This method handles address translation details. This method must
+	 * <i>not</i> destroy the current process if an error occurs, but instead
+	 * should return the number of bytes successfully copied (or zero if no data
+	 * could be copied).
+	 * 
+	 * @param vaddr the first byte of virtual memory to write.
+	 * @param data the array containing the data to transfer.
+	 * @param offset the first byte to transfer from the array.
+	 * @param length the number of bytes to transfer from the array to virtual
+	 * memory.
+	 * @return the number of bytes successfully transferred.
+	 */
+	public int writeVirtualMemory(int vaddr, byte[] data, int offset, int length) {
+		Lib.assertTrue(offset >= 0 && length >= 0
+				&& offset + length <= data.length);
+
+		byte[] memory = Machine.processor().getMemory();
+
+		// for now, just assume that virtual addresses equal physical addresses
+		if (vaddr < 0 || vaddr >= memory.length)
+			return 0;
+		
+		//added
+		int remain = length;
+		int j = 0;
+		while(remain > 0 ) {
+			int vpn = vaddr / Processor.pageSize;
+			if(vpn >= numPages) {
+				return -1;
+			}
+			TranslationEntry entry = pageTable[vpn];
+			if(!entry.valid) {
+				if(handlePageFault(vaddr) != 1) {
+					System.out.println("encounter handlePageFault error when readVirtualMemory............");
+					return -1;
+				}
+			}
+			int ptr = vaddr - (vaddr / Processor.pageSize) * Processor.pageSize;
+			
+			int ppn = pageTable[vpn].ppn;
+			for(int i = 0; i + ptr < Processor.pageSize && remain > 0; i++) {
+				memory[ppn*Processor.pageSize + i + ptr] = data[j + offset];
+				remain--;
+				vaddr++;
+				j++;
+			}
+		}
+
+		return length - remain;
 	}
 
 
