@@ -14,13 +14,7 @@ public class VMKernel extends UserKernel {
 	 */
 	public VMKernel() {
 		super();
-		lock = new Lock();
-		invertedPageTable = new invertedPageTableEntry[Machine.processor().getNumPhysPages()];
-		usedFlag = new boolean[Machine.processor().getNumPhysPages()];
-		for (int i = 0; i < usedFlag.length; i++) {
-			usedFlag[i] = false;
-			invertedPageTable[i] = new invertedPageTableEntry(null, null, 0);
-		}
+		
 
 	}
 
@@ -29,6 +23,13 @@ public class VMKernel extends UserKernel {
 	 */
 	public void initialize(String[] args) {
 		super.initialize(args);
+		lock = new Lock();
+		invertedPageTable = new invertedPageTableEntry[Machine.processor().getNumPhysPages()];
+		usedFlag = new boolean[Machine.processor().getNumPhysPages()];
+		for (int i = 0; i < usedFlag.length; i++) {
+			usedFlag[i] = false;
+			invertedPageTable[i] = new invertedPageTableEntry(null, null, 0);
+		}
 	}
 
 	/**
@@ -77,6 +78,7 @@ public class VMKernel extends UserKernel {
 		} else {
 			
 			int ppn = clock();
+			System.out.println("clock returns ppn#" + ppn);
 			invertedPageTableEntry physEntry = invertedPageTable[ppn];
 			if (physEntry.transEntry.dirty) {
 				swapOut(ppn);
