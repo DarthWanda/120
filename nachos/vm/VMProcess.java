@@ -40,17 +40,18 @@ public class VMProcess extends UserProcess {
 	 */
 	protected boolean loadSections() {
 		//return super.loadSections();
-		if (numPages > Machine.processor().getNumPhysPages()) {
-			coff.close();
-			Lib.debug(dbgProcess, "\tinsufficient physical memory");
-			return false;
-		}
+		// if (numPages > Machine.processor().getNumPhysPages()) {
+		// 	coff.close();
+		// 	Lib.debug(dbgProcess, "\tinsufficient physical memory");
+		// 	return false;
+		// }
 
 
 		pageTable = new TranslationEntry[numPages];
 		//set all translation entry to invalid
 		for (int i = 0; i < pageTable.length; i++) {
-			pageTable[i] = new TranslationEntry(i, UserKernel.getNextPage(), false, false, false, false);
+			//pageTable[i] = new TranslationEntry(i, UserKernel.getNextPage(), false, false, false, false);
+			pageTable[i] = new TranslationEntry(i, 0, false, false, false, false);
 
 		}
 
@@ -97,11 +98,13 @@ public class VMProcess extends UserProcess {
 			return -1;
 		}
 		entry.valid = true;
+		entry.ppn = VMKernel.getNextPage();
 		//entry.vpn = vpn;
 		// if is argument;
 		// if (vpn == numPages - 1) {
 
 		// }
+		//System.out.println("num pages is ........." + numPages);
 		for (int s = 0; s < coff.getNumSections(); s++) {
 			CoffSection section = coff.getSection(s);
 			Lib.debug(dbgProcess, "\tinitializing " + section.getName()
@@ -109,14 +112,14 @@ public class VMProcess extends UserProcess {
 			for (int i = 0; i < section.getLength(); i++) {
 				int secVpn = section.getFirstVPN() + i;
 				if (secVpn == vpn) {
-					System.out.println("section  " + secVpn);
+					//System.out.println("section  " + secVpn);
 					entry.readOnly = section.isReadOnly();
 					section.loadPage(i, entry.ppn);
 					return 1;
 				}			
 			}
 		}
-		System.out.println("flush memory.........");
+		//System.out.println("flush memory.........");
 		flushMemory(entry.ppn);
 		return 1;
 	}

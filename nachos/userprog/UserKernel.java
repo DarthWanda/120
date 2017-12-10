@@ -106,7 +106,7 @@ public class UserKernel extends ThreadedKernel {
 		rootProcess = UserProcess.newUserProcess();
 
 		String shellProgram = Machine.getShellProgramName();
-		//System.out.println(shellProgram);
+		System.out.println(shellProgram);
 		Lib.assertTrue(rootProcess.execute(shellProgram, new String[] {}));
 
 		KThread.currentThread().finish();
@@ -189,7 +189,15 @@ public class UserKernel extends ThreadedKernel {
 	public static UserProcess rootProcess;
 	public static int getNextPage() {
 		pageLock.P();
-        int nextPage = pageList.removeLast();
+		int nextPage = -1;
+		if (!pageList.isEmpty()) {
+			nextPage = pageList.removeLast();
+		} else {
+			
+			
+			System.out.println("not sufficcient page, require swap");
+		}
+        
 		pageLock.V();
 		return nextPage;
 	}

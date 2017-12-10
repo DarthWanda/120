@@ -182,7 +182,7 @@ public class UserProcess {
 		while(remain > 0 ) {
 			int vpn = vaddr / Processor.pageSize;
 			if(vpn >= numPages) {
-				return -1;
+				return length - remain;
 			}
 			int ptr = vaddr - (vaddr / Processor.pageSize) * Processor.pageSize;
 			int ppn = pageTable[vpn].ppn;
@@ -239,8 +239,8 @@ public class UserProcess {
 		while(remain > 0 ) {
 			int vpn = vaddr / Processor.pageSize;
 			int ptr = vaddr - (vaddr / Processor.pageSize) * Processor.pageSize;
-			if(vpn >= numPages) {
-				return -1;
+			if(vpn >= numPages || pageTable[vpn].readOnly) {
+				return length - remain;
 			}
 			int ppn = pageTable[vpn].ppn;
 			for(int i = 0; i + ptr < Processor.pageSize && remain > 0; i++) {

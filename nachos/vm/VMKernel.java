@@ -14,6 +14,7 @@ public class VMKernel extends UserKernel {
 	 */
 	public VMKernel() {
 		super();
+		invertedPageTable = new InvertedPageTableEntry[Machine.processor().getNumPhysPages()];
 	}
 
 	/**
@@ -44,8 +45,39 @@ public class VMKernel extends UserKernel {
 		super.terminate();
 	}
 
+	// add inverted page table;
+	private class InvertedPageTableEntry {
+		VMProcess process;
+		TranslationEntry transEntry;
+		int pinCount;
+
+		public InvertedPageTableEntry(VMProcess p, TranslationEntry t, int cnt) {
+			this.process = p;
+			this.transEntry = t;
+			this.pinCount = pinCount;
+		}
+
+	}
+	
+	public static int getNextPage() {
+		pageLock.P();
+		int nextPage = -1;
+		if (!pageList.isEmpty()) {
+			nextPage = pageList.removeLast();
+		} else {
+			
+			
+			System.out.println("not sufficcient page, require swap");
+		}
+        
+		pageLock.V();
+		return nextPage;
+	}
+
+
+	private InvertedPageTableEntry[] invertedPageTable;
+	private int[] frame;
 	// dummy variables to make javac smarter
 	private static VMProcess dummy1 = null;
-
 	private static final char dbgVM = 'v';
 }
