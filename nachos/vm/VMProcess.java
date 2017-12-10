@@ -169,7 +169,7 @@ public class VMProcess extends UserProcess {
 		while(remain > 0 ) {
 			int vpn = vaddr / Processor.pageSize;
 			if(vpn >= numPages) {
-				return -1;
+				return length - remain;
 			}
 			TranslationEntry entry = pageTable[vpn];
 			if(!entry.valid) {
@@ -224,9 +224,9 @@ public class VMProcess extends UserProcess {
 		int j = 0;
 		while(remain > 0 ) {
 			int vpn = vaddr / Processor.pageSize;
-			if(vpn >= numPages) {
-				return -1;
-			}	
+			if(vpn >= numPages || pageTable[vpn].readOnly) {
+				return length - remain;
+			}
 			TranslationEntry entry = pageTable[vpn];
 			if(!entry.valid) {
 				if(handlePageFault(vaddr) != 1) {
