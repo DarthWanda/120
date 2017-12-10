@@ -79,7 +79,7 @@ public class VMProcess extends UserProcess {
 		case Processor.exceptionPageFault:
 			//System.out.println("exception cause: " + cause);
 			int result = handlePageFault(processor.readRegister(Processor.regBadVAddr));
-			processor.writeRegister(Processor.regV0, result);
+			//processor.writeRegister(Processor.regV0, result);
 			break;
 		default:
 			//System.out.println("exception cause: " + cause);
