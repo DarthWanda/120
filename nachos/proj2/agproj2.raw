@@ -1,8 +1,9 @@
-------[ Sat Dec  9 13:00:23 2017 ]------
+------[ Sun Dec 10 10:30:25 2017 ]------
 --[ tests write1.c ]--
 stty: standard input: Inappropriate ioctl for device
 stty: standard input: Inappropriate ioctl for device
 nachos 5.0j initializing... config interrupt timer processor console user-check grader
+write1.coff
 5
 
 roses are red
@@ -17,6 +18,7 @@ stty: standard input: Inappropriate ioctl for device
 stty: standard input: Inappropriate ioctl for device
 stty: standard input: Inappropriate ioctl for device
 nachos 5.0j initializing... config interrupt timer processor console user-check grader
+write10.coff
 17
 creating write.out...
 2
@@ -209,6 +211,7 @@ stty: standard input: Inappropriate ioctl for device
 stty: standard input: Inappropriate ioctl for device
 stty: standard input: Inappropriate ioctl for device
 nachos 5.0j initializing... config interrupt timer processor console user-check grader
+exit1.coff
 1
 
 success
@@ -217,6 +220,7 @@ stty: standard input: Inappropriate ioctl for device
 stty: standard input: Inappropriate ioctl for device
 stty: standard input: Inappropriate ioctl for device
 nachos 5.0j initializing... config interrupt timer processor console user-check grader
+exec1_orig.coff
 2
 1
 
@@ -226,6 +230,7 @@ stty: standard input: Inappropriate ioctl for device
 stty: standard input: Inappropriate ioctl for device
 stty: standard input: Inappropriate ioctl for device
 nachos 5.0j initializing... config interrupt timer processor console user-check grader
+join1.coff
 5
 execing exit1.coff...
 1
