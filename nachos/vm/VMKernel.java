@@ -31,6 +31,13 @@ public class VMKernel extends UserKernel {
 			usedFlag[i] = false;
 			invertedPageTable[i] = new invertedPageTableEntry(null, null, 0);
 		}
+
+		/*
+			begin to initilize the swap file
+		*/	
+		// remove if exist in kernel
+		ThreadedKernel.fileSystem.remove("myswapfile");
+		swapFile = ThreadedKernel.fileSystem.open("myswapfile", true);
 	}
 
 	/**
@@ -56,21 +63,42 @@ public class VMKernel extends UserKernel {
 
 	// add inverted page table;
 	private class invertedPageTableEntry {
-		public Integer pid;
+		public VMProcess proc;
 		public TranslationEntry transEntry;
 		public int pinCount;
 
-		public invertedPageTableEntry(Integer p, TranslationEntry t, int cnt) {
-			this.pid = p;
+		public invertedPageTableEntry(VMProcess p, TranslationEntry t, int cnt) {
+			this.proc = p;
 			this.transEntry = t;
 			this.pinCount = pinCount;
 		}
 
 	}
 
-	protected static void swapIn()
+
+	protected static void swapIn(int spn, int ppn){
+		byte[] memory = Machine.processor().getMemory();
+		int paddr = Processor.makeAddress(ppn, 0);
+		swapFile.read(spn*Processor.pageSize, memory, paddr, Processor.pageSize);
+
+		System.out.println("swap into physical page" + ppn);
+	}
+
 	protected static void swapOut(int ppn) {
-		System.out.println("swap out dirty page" + ppn);
+		invertedPageTableEntry entry = invertedPageTable[ppn];
+		VMProcess proc = entry.proc;
+		// this entry should be valid
+		Lib.assertTrue(entry.transEntry.valid);
+		int vpn = entry.transEntry.vpn;
+
+		// write physical page to swap file, swap out.
+		byte[] memory = Machine.processor().getMemory();
+		int paddr = Processor.makeAddress(ppn, 0);
+		Lib.assertTrue(swapFile.length()%Processor.pageSize == 0);
+		entry.transEntry.ppn = swapFile.length() / Processor.pageSize;
+		swapFile.write(swapFile.length(), memory, paddr, Processor.pageSize);
+
+		System.out.println("swap out physical page" + ppn);
 	}
 
 	public static int getNextPage() {
@@ -97,10 +125,10 @@ public class VMKernel extends UserKernel {
 		lock.release();
 		return nextPage;
 	}
-	public static void fillInvertedEntry(int ppn,int p, TranslationEntry t) {
+	public static void fillInvertedEntry(int ppn,VMProcess p, TranslationEntry t) {
 		lock.acquire();
 		invertedPageTableEntry it = invertedPageTable[ppn];
-		it.pid = p;
+		it.proc = p;
 		it.transEntry = t;
 		lock.release();
 	}
@@ -148,4 +176,12 @@ public class VMKernel extends UserKernel {
 	// dummy variables to make javac smarter
 	private static VMProcess dummy1 = null;
 	private static final char dbgVM = 'v';
+
+	private static OpenFile swapFile;
+
+
+
+
+
+
 }

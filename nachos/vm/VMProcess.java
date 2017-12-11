@@ -98,12 +98,14 @@ public class VMProcess extends UserProcess {
 		}
 		TranslationEntry entry = pageTable[vpn];
 		
+		int spn = vpnToSpn(vpn);
 		entry.valid = true;
 		entry.ppn = VMKernel.getNextPage();
 		
-		VMKernel.fillInvertedEntry(entry.ppn, this.getPid(), entry);
+		VMKernel.fillInvertedEntry(entry.ppn, this, entry);
 		if (entry.dirty == true) {
-			VMKernel.swapIn()
+			VMKernel.swapIn(spn, entry.ppn);
+			return 1;
 		}
 		//System.out.println("num pages is ........." + numPages);
 		for (int s = 0; s < coff.getNumSections(); s++) {
@@ -171,7 +173,7 @@ public class VMProcess extends UserProcess {
 			if(!entry.valid) {
 				if(handlePageFault(vaddr) != 1) {
 					System.out.println("encounter handlePageFault error when readVirtualMemory............");
-					return -1;
+					return length - remain;
 				}
 			}
 			
@@ -262,7 +264,12 @@ public class VMProcess extends UserProcess {
 		int memoryLength = Machine.processor().getMemory().length;
 		
 		byte[] localBuf = new byte[a2];
-		
+
+		int vpn = Processor.pageFromAddress(a1 + a2);
+		if (vpn >= numPages) {
+			return -1;
+		}
+
 		if(readVirtualMemory(a1, localBuf) == -1) {
 			return -1;
 		}
@@ -276,7 +283,6 @@ public class VMProcess extends UserProcess {
 			//write(int pos, byte[] buf, int offset, int length)
 			int flag = f.write(pos, localBuf, 0, localBuf.length);
 			if(flag == -1) {
-				
 				return flag;
 			}
 			else {
@@ -285,10 +291,20 @@ public class VMProcess extends UserProcess {
 			}
 		}
 	}
-
 	private static final int pageSize = Processor.pageSize;
 
 	private static final char dbgProcess = 'a';
 
 	private static final char dbgVM = 'v';
+
+	// because when encounter page fault, the ppn is useless, so use ppn as spn
+	private int vpnToSpn(int vpn) {
+		return pageTable[vpn].ppn;
+	}
+
+
+
+
+
+
 }

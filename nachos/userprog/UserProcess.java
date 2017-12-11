@@ -501,6 +501,10 @@ public class UserProcess {
 
 		byte[] localBuf = new byte[a2];
 		
+		int vpn = Processor.pageFromAddress(a1 + a2);
+		if (vpn > numPages) {
+			return -1;
+		}
 		if(readVirtualMemory(a1, localBuf) == -1) {
 
 			return -1;
@@ -586,6 +590,10 @@ public class UserProcess {
 		// System.out.println("");
 
 		// f.read(localBuf, 0, 1000);
+		int vpn = Processor.pageFromAddress(buffer + count);
+		if (vpn >= numPages) {
+			return -1;
+		}
 
 		if(fd == 0 || fd ==1) {
 			int nBytes;
