@@ -71,12 +71,11 @@ public class VMKernel extends UserKernel {
 	}
 
 	public static int getNextPage() {
-		pageLock.P();
+		lock.acquire();
 		int nextPage = -1;
 		if (!pageList.isEmpty()) {
 			nextPage = pageList.removeLast();
-		} else {
-			
+		} else {	
 			int ppn = clock();
 			System.out.println("clock returns ppn#" + ppn);
 			invertedPageTableEntry physEntry = invertedPageTable[ppn];
@@ -87,7 +86,7 @@ public class VMKernel extends UserKernel {
 			System.out.println("not sufficcient page, require swap");
 		}
         
-		pageLock.V();
+		lock.release();
 		return nextPage;
 	}
 	public void fillInvertedEntry(invertedPageTableEntry it,VMProcess p, TranslationEntry t) {
@@ -116,6 +115,7 @@ public class VMKernel extends UserKernel {
 				res = i;
 				break;
 			} else {
+				System.out.println("fuck you mom");
 				usedFlag[i] = false;
 			}
 		}

@@ -89,16 +89,18 @@ public class VMProcess extends UserProcess {
 	}
 
 	private int handlePageFault(int vaddr) {
+		
 		int vpn = Processor.pageFromAddress(vaddr);
 		//see if translage is good
 		//Lib.assertTrue(vpn == vvpn);
-
-		TranslationEntry entry = pageTable[vpn];
 		if (vpn >= numPages) {
-			return -1;
+					return -1;
 		}
+		TranslationEntry entry = pageTable[vpn];
+		
 		entry.valid = true;
 		entry.ppn = VMKernel.getNextPage();
+		//System.out.print("..........handlePageFault!!!!!   " + entry.vpn + "..........");
 		//entry.vpn = vpn;
 		// if is argument;
 		// if (vpn == numPages - 1) {
@@ -112,14 +114,15 @@ public class VMProcess extends UserProcess {
 			for (int i = 0; i < section.getLength(); i++) {
 				int secVpn = section.getFirstVPN() + i;
 				if (secVpn == vpn) {
-					//System.out.println("section  " + secVpn);
+					System.out.println("section  " + secVpn);
 					entry.readOnly = section.isReadOnly();
 					section.loadPage(i, entry.ppn);
 					return 1;
 				}			
 			}
 		}
-		//System.out.println("flush memory.........");
+		System.out.println("flush memory.........");
+		entry.readOnly = false;
 		flushMemory(entry.ppn);
 		return 1;
 	}
@@ -156,19 +159,16 @@ public class VMProcess extends UserProcess {
 	public int readVirtualMemory(int vaddr, byte[] data, int offset, int length) {
 		Lib.assertTrue(offset >= 0 && length >= 0
 				&& offset + length <= data.length);
-
+		
 		byte[] memory = Machine.processor().getMemory();
 
-		// for now, just assume that virtual addresses equal physical addresses
-		if (vaddr < 0 || vaddr >= memory.length)
-			return 0;
 		
-		//added
 		int remain = length;
 		int j = 0;
 		while(remain > 0 ) {
 			int vpn = vaddr / Processor.pageSize;
 			if(vpn >= numPages) {
+				System.out.println("fuck you mom");
 				return length - remain;
 			}
 			TranslationEntry entry = pageTable[vpn];
@@ -192,6 +192,7 @@ public class VMProcess extends UserProcess {
 	}
 
 	public int writeVirtualMemory(int vaddr, byte[] data) {
+		//System.out.println("writing virtual mem..................");
 		return writeVirtualMemory(vaddr, data, 0, data.length);
 	}
 
@@ -215,20 +216,22 @@ public class VMProcess extends UserProcess {
 
 		byte[] memory = Machine.processor().getMemory();
 
-		// for now, just assume that virtual addresses equal physical addresses
-		if (vaddr < 0 || vaddr >= memory.length)
-			return 0;
 		
+		System.out.println("writing ppn..................");
 		//added
 		int remain = length;
 		int j = 0;
+		System.out.println(" begin to write virtual ");
 		while(remain > 0 ) {
+			System.out.println("writed " + (length - remain) + " bytes ");
 			int vpn = vaddr / Processor.pageSize;
 			if(vpn >= numPages || pageTable[vpn].readOnly) {
+				System.out.println("fuck you mom");
 				return length - remain;
 			}
 			TranslationEntry entry = pageTable[vpn];
 			if(!entry.valid) {
+
 				if(handlePageFault(vaddr) != 1) {
 					System.out.println("encounter handlePageFault error when readVirtualMemory............");
 					return -1;
@@ -237,6 +240,7 @@ public class VMProcess extends UserProcess {
 			int ptr = vaddr - (vaddr / Processor.pageSize) * Processor.pageSize;
 			
 			int ppn = pageTable[vpn].ppn;
+
 			for(int i = 0; i + ptr < Processor.pageSize && remain > 0; i++) {
 				memory[ppn*Processor.pageSize + i + ptr] = data[j + offset];
 				remain--;
@@ -244,7 +248,7 @@ public class VMProcess extends UserProcess {
 				j++;
 			}
 		}
-
+		
 		return length - remain;
 	}
 

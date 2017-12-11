@@ -193,7 +193,7 @@ public class UserProcess {
 				j++;
 			}
 		}
-
+		//System.out.println("fuck you mom");
 		return length - remain;
 	}
 
@@ -206,6 +206,7 @@ public class UserProcess {
 	 * @return the number of bytes successfully transferred.
 	 */
 	public int writeVirtualMemory(int vaddr, byte[] data) {
+		//System.out.println("writing virtual mem..................");
 		return writeVirtualMemory(vaddr, data, 0, data.length);
 	}
 
@@ -250,7 +251,7 @@ public class UserProcess {
 				j++;
 			}
 		}
-
+		System.out.println("fuck you mom");
 		return length - remain;
 	}
 
@@ -293,7 +294,6 @@ public class UserProcess {
 			}
 			numPages += section.getLength();
 		}
-			
 		// make sure the 	 array will fit in one page
 		byte[][] argv = new byte[args.length][];
 		int argsSize = 0;
@@ -598,12 +598,15 @@ public class UserProcess {
 		}
 		else {
 			int pos = fileReadPos[fd];
+
 			//write(int pos, byte[] buf, int offset, int length)
 			int flag = f.read(pos, localBuf, 0, localBuf.length);
 			if(flag == -1) {
+
 				return flag;
 			}
-			else {
+			else {	
+
 				if(writeVirtualMemory(buffer, localBuf) == -1 ) {
 					return -1;
 				}
