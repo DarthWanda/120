@@ -100,12 +100,11 @@ public class VMProcess extends UserProcess {
 		
 		entry.valid = true;
 		entry.ppn = VMKernel.getNextPage();
-		//System.out.print("..........handlePageFault!!!!!   " + entry.vpn + "..........");
-		//entry.vpn = vpn;
-		// if is argument;
-		// if (vpn == numPages - 1) {
-
-		// }
+		
+		VMKernel.fillInvertedEntry(entry.ppn, this.getPid(), entry);
+		if (entry.dirty == true) {
+			VMKernel.swapIn()
+		}
 		//System.out.println("num pages is ........." + numPages);
 		for (int s = 0; s < coff.getNumSections(); s++) {
 			CoffSection section = coff.getSection(s);
@@ -114,14 +113,12 @@ public class VMProcess extends UserProcess {
 			for (int i = 0; i < section.getLength(); i++) {
 				int secVpn = section.getFirstVPN() + i;
 				if (secVpn == vpn) {
-					System.out.println("section  " + secVpn);
 					entry.readOnly = section.isReadOnly();
 					section.loadPage(i, entry.ppn);
 					return 1;
 				}			
 			}
 		}
-		System.out.println("flush memory.........");
 		entry.readOnly = false;
 		flushMemory(entry.ppn);
 		return 1;
@@ -168,7 +165,6 @@ public class VMProcess extends UserProcess {
 		while(remain > 0 ) {
 			int vpn = vaddr / Processor.pageSize;
 			if(vpn >= numPages) {
-				System.out.println("fuck you mom");
 				return length - remain;
 			}
 			TranslationEntry entry = pageTable[vpn];
@@ -226,7 +222,6 @@ public class VMProcess extends UserProcess {
 			System.out.println("writed " + (length - remain) + " bytes ");
 			int vpn = vaddr / Processor.pageSize;
 			if(vpn >= numPages || pageTable[vpn].readOnly) {
-				System.out.println("fuck you mom");
 				return length - remain;
 			}
 			TranslationEntry entry = pageTable[vpn];
@@ -240,7 +235,8 @@ public class VMProcess extends UserProcess {
 			int ptr = vaddr - (vaddr / Processor.pageSize) * Processor.pageSize;
 			
 			int ppn = pageTable[vpn].ppn;
-
+			entry.dirty = true;
+			//System.out.println(ppn + " is dirty page");
 			for(int i = 0; i + ptr < Processor.pageSize && remain > 0; i++) {
 				memory[ppn*Processor.pageSize + i + ptr] = data[j + offset];
 				remain--;
@@ -252,6 +248,43 @@ public class VMProcess extends UserProcess {
 		return length - remain;
 	}
 
+	/*
+		override
+	*/
+	protected int handleWrite(int a0, int a1, int a2) {
+		if(a0 >= 16 || a0 < 0 || a2 < 0) {
+			return -1;
+		}
+		OpenFile f = fileTable[a0];
+		if(f == null) {
+			return -1;
+		}
+		int memoryLength = Machine.processor().getMemory().length;
+		
+		byte[] localBuf = new byte[a2];
+		
+		if(readVirtualMemory(a1, localBuf) == -1) {
+			return -1;
+		}
+		//System.out.println("handle writing...........");
+		// stdin stdout;
+		if(a0 == 0 || a0 ==1) {
+			return f.write(localBuf, 0, a2);			
+		}
+		else {
+			int pos = fileWritePos[a0];
+			//write(int pos, byte[] buf, int offset, int length)
+			int flag = f.write(pos, localBuf, 0, localBuf.length);
+			if(flag == -1) {
+				
+				return flag;
+			}
+			else {
+				fileWritePos[a0] += flag;
+				return flag;
+			}
+		}
+	}
 
 	private static final int pageSize = Processor.pageSize;
 

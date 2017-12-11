@@ -24,6 +24,7 @@ public class VMKernel extends UserKernel {
 	public void initialize(String[] args) {
 		super.initialize(args);
 		lock = new Lock();
+		clockLock = new Lock();
 		invertedPageTable = new invertedPageTableEntry[Machine.processor().getNumPhysPages()];
 		usedFlag = new boolean[Machine.processor().getNumPhysPages()];
 		for (int i = 0; i < usedFlag.length; i++) {
@@ -55,19 +56,21 @@ public class VMKernel extends UserKernel {
 
 	// add inverted page table;
 	private class invertedPageTableEntry {
-		public VMProcess process;
+		public Integer pid;
 		public TranslationEntry transEntry;
 		public int pinCount;
 
-		public invertedPageTableEntry(VMProcess p, TranslationEntry t, int cnt) {
-			this.process = p;
+		public invertedPageTableEntry(Integer p, TranslationEntry t, int cnt) {
+			this.pid = p;
 			this.transEntry = t;
 			this.pinCount = pinCount;
 		}
 
 	}
-	private static void swapOut(int ppn) {
-		System.out.println("swapping out physical page#" + ppn);
+
+	protected static void swapIn()
+	protected static void swapOut(int ppn) {
+		System.out.println("swap out dirty page" + ppn);
 	}
 
 	public static int getNextPage() {
@@ -75,23 +78,29 @@ public class VMKernel extends UserKernel {
 		int nextPage = -1;
 		if (!pageList.isEmpty()) {
 			nextPage = pageList.removeLast();
+
 		} else {	
 			int ppn = clock();
-			System.out.println("clock returns ppn#" + ppn);
+			nextPage = ppn;
+			//System.out.println("clock returns ppn#" + ppn);
 			invertedPageTableEntry physEntry = invertedPageTable[ppn];
+			if (physEntry.transEntry == null) {
+				System.out.println("omg fuck your mom");
+			}
 			if (physEntry.transEntry.dirty) {
 				swapOut(ppn);
 			}
 			physEntry.transEntry.valid = false;
-			System.out.println("not sufficcient page, require swap");
+			//System.out.println("not sufficcient page, require swap");
 		}
         
 		lock.release();
 		return nextPage;
 	}
-	public void fillInvertedEntry(invertedPageTableEntry it,VMProcess p, TranslationEntry t) {
+	public static void fillInvertedEntry(int ppn,int p, TranslationEntry t) {
 		lock.acquire();
-		it.process = p;
+		invertedPageTableEntry it = invertedPageTable[ppn];
+		it.pid = p;
 		it.transEntry = t;
 		lock.release();
 	}
@@ -107,7 +116,7 @@ public class VMKernel extends UserKernel {
 	}
 
 	private static int clock() {
-		lock.acquire();
+		clockLock.acquire();
 		int res = 0;
 		for (int i = 0; ; i = (i + 1) % Machine.processor().getNumPhysPages()) {
 			if(usedFlag[i] == false) {
@@ -115,14 +124,23 @@ public class VMKernel extends UserKernel {
 				res = i;
 				break;
 			} else {
-				System.out.println("fuck you mom");
 				usedFlag[i] = false;
 			}
 		}
-		lock.acquire();
+		clockLock.release();
 		return res;
 	}
 
+	// public static VMProcess currentProcess() {
+	// 	if (!(KThread.currentThread() instanceof UThread))
+	// 		return null;
+
+	// 	return ((UThread) KThread.currentThread()).process;
+	// }
+
+
+
+	private static Lock clockLock;
 	private static Lock lock;
 	private static invertedPageTableEntry[] invertedPageTable;
 	private static int[] frame;

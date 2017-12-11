@@ -484,7 +484,7 @@ public class UserProcess {
 	/*
 		Handle the write() system call
 	*/
-	private int handleWrite(int a0, int a1, int a2) {
+	protected int handleWrite(int a0, int a1, int a2) {
 		if(a0 >= 16 || a0 < 0 || a2 < 0) {
 			return -1;
 		}
@@ -492,6 +492,7 @@ public class UserProcess {
 		if(f == null) {
 			return -1;
 		}
+		
 		int memoryLength = Machine.processor().getMemory().length;
 		if (a1 + a2 >= memoryLength) {
 			//System.out.println("invalid buffer:");
@@ -501,6 +502,7 @@ public class UserProcess {
 		byte[] localBuf = new byte[a2];
 		
 		if(readVirtualMemory(a1, localBuf) == -1) {
+
 			return -1;
 		}
 		
@@ -513,6 +515,7 @@ public class UserProcess {
 			//write(int pos, byte[] buf, int offset, int length)
 			int flag = f.write(pos, localBuf, 0, localBuf.length);
 			if(flag == -1) {
+
 				return flag;
 			}
 			else {
@@ -870,10 +873,10 @@ public class UserProcess {
 
 	private static final char dbgProcess = 'a';
 
-	private OpenFile[] fileTable = new OpenFile[16];
-	private int[] fileReadPos = new int[16];
-	private int[] fileWritePos = new int[16];
-	private HashSet<String> fileUnlinkHold = new HashSet<String>();
+	protected OpenFile[] fileTable = new OpenFile[16];
+	protected int[] fileReadPos = new int[16];
+	protected int[] fileWritePos = new int[16];
+	protected HashSet<String> fileUnlinkHold = new HashSet<String>();
 
 	private final int pid;
 	private ArrayList<Integer> childrens = new ArrayList<Integer>();
@@ -897,6 +900,7 @@ public class UserProcess {
 	}
 
 	
+
 	private static int cnt = 0;
 	private UThread currentThread;
 	private Integer exitStatus = null;
