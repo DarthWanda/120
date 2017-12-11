@@ -220,3 +220,9 @@ PASS : tests write10.c
 PASS : tests exit1.c
 PASS : tests exec1.c
 PASS : tests join1.c
+------[ Mon Dec 11 14:30:38 2017 ]------
+PASS : tests write1.c
+PASS : tests write10.c
+PASS : tests exit1.c
+PASS : tests exec1.c
+PASS : tests join1.c
