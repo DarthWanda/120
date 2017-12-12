@@ -344,6 +344,7 @@ public final class Processor {
 		int ppn = entry.ppn;
 		if (ppn < 0 || ppn >= numPhysPages) {
 			Lib.debug(dbgProcessor, "\t\tbad ppn");
+			Lib.debug('g',"vaddr# " + String.valueOf(vaddr) + " ppn#" + String.valueOf(ppn));
 			throw new MipsException(exceptionBusError, vaddr);
 		}
 

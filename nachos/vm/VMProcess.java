@@ -99,8 +99,10 @@ public class VMProcess extends UserProcess {
 		TranslationEntry entry = pageTable[vpn];
 		
 		int spn = vpnToSpn(vpn);
+
 		entry.valid = true;
 		entry.ppn = VMKernel.getNextPage();
+		
 		
 		VMKernel.fillInvertedEntry(entry.ppn, this, entry);
 		if (entry.dirty == true) {
@@ -176,7 +178,12 @@ public class VMProcess extends UserProcess {
 					return length - remain;
 				}
 			}
-			
+			//check if swap succussfully
+			Lib.assertTrue(entry.valid);
+			Lib.assertTrue(entry.vpn == vpn);
+			Lib.assertTrue(entry.ppn < Machine.processor().getNumPhysPages());
+
+
 			int ptr = vaddr - (vaddr / Processor.pageSize) * Processor.pageSize;
 			int ppn = pageTable[vpn].ppn;
 			for(int i = 0; i + ptr < Processor.pageSize && remain > 0; i++) {
@@ -228,12 +235,20 @@ public class VMProcess extends UserProcess {
 			}
 			TranslationEntry entry = pageTable[vpn];
 			if(!entry.valid) {
-
 				if(handlePageFault(vaddr) != 1) {
 					System.out.println("encounter handlePageFault error when readVirtualMemory............");
 					return -1;
 				}
 			}
+
+			//check if swap succussfully
+			Lib.assertTrue(!entry.readOnly);
+			Lib.assertTrue(entry.valid);
+			Lib.assertTrue(entry.vpn == vpn);
+			Lib.assertTrue(entry.ppn < Machine.processor().getNumPhysPages());
+			Lib.assertTrue(entry.ppn != 10);
+
+
 			int ptr = vaddr - (vaddr / Processor.pageSize) * Processor.pageSize;
 			
 			int ppn = pageTable[vpn].ppn;

@@ -88,7 +88,7 @@ public class VMKernel extends UserKernel {
 		invertedPageTableEntry entry = invertedPageTable[ppn];
 		VMProcess proc = entry.proc;
 		// this entry should be valid
-		Lib.assertTrue(entry.transEntry.valid);
+		//Lib.assertTrue(entry.transEntry.valid);
 		int vpn = entry.transEntry.vpn;
 
 		// write physical page to swap file, swap out.
@@ -109,16 +109,19 @@ public class VMKernel extends UserKernel {
 
 		} else {	
 			int ppn = clock();
+			Lib.assertTrue(ppn < Machine.processor().getNumPhysPages());
+
 			nextPage = ppn;
 			invertedPageTableEntry physEntry = invertedPageTable[ppn];
-			if (physEntry.transEntry == null) {
-				System.out.println("omg fuck your mom");
-			}
+			
+			Lib.assertTrue(physEntry.transEntry != null);
+
 			if (physEntry.transEntry.dirty) {
 				Lib.assertTrue(!physEntry.transEntry.readOnly);
 				swapOut(ppn);
 			}
 			physEntry.transEntry.valid = false;
+
 			//System.out.println("not sufficcient page, require swap");
 		}
         
@@ -147,13 +150,12 @@ public class VMKernel extends UserKernel {
 		clockLock.acquire();
 		int res = 0;
 		for (int i = 0; ; i = (i + 1) % Machine.processor().getNumPhysPages()) {
-			Lib.debug('c', "searching ppn#" + i);
 			if(usedFlag[i] == false) {
 				invertedPageTableEntry physEntry = invertedPageTable[i];
 				
-				if (physEntry.transEntry.readOnly) {
-					continue;
-				}
+				// if (physEntry.transEntry.readOnly) {
+				// 	continue;
+				// }
 
 				usedFlag[i] = true;
 				res = i;
