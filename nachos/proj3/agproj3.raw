@@ -1,4 +1,4 @@
-------[ Mon Dec 11 14:31:35 2017 ]------
+------[ Tue Dec 12 00:01:27 2017 ]------
 --[ swap4: Tests swapping by initializing an array larger than physical memory and reading through it - does not dirty the pages again ]--
 stty: standard input: Inappropriate ioctl for device
 stty: standard input: Inappropriate ioctl for device
