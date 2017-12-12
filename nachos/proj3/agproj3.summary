@@ -1,3 +1,6 @@
 ------[ Sat Dec  9 14:30:22 2017 ]------
 FAIL : swap4: Tests swapping by initializing an array larger than physical memory and reading through it - does not dirty the pages again
 FAIL : swap5: Tests swapping by initializing an array larger than physical memory and reading through it - dirties the pages again after initialization
+------[ Mon Dec 11 14:31:35 2017 ]------
+PASS : swap4: Tests swapping by initializing an array larger than physical memory and reading through it - does not dirty the pages again
+PASS : swap5: Tests swapping by initializing an array larger than physical memory and reading through it - dirties the pages again after initialization
