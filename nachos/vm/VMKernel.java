@@ -110,12 +110,12 @@ public class VMKernel extends UserKernel {
 		} else {	
 			int ppn = clock();
 			nextPage = ppn;
-			//System.out.println("clock returns ppn#" + ppn);
 			invertedPageTableEntry physEntry = invertedPageTable[ppn];
 			if (physEntry.transEntry == null) {
 				System.out.println("omg fuck your mom");
 			}
 			if (physEntry.transEntry.dirty) {
+				Lib.assertTrue(!physEntry.transEntry.readOnly);
 				swapOut(ppn);
 			}
 			physEntry.transEntry.valid = false;
@@ -147,7 +147,14 @@ public class VMKernel extends UserKernel {
 		clockLock.acquire();
 		int res = 0;
 		for (int i = 0; ; i = (i + 1) % Machine.processor().getNumPhysPages()) {
+			Lib.debug('c', "searching ppn#" + i);
 			if(usedFlag[i] == false) {
+				invertedPageTableEntry physEntry = invertedPageTable[i];
+				
+				if (physEntry.transEntry.readOnly) {
+					continue;
+				}
+
 				usedFlag[i] = true;
 				res = i;
 				break;
