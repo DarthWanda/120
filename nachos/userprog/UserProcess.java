@@ -390,7 +390,9 @@ public class UserProcess {
 	protected void unloadSections() {
 //		release those pages to Userkernel
 		for (int i = 0; i < numPages; i++){
-			UserKernel.addFreePage(pageTable[i].ppn);
+			if (pageTable[i].valid) {
+				UserKernel.addFreePage(pageTable[i].ppn);
+			}
 		}
 	}
 

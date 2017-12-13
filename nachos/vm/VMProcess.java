@@ -4,7 +4,7 @@ import nachos.machine.*;
 import nachos.threads.*;
 import nachos.userprog.*;
 import nachos.vm.*;
-
+import nachos.vm.VMKernel.*;
 /**
  * A <tt>UserProcess</tt> that supports demand-paging.
  */
@@ -89,44 +89,70 @@ public class VMProcess extends UserProcess {
 			VMKernel.pageFaultLock.release();
 			return -1;
 		}
-		
-		TranslationEntry entry = pageTable[vpn];
-		
-		int spn = vpnToSpn(vpn);
 
-		entry.valid = true;
-		entry.ppn = VMKernel.getNextPage();
-		
-		
-		VMKernel.fillInvertedEntry(entry.ppn, this, entry);
-		if (entry.dirty == true) {
-			VMKernel.swapIn(spn, entry.ppn);
-			VMKernel.pageFaultLock.release();
-			return 1;
+		TranslationEntry entry = pageTable[vpn];
+		Lib.assertTrue(!entry.valid);
+
+		int nextPPN = VMKernel.getNextPage();
+		Lib.assertTrue(nextPPN < Machine.processor().getNumPhysPages());
+		invertedPageTableEntry invertedEntry = VMKernel.getInvertedEntry(nextPPN);
+		// check, this should be valid
+		if (invertedEntry != null) {
+			Lib.assertTrue(invertedEntry.transEntry.valid);
+			loadToPPN(vpn, nextPPN);
 		}
-		//System.out.println("num pages is ........." + numPages);
-		for (int s = 0; s < coff.getNumSections(); s++) {
-			CoffSection section = coff.getSection(s);
-			Lib.debug(dbgProcess, "\tinitializing " + section.getName()
-					+ " section (" + section.getLength() + " pages)");
-			for (int i = 0; i < section.getLength(); i++) {
-				int secVpn = section.getFirstVPN() + i;
-				if (secVpn == vpn) {
-					entry.readOnly = section.isReadOnly();
-					section.loadPage(i, entry.ppn);
-					VMKernel.pageFaultLock.release();
-					return 1;
-				}			
-			}
+		else {
+			invertedEntry = VMKernel.newInvertedEntry(nextPPN, this, pageTable[vpn], 0);
+			loadToPPN(vpn, nextPPN);
 		}
-		entry.readOnly = false;
-		flushMemory(entry.ppn);
 
 		VMKernel.pageFaultLock.release();
 		return 1;
 	}
 
+	private void loadToPPN(int vpn, int ppn) {
+		invertedPageTableEntry invertedEntry = VMKernel.getInvertedEntry(ppn);
+		TranslationEntry entry = pageTable[vpn];
 
+		// Lib.assertTrue(invertedEntry != null);
+		// Lib.assertTrue(invertedEntry.transEntry.valid);
+		// Lib.assertTrue(!entry.valid);
+
+		invertedEntry.transEntry.valid = false;
+		entry.valid = true;
+
+		if (invertedEntry.transEntry.dirty) {
+			Lib.assertTrue(!invertedEntry.transEntry.readOnly);
+			VMKernel.swapOut(ppn);
+		}
+
+		if (entry.dirty) {
+			VMKernel.swapIn(entry.ppn, ppn);	
+		} else {
+			int cntFlag = 0;
+			for (int s = 0; s < coff.getNumSections(); s++) {
+				CoffSection section = coff.getSection(s);
+				Lib.debug(dbgProcess, "\tinitializing " + section.getName()
+						+ " section (" + section.getLength() + " pages)");
+				for (int i = 0; i < section.getLength(); i++) {
+					int secVpn = section.getFirstVPN() + i;
+					if (secVpn == vpn) {
+						cntFlag++;
+						entry.readOnly = section.isReadOnly();
+						section.loadPage(i, ppn);
+					}			
+				}
+			}
+			Lib.assertTrue(cntFlag == 0 || cntFlag == 1);
+			if (cntFlag == 0) {
+				entry.readOnly = false;
+				flushMemory(ppn);
+			}
+				
+		}
+		entry.ppn = ppn;
+		VMKernel.fillInvertedEntry(ppn, this, entry);
+	}
 
 
 	public void flushMemory(int ppn) {

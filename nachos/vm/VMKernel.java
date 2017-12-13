@@ -28,11 +28,12 @@ public class VMKernel extends UserKernel {
 		pageFaultLock = new Lock();
 
 		pinSet = new HashSet<>();
+		vpnToSpn = new HashMap<>();
 		invertedPageTable = new invertedPageTableEntry[Machine.processor().getNumPhysPages()];
 		usedFlag = new boolean[Machine.processor().getNumPhysPages()];
 		for (int i = 0; i < usedFlag.length; i++) {
 			usedFlag[i] = false;
-			invertedPageTable[i] = new invertedPageTableEntry(null, null, 0);
+			//invertedPageTable[i] = new invertedPageTableEntry(null, null, 0);
 		}
 
 		/*
@@ -62,22 +63,11 @@ public class VMKernel extends UserKernel {
 	 */
 	public void terminate() {
 		super.terminate();
-		
+
 	}
 
 	// add inverted page table;
-	private class invertedPageTableEntry {
-		public VMProcess proc;
-		public TranslationEntry transEntry;
-		public int pinCount;
-
-		public invertedPageTableEntry(VMProcess p, TranslationEntry t, int cnt) {
-			this.proc = p;
-			this.transEntry = t;
-			this.pinCount = pinCount;
-		}
-
-	}
+	
 
 
 	protected static void swapIn(int spn, int ppn){
@@ -85,7 +75,7 @@ public class VMKernel extends UserKernel {
 		int paddr = Processor.makeAddress(ppn, 0);
 		swapFile.read(spn*Processor.pageSize, memory, paddr, Processor.pageSize);
 
-		System.out.println("swap into physical page" + ppn);
+		//System.out.println("swap into physical page" + ppn);
 	}
 
 	protected static void swapOut(int ppn) {
@@ -102,7 +92,7 @@ public class VMKernel extends UserKernel {
 		entry.transEntry.ppn = swapFile.length() / Processor.pageSize;
 		swapFile.write(swapFile.length(), memory, paddr, Processor.pageSize);
 
-		System.out.println("swap out physical page" + ppn);
+		//System.out.println("swap out physical page" + ppn);
 	}
 
 	public static int getNextPage() {
@@ -110,27 +100,28 @@ public class VMKernel extends UserKernel {
 		int nextPage = -1;
 		if (!pageList.isEmpty()) {
 			nextPage = pageList.removeLast();
-
 		} else {	
 			int ppn = clock();
 			Lib.assertTrue(ppn < Machine.processor().getNumPhysPages());
 
 			nextPage = ppn;
-			invertedPageTableEntry physEntry = invertedPageTable[ppn];
 			
-			Lib.assertTrue(physEntry.transEntry != null);
+			// invertedPageTableEntry physEntry = invertedPageTable[ppn];
+			
+			// Lib.assertTrue(physEntry.transEntry != null);
 
-			if (physEntry.transEntry.dirty) {
-				Lib.assertTrue(!physEntry.transEntry.readOnly);
-				swapOut(ppn);
-			}
+			// if (physEntry.transEntry.dirty) {
+			// 	Lib.assertTrue(!physEntry.transEntry.readOnly);
+			// 	swapOut(ppn);
+			// }
 
-			physEntry.transEntry.valid = false;
+			// physEntry.transEntry.valid = false;
 
 			//System.out.println("not sufficcient page, require swap");
 		}
-        
+        Lib.debug('5', "next page" + String.valueOf(nextPage));
 		lock.release();
+		Lib.debug('5', "next page" + String.valueOf(nextPage));
 		return nextPage;
 	}
 	public static void fillInvertedEntry(int ppn,VMProcess p, TranslationEntry t) {
@@ -179,18 +170,24 @@ public class VMKernel extends UserKernel {
 
 	// 	return ((UThread) KThread.currentThread()).process;
 	// }
+	public static invertedPageTableEntry newInvertedEntry(int ppn, VMProcess p, TranslationEntry t, int cnt) {
+		invertedPageTable[ppn] = new invertedPageTableEntry(p, t, cnt);
+		return invertedPageTable[ppn];
+	}
 
-
+	public static invertedPageTableEntry getInvertedEntry(int ppn) {
+		return invertedPageTable[ppn];
+	}
 
 	private static Lock clockLock;
 	private static Lock lock;
 	protected static Lock pageFaultLock;
 
 
-	private static invertedPageTableEntry[] invertedPageTable;
+	protected static invertedPageTableEntry[] invertedPageTable;
 	private static boolean[] usedFlag;
 	protected static HashSet<Integer> pinSet;
-
+	protected static HashMap<Integer, Integer> vpnToSpn;
 
 
 	// dummy variables to make javac smarter
@@ -198,10 +195,16 @@ public class VMKernel extends UserKernel {
 	private static final char dbgVM = 'v';
 
 	private static OpenFile swapFile;
+}
+class invertedPageTableEntry {
+	public VMProcess proc;
+	public TranslationEntry transEntry;
+	public int pinCount;
 
-
-
-
-
+	public invertedPageTableEntry(VMProcess p, TranslationEntry t, int cnt) {
+		this.proc = p;
+		this.transEntry = t;
+		this.pinCount = pinCount;
+	}
 
 }
