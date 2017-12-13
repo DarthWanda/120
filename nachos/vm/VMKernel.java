@@ -120,6 +120,7 @@ public class VMKernel extends UserKernel {
 				Lib.assertTrue(!physEntry.transEntry.readOnly);
 				swapOut(ppn);
 			}
+			
 			physEntry.transEntry.valid = false;
 
 			//System.out.println("not sufficcient page, require swap");
