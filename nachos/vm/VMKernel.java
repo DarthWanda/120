@@ -119,9 +119,7 @@ public class VMKernel extends UserKernel {
 
 			//System.out.println("not sufficcient page, require swap");
 		}
-        Lib.debug('5', "next page" + String.valueOf(nextPage));
 		lock.release();
-		Lib.debug('5', "next page" + String.valueOf(nextPage));
 		return nextPage;
 	}
 	public static void fillInvertedEntry(int ppn,VMProcess p, TranslationEntry t) {

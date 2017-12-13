@@ -197,7 +197,7 @@ public class VMProcess extends UserProcess {
 			}
 			TranslationEntry entry = pageTable[vpn];
 			if(!entry.valid) {
-				System.out.println("encounter handlePageFault error when readVirtualMemory............");
+				//System.out.println("encounter handlePageFault error when readVirtualMemory............");
 				if(handlePageFault(vaddr) != 1) {
 					
 					return length - remain;
@@ -260,7 +260,7 @@ public class VMProcess extends UserProcess {
 			}
 			TranslationEntry entry = pageTable[vpn];
 			if(!entry.valid) {
-				System.out.println("encounter handlePageFault error when writeVirtualMemory............");
+				//System.out.println("encounter handlePageFault error when writeVirtualMemory............");
 				if(handlePageFault(vaddr) != 1) {
 					
 					return -1;
