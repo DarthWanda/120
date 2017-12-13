@@ -4,7 +4,7 @@ import nachos.machine.*;
 import nachos.threads.*;
 import nachos.userprog.*;
 import nachos.vm.*;
-
+import java.util.*;
 /**
  * A kernel that can support multiple demand-paging user processes.
  */
@@ -25,6 +25,9 @@ public class VMKernel extends UserKernel {
 		super.initialize(args);
 		lock = new Lock();
 		clockLock = new Lock();
+		pageFaultLock = new Lock();
+
+		pinSet = new HashSet<>();
 		invertedPageTable = new invertedPageTableEntry[Machine.processor().getNumPhysPages()];
 		usedFlag = new boolean[Machine.processor().getNumPhysPages()];
 		for (int i = 0; i < usedFlag.length; i++) {
@@ -59,6 +62,7 @@ public class VMKernel extends UserKernel {
 	 */
 	public void terminate() {
 		super.terminate();
+		
 	}
 
 	// add inverted page table;
@@ -120,7 +124,7 @@ public class VMKernel extends UserKernel {
 				Lib.assertTrue(!physEntry.transEntry.readOnly);
 				swapOut(ppn);
 			}
-			
+
 			physEntry.transEntry.valid = false;
 
 			//System.out.println("not sufficcient page, require swap");
@@ -180,9 +184,15 @@ public class VMKernel extends UserKernel {
 
 	private static Lock clockLock;
 	private static Lock lock;
+	protected static Lock pageFaultLock;
+
+
 	private static invertedPageTableEntry[] invertedPageTable;
-	private static int[] frame;
 	private static boolean[] usedFlag;
+	protected static HashSet<Integer> pinSet;
+
+
+
 	// dummy variables to make javac smarter
 	private static VMProcess dummy1 = null;
 	private static final char dbgVM = 'v';

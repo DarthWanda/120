@@ -39,14 +39,6 @@ public class VMProcess extends UserProcess {
 	 * @return <tt>true</tt> if successful.
 	 */
 	protected boolean loadSections() {
-		//return super.loadSections();
-		// if (numPages > Machine.processor().getNumPhysPages()) {
-		// 	coff.close();
-		// 	Lib.debug(dbgProcess, "\tinsufficient physical memory");
-		// 	return false;
-		// }
-
-
 		pageTable = new TranslationEntry[numPages];
 		//set all translation entry to invalid
 		for (int i = 0; i < pageTable.length; i++) {
@@ -90,12 +82,14 @@ public class VMProcess extends UserProcess {
 
 	private int handlePageFault(int vaddr) {
 		
+		VMKernel.pageFaultLock.acquire();
+
 		int vpn = Processor.pageFromAddress(vaddr);
-		//see if translage is good
-		//Lib.assertTrue(vpn == vvpn);
 		if (vpn >= numPages) {
-					return -1;
+			VMKernel.pageFaultLock.release();
+			return -1;
 		}
+		
 		TranslationEntry entry = pageTable[vpn];
 		
 		int spn = vpnToSpn(vpn);
@@ -107,6 +101,7 @@ public class VMProcess extends UserProcess {
 		VMKernel.fillInvertedEntry(entry.ppn, this, entry);
 		if (entry.dirty == true) {
 			VMKernel.swapIn(spn, entry.ppn);
+			VMKernel.pageFaultLock.release();
 			return 1;
 		}
 		//System.out.println("num pages is ........." + numPages);
@@ -119,12 +114,15 @@ public class VMProcess extends UserProcess {
 				if (secVpn == vpn) {
 					entry.readOnly = section.isReadOnly();
 					section.loadPage(i, entry.ppn);
+					VMKernel.pageFaultLock.release();
 					return 1;
 				}			
 			}
 		}
 		entry.readOnly = false;
 		flushMemory(entry.ppn);
+
+		VMKernel.pageFaultLock.release();
 		return 1;
 	}
 
@@ -173,8 +171,9 @@ public class VMProcess extends UserProcess {
 			}
 			TranslationEntry entry = pageTable[vpn];
 			if(!entry.valid) {
+				System.out.println("encounter handlePageFault error when readVirtualMemory............");
 				if(handlePageFault(vaddr) != 1) {
-					System.out.println("encounter handlePageFault error when readVirtualMemory............");
+					
 					return length - remain;
 				}
 			}
@@ -235,8 +234,9 @@ public class VMProcess extends UserProcess {
 			}
 			TranslationEntry entry = pageTable[vpn];
 			if(!entry.valid) {
+				System.out.println("encounter handlePageFault error when writeVirtualMemory............");
 				if(handlePageFault(vaddr) != 1) {
-					System.out.println("encounter handlePageFault error when readVirtualMemory............");
+					
 					return -1;
 				}
 			}
