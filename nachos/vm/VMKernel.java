@@ -152,7 +152,7 @@ public class VMKernel extends UserKernel {
 		clockLock.acquire();
 		int res = 0;
 		for (int i = 0; ; i = (i + 1) % Machine.processor().getNumPhysPages()) {
-			if(usedFlag[i] == false) {
+			if(usedFlag[i] == false && !pinSet.contains(i)) {
 				invertedPageTableEntry physEntry = invertedPageTable[i];
 				
 				// if (physEntry.transEntry.readOnly) {
