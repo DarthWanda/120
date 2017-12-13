@@ -1,42 +1,9 @@
-------[ Wed Dec 13 10:31:17 2017 ]------
+------[ Wed Dec 13 13:01:05 2017 ]------
 --[ swap4: Tests swapping by initializing an array larger than physical memory and reading through it - does not dirty the pages again ]--
 stty: standard input: Inappropriate ioctl for device
 stty: standard input: Inappropriate ioctl for device
 nachos 5.0j initializing... config interrupt timer processor console user-check grader
 swap4.coff
-swap out physical page0
-swap out physical page1
-swap out physical page0
-swap out physical page2
-swap into physical page2
-swap out physical page0
-swap into physical page0
-swap out physical page1
-swap into physical page1
-swap out physical page0
-swap into physical page0
-swap out physical page3
-swap into physical page3
-swap out physical page0
-swap into physical page0
-swap out physical page1
-swap into physical page1
-swap out physical page0
-swap into physical page0
-swap out physical page2
-swap into physical page2
-swap out physical page0
-swap into physical page0
-swap out physical page1
-swap into physical page1
-swap out physical page0
-swap into physical page0
-swap out physical page4
-swap into physical page4
-swap out physical page0
-swap into physical page0
-swap out physical page1
-swap into physical page1
 
 success
 stty: standard input: Inappropriate ioctl for device
@@ -45,63 +12,6 @@ stty: standard input: Inappropriate ioctl for device
 stty: standard input: Inappropriate ioctl for device
 nachos 5.0j initializing... config interrupt timer processor console user-check grader
 swap5.coff
-swap out physical page0
-swap out physical page1
-swap out physical page0
-swap out physical page2
-swap into physical page2
-swap out physical page0
-swap into physical page0
-swap out physical page1
-swap into physical page1
-swap out physical page0
-swap into physical page0
-swap out physical page3
-swap into physical page3
-swap out physical page0
-swap into physical page0
-swap out physical page1
-swap into physical page1
-swap out physical page0
-swap into physical page0
-swap out physical page2
-swap into physical page2
-swap out physical page0
-swap into physical page0
-swap out physical page1
-swap into physical page1
-swap out physical page0
-swap into physical page0
-swap out physical page4
-swap into physical page4
-swap out physical page0
-swap into physical page0
-swap out physical page1
-swap into physical page1
-swap out physical page0
-swap into physical page0
-swap out physical page2
-swap into physical page2
-swap out physical page0
-swap into physical page0
-swap out physical page1
-swap into physical page1
-swap out physical page0
-swap into physical page0
-swap out physical page3
-swap into physical page3
-swap out physical page0
-swap into physical page0
-swap out physical page1
-swap into physical page1
-swap out physical page0
-swap into physical page0
-swap out physical page2
-swap into physical page2
-swap out physical page0
-swap into physical page0
-swap out physical page1
-swap into physical page1
 
 success
 stty: standard input: Inappropriate ioctl for device
