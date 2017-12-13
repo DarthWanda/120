@@ -211,12 +211,22 @@ public class VMProcess extends UserProcess {
 
 			int ptr = vaddr - (vaddr / Processor.pageSize) * Processor.pageSize;
 			int ppn = pageTable[vpn].ppn;
+			VMKernel.pinLock.acquire();
+			VMKernel.pinSet.add(ppn);
+			VMKernel.pinLock.release();
+
 			for(int i = 0; i + ptr < Processor.pageSize && remain > 0; i++) {
 				data[j + offset] = memory[ppn*Processor.pageSize + i + ptr];
 				remain--;
 				vaddr++;
 				j++;
 			}
+			VMKernel.pinLock.acquire();
+			VMKernel.pinSet.remove(ppn);
+			VMKernel.pinCVLock.acquire();
+			VMKernel.pinCV.wake();
+			VMKernel.pinCVLock.release();
+			VMKernel.pinLock.release();
 		}
 		return length - remain;
 	}
@@ -278,7 +288,10 @@ public class VMProcess extends UserProcess {
 			int ptr = vaddr - (vaddr / Processor.pageSize) * Processor.pageSize;
 			
 			int ppn = pageTable[vpn].ppn;
+			VMKernel.pinLock.acquire();
 			entry.dirty = true;
+			VMKernel.pinSet.add(ppn);
+			VMKernel.pinLock.release();
 			//System.out.println(ppn + " is dirty page");
 			for(int i = 0; i + ptr < Processor.pageSize && remain > 0; i++) {
 				memory[ppn*Processor.pageSize + i + ptr] = data[j + offset];
@@ -286,6 +299,12 @@ public class VMProcess extends UserProcess {
 				vaddr++;
 				j++;
 			}
+			VMKernel.pinLock.acquire();
+			VMKernel.pinSet.remove(ppn);
+			VMKernel.pinCVLock.acquire();
+			VMKernel.pinCV.wake();
+			VMKernel.pinCVLock.release();
+			VMKernel.pinLock.release();
 		}
 		
 		return length - remain;

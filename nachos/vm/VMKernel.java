@@ -36,6 +36,9 @@ public class VMKernel extends UserKernel {
 			//invertedPageTable[i] = new invertedPageTableEntry(null, null, 0);
 		}
 
+		pinCVLock = new Lock();
+		pinLock = new Lock();
+		pinCV = new Condition(pinCVLock);
 		/*
 			begin to initilize the swap file
 		*/	
@@ -96,6 +99,11 @@ public class VMKernel extends UserKernel {
 	}
 
 	public static int getNextPage() {
+		if (pinSet.size() == Machine.processor().getNumPhysPages()) {
+			pinCVLock.acquire();
+			pinCV.sleep();
+			pinCVLock.release();
+		}
 		lock.acquire();
 		int nextPage = -1;
 		if (!pageList.isEmpty()) {
@@ -180,6 +188,9 @@ public class VMKernel extends UserKernel {
 	private static Lock clockLock;
 	private static Lock lock;
 	protected static Lock pageFaultLock;
+	protected static Lock pinCVLock;
+	protected static Lock pinLock;
+	protected static Condition pinCV;
 
 
 	protected static invertedPageTableEntry[] invertedPageTable;
