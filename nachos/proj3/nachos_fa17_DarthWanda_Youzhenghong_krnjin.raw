@@ -1,0 +1,2338 @@
+------[ Sat Dec 16 00:43:07 2017 ]------
+--[ swap4 (m=32) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+swap4.coff
+
+success
+
+--[ swap5 (m=32) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+swap5.coff
+
+success
+
+--[ matrix_mul_32_4 (m=32) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+matrix_mul_32_4.coff
+C[31][31] = 30752
+
+success
+
+--[ matrix_mul_8_4 (m=32) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+matrix_mul_8_4.coff
+C[7][7] = 392
+
+success
+
+--[ read-long (m=32) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+read-long.coff
+2
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+writed 376 bytes 
+writed 1400 bytes 
+
+success
+
+--[ write-long (m=32) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+write-long.coff
+2
+
+success
+
+--[ write10 (m=32) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+write10.coff
+creating write.out...
+2
+...passed (fd = 2)
+writing 59 bytes to file, 59 bytes at a time...
+...passed (wrote 59 bytes)
+closing 2...
+opening write.out...
+2
+...passed (fd = 2)
+reading write.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+...success
+validating write.out...
+...passed
+closing 2...
+creating write.out...
+2
+...passed (fd = 2)
+writing 59 bytes to file, 8 bytes at a time...
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 3 bytes)
+closing 2...
+opening write.out...
+2
+...passed (fd = 2)
+reading write.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+...success
+validating write.out...
+...passed
+closing 2...
+creating write.out...
+2
+...passed (fd = 2)
+writing 59 bytes to file, 1 bytes at a time...
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+closing 2...
+opening write.out...
+2
+...passed (fd = 2)
+reading write.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+...success
+validating write.out...
+...passed
+closing 2...
+creating binary.out...
+2
+...passed (fd = 2)
+writing 4096 bytes to file, 4096 bytes at a time...
+...passed (wrote 4096 bytes)
+closing 2...
+opening binary.out...
+2
+...passed (fd = 2)
+reading binary.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+writed 768 bytes 
+writed 1792 bytes 
+writed 2816 bytes 
+writed 3840 bytes 
+...success
+validating binary.out...
+...passed
+closing 2...
+creating binary.out...
+2
+...passed (fd = 2)
+writing 4096 bytes to file, 128 bytes at a time...
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+closing 2...
+opening binary.out...
+2
+...passed (fd = 2)
+reading binary.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+writed 768 bytes 
+writed 1792 bytes 
+writed 2816 bytes 
+writed 3840 bytes 
+...success
+validating binary.out...
+...passed
+closing 2...
+writing to an invalid fd (-10)...
+...passed (r = -1)
+writing to an invalid fd (256)...
+...passed (r = -1)
+writing to an unopened fd (8)...
+...passed (r = -1)
+creating bad.out...
+2
+...passed (fd = 2)
+writing count = 0 bytes...
+...passed
+writing with an invalid buffer (should not crash, only return an error)...
+...passed (r = -1)
+writing with an invalid count (should not crash, only return an error)...
+...passed (r = -1)
+writing with a buffer that extends beyond the end of the
+address space.  write should return an error.
+...passed (r = -1)
+
+success
+
+--[ exec1 (one child) (m=128) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+exec1.coff
+2
+1
+
+success
+
+--[ exec2 (three child) (m=128) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+exec2.coff
+2
+1
+1
+1
+
+success
+
+--[ execsw1: swap4;swap4 (no rVM/wVM) (m=128) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+execsw1.coff
+
+success
+
+--[ execsw2: swap4;swap5 (no rVM/wVM) (m=128) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+execsw2.coff
+
+success
+
+--[ execsw3: swap4;write11 (m=128) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+execsw3.coff
+creating write.out...
+2
+...passed (fd = 2)
+writing 59 bytes to file, 59 bytes at a time...
+...passed (wrote 59 bytes)
+closing 2...
+opening write.out...
+2
+...passed (fd = 2)
+reading write.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+...success
+validating write.out...
+...passed
+closing 2...
+creating write.out...
+2
+...passed (fd = 2)
+writing 59 bytes to file, 8 bytes at a time...
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 3 bytes)
+closing 2...
+opening write.out...
+2
+...passed (fd = 2)
+reading write.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+...success
+validating write.out...
+...passed
+closing 2...
+creating write.out...
+2
+...passed (fd = 2)
+writing 59 bytes to file, 1 bytes at a time...
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+closing 2...
+opening write.out...
+2
+...passed (fd = 2)
+reading write.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+...success
+validating write.out...
+...passed
+closing 2...
+creating binary.out...
+2
+...passed (fd = 2)
+writing 4096 bytes to file, 4096 bytes at a time...
+...passed (wrote 4096 bytes)
+closing 2...
+opening binary.out...
+2
+...passed (fd = 2)
+reading binary.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+writed 768 bytes 
+writed 1792 bytes 
+writed 2816 bytes 
+writed 3840 bytes 
+...success
+validating binary.out...
+...passed
+closing 2...
+creating binary.out...
+2
+...passed (fd = 2)
+writing 4096 bytes to file, 128 bytes at a time...
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+closing 2...
+opening binary.out...
+2
+...passed (fd = 2)
+reading binary.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+writed 768 bytes 
+writed 1792 bytes 
+writed 2816 bytes 
+writed 3840 bytes 
+...success
+validating binary.out...
+...passed
+closing 2...
+writing to an invalid fd (-10)...
+...passed (r = -1)
+writing to an invalid fd (256)...
+...passed (r = -1)
+writing to an unopened fd (8)...
+...passed (r = -1)
+creating bad.out...
+2
+...passed (fd = 2)
+writing count = 0 bytes...
+...passed
+writing with an invalid buffer (should not crash, only return an error)...
+...passed (r = -1)
+writing with an invalid count (should not crash, only return an error)...
+...passed (r = -1)
+writing with a buffer that extends beyond the end of the
+address space.  write should return an error.
+...passed (r = -1)
+
+success
+
+--[ execsw4: swap4 x3;swap5 x3 (m=256) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+execsw4.coff
+
+success
+
+--[ execsw5: swap4 x3;swap5 x3;write11 (m=256) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+execsw5.coff
+creating write.out...
+2
+...passed (fd = 2)
+writing 59 bytes to file, 59 bytes at a time...
+...passed (wrote 59 bytes)
+closing 2...
+opening write.out...
+2
+...passed (fd = 2)
+reading write.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+...success
+validating write.out...
+...passed
+closing 2...
+creating write.out...
+2
+...passed (fd = 2)
+writing 59 bytes to file, 8 bytes at a time...
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 3 bytes)
+closing 2...
+opening write.out...
+2
+...passed (fd = 2)
+reading write.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+...success
+validating write.out...
+...passed
+closing 2...
+creating write.out...
+2
+...passed (fd = 2)
+writing 59 bytes to file, 1 bytes at a time...
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+closing 2...
+opening write.out...
+2
+...passed (fd = 2)
+reading write.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+...success
+validating write.out...
+...passed
+closing 2...
+creating binary.out...
+2
+...passed (fd = 2)
+writing 4096 bytes to file, 4096 bytes at a time...
+...passed (wrote 4096 bytes)
+closing 2...
+opening binary.out...
+2
+...passed (fd = 2)
+reading binary.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+writed 768 bytes 
+writed 1792 bytes 
+writed 2816 bytes 
+writed 3840 bytes 
+...success
+validating binary.out...
+...passed
+closing 2...
+creating binary.out...
+2
+...passed (fd = 2)
+writing 4096 bytes to file, 128 bytes at a time...
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+closing 2...
+opening binary.out...
+2
+...passed (fd = 2)
+reading binary.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+writed 768 bytes 
+writed 1792 bytes 
+writed 2816 bytes 
+writed 3840 bytes 
+...success
+validating binary.out...
+...passed
+closing 2...
+writing to an invalid fd (-10)...
+...passed (r = -1)
+writing to an invalid fd (256)...
+...passed (r = -1)
+writing to an unopened fd (8)...
+...passed (r = -1)
+creating bad.out...
+2
+...passed (fd = 2)
+writing count = 0 bytes...
+...passed
+writing with an invalid buffer (should not crash, only return an error)...
+...passed (r = -1)
+writing with an invalid count (should not crash, only return an error)...
+...passed (r = -1)
+writing with a buffer that extends beyond the end of the
+address space.  write should return an error.
+...passed (r = -1)
+
+success
+
+--[ swap4 (m=16) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+swap4.coff
+
+success
+
+--[ swap5 (m=16) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+swap5.coff
+
+success
+
+--[ swap3 (m=16) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+swap3.coff
+
+success
+
+--[ swap4 (m=8) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+swap4.coff
+
+success
+
+--[ swap5 (m=8) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+swap5.coff
+
+success
+
+--[ swap3 (m=8) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+swap3.coff
+
+success
+
+--[ swap4 (m=4) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+swap4.coff
+
+success
+
+--[ swap5 (m=4) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+swap5.coff
+
+success
+
+--[ swap3 (m=4) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+swap3.coff
+
+success
+
+--[ matrix_mul_32_4 (m=8) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+matrix_mul_32_4.coff
+C[31][31] = 30752
+
+success
+
+--[ matrix_mul_8_4 (m=8) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+matrix_mul_8_4.coff
+C[7][7] = 392
+
+success
+
+--[ matrix_mul_32_4 (m=4) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+matrix_mul_32_4.coff
+C[31][31] = 30752
+
+success
+
+--[ matrix_mul_8_4 (m=4) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+matrix_mul_8_4.coff
+C[7][7] = 392
+
+success
+
+--[ write10 (m=16) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+write10.coff
+creating write.out...
+2
+...passed (fd = 2)
+writing 59 bytes to file, 59 bytes at a time...
+...passed (wrote 59 bytes)
+closing 2...
+opening write.out...
+2
+...passed (fd = 2)
+reading write.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+...success
+validating write.out...
+...passed
+closing 2...
+creating write.out...
+2
+...passed (fd = 2)
+writing 59 bytes to file, 8 bytes at a time...
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 3 bytes)
+closing 2...
+opening write.out...
+2
+...passed (fd = 2)
+reading write.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+...success
+validating write.out...
+...passed
+closing 2...
+creating write.out...
+2
+...passed (fd = 2)
+writing 59 bytes to file, 1 bytes at a time...
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+closing 2...
+opening write.out...
+2
+...passed (fd = 2)
+reading write.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+...success
+validating write.out...
+...passed
+closing 2...
+creating binary.out...
+2
+...passed (fd = 2)
+writing 4096 bytes to file, 4096 bytes at a time...
+...passed (wrote 4096 bytes)
+closing 2...
+opening binary.out...
+2
+...passed (fd = 2)
+reading binary.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+writed 768 bytes 
+writed 1792 bytes 
+writed 2816 bytes 
+writed 3840 bytes 
+...success
+validating binary.out...
+...passed
+closing 2...
+creating binary.out...
+2
+...passed (fd = 2)
+writing 4096 bytes to file, 128 bytes at a time...
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+closing 2...
+opening binary.out...
+2
+...passed (fd = 2)
+reading binary.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+writed 768 bytes 
+writed 1792 bytes 
+writed 2816 bytes 
+writed 3840 bytes 
+...success
+validating binary.out...
+...passed
+closing 2...
+writing to an invalid fd (-10)...
+...passed (r = -1)
+writing to an invalid fd (256)...
+...passed (r = -1)
+writing to an unopened fd (8)...
+...passed (r = -1)
+creating bad.out...
+2
+...passed (fd = 2)
+writing count = 0 bytes...
+...passed
+writing with an invalid buffer (should not crash, only return an error)...
+...passed (r = -1)
+writing with an invalid count (should not crash, only return an error)...
+...passed (r = -1)
+writing with a buffer that extends beyond the end of the
+address space.  write should return an error.
+...passed (r = -1)
+
+success
+
+--[ write10 (m=8) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+write10.coff
+creating write.out...
+2
+...passed (fd = 2)
+writing 59 bytes to file, 59 bytes at a time...
+...passed (wrote 59 bytes)
+closing 2...
+opening write.out...
+2
+...passed (fd = 2)
+reading write.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+...success
+validating write.out...
+...passed
+closing 2...
+creating write.out...
+2
+...passed (fd = 2)
+writing 59 bytes to file, 8 bytes at a time...
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 3 bytes)
+closing 2...
+opening write.out...
+2
+...passed (fd = 2)
+reading write.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+...success
+validating write.out...
+...passed
+closing 2...
+creating write.out...
+2
+...passed (fd = 2)
+writing 59 bytes to file, 1 bytes at a time...
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+closing 2...
+opening write.out...
+2
+...passed (fd = 2)
+reading write.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+...success
+validating write.out...
+...passed
+closing 2...
+creating binary.out...
+2
+...passed (fd = 2)
+writing 4096 bytes to file, 4096 bytes at a time...
+...passed (wrote 4096 bytes)
+closing 2...
+opening binary.out...
+2
+...passed (fd = 2)
+reading binary.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+writed 768 bytes 
+writed 1792 bytes 
+writed 2816 bytes 
+writed 3840 bytes 
+...success
+validating binary.out...
+...passed
+closing 2...
+creating binary.out...
+2
+...passed (fd = 2)
+writing 4096 bytes to file, 128 bytes at a time...
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+closing 2...
+opening binary.out...
+2
+...passed (fd = 2)
+reading binary.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+writed 768 bytes 
+writed 1792 bytes 
+writed 2816 bytes 
+writed 3840 bytes 
+...success
+validating binary.out...
+...passed
+closing 2...
+writing to an invalid fd (-10)...
+...passed (r = -1)
+writing to an invalid fd (256)...
+...passed (r = -1)
+writing to an unopened fd (8)...
+...passed (r = -1)
+creating bad.out...
+2
+...passed (fd = 2)
+writing count = 0 bytes...
+...passed
+writing with an invalid buffer (should not crash, only return an error)...
+...passed (r = -1)
+writing with an invalid count (should not crash, only return an error)...
+...passed (r = -1)
+writing with a buffer that extends beyond the end of the
+address space.  write should return an error.
+...passed (r = -1)
+
+success
+
+--[ write10 (m=4) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+write10.coff
+creating write.out...
+2
+...passed (fd = 2)
+writing 59 bytes to file, 59 bytes at a time...
+...passed (wrote 59 bytes)
+closing 2...
+opening write.out...
+2
+...passed (fd = 2)
+reading write.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+...success
+validating write.out...
+...passed
+closing 2...
+creating write.out...
+2
+...passed (fd = 2)
+writing 59 bytes to file, 8 bytes at a time...
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 3 bytes)
+closing 2...
+opening write.out...
+2
+...passed (fd = 2)
+reading write.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+...success
+validating write.out...
+...passed
+closing 2...
+creating write.out...
+2
+...passed (fd = 2)
+writing 59 bytes to file, 1 bytes at a time...
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+closing 2...
+opening write.out...
+2
+...passed (fd = 2)
+reading write.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+...success
+validating write.out...
+...passed
+closing 2...
+creating binary.out...
+2
+...passed (fd = 2)
+writing 4096 bytes to file, 4096 bytes at a time...
+...passed (wrote 4096 bytes)
+closing 2...
+opening binary.out...
+2
+...passed (fd = 2)
+reading binary.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+writed 768 bytes 
+writed 1792 bytes 
+writed 2816 bytes 
+writed 3840 bytes 
+...success
+validating binary.out...
+...passed
+closing 2...
+creating binary.out...
+2
+...passed (fd = 2)
+writing 4096 bytes to file, 128 bytes at a time...
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+closing 2...
+opening binary.out...
+2
+...passed (fd = 2)
+reading binary.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+writed 768 bytes 
+writed 1792 bytes 
+writed 2816 bytes 
+writed 3840 bytes 
+...success
+validating binary.out...
+...passed
+closing 2...
+writing to an invalid fd (-10)...
+...passed (r = -1)
+writing to an invalid fd (256)...
+...passed (r = -1)
+writing to an unopened fd (8)...
+...passed (r = -1)
+creating bad.out...
+2
+...passed (fd = 2)
+writing count = 0 bytes...
+...passed
+writing with an invalid buffer (should not crash, only return an error)...
+...passed (r = -1)
+writing with an invalid count (should not crash, only return an error)...
+...passed (r = -1)
+writing with a buffer that extends beyond the end of the
+address space.  write should return an error.
+...passed (r = -1)
+
+success
+
+--[ read-long (m=4) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+read-long.coff
+2
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+writed 376 bytes 
+writed 1400 bytes 
+
+success
+
+--[ write-long (m=4) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+write-long.coff
+2
+
+success
+
+--[ execsw1: swap4;swap4 (no rVM/wVM) (m=32) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+execsw1.coff
+
+success
+
+--[ execsw2: swap4;swap5 (no rVM/wVM) (m=32) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+execsw2.coff
+
+success
+
+--[ execsw3: swap4;write11 (m=32) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+execsw3.coff
+creating write.out...
+2
+...passed (fd = 2)
+writing 59 bytes to file, 59 bytes at a time...
+...passed (wrote 59 bytes)
+closing 2...
+opening write.out...
+2
+...passed (fd = 2)
+reading write.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+...success
+validating write.out...
+...passed
+closing 2...
+creating write.out...
+2
+...passed (fd = 2)
+writing 59 bytes to file, 8 bytes at a time...
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 3 bytes)
+closing 2...
+opening write.out...
+2
+...passed (fd = 2)
+reading write.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+...success
+validating write.out...
+...passed
+closing 2...
+creating write.out...
+2
+...passed (fd = 2)
+writing 59 bytes to file, 1 bytes at a time...
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+closing 2...
+opening write.out...
+2
+...passed (fd = 2)
+reading write.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+...success
+validating write.out...
+...passed
+closing 2...
+creating binary.out...
+2
+...passed (fd = 2)
+writing 4096 bytes to file, 4096 bytes at a time...
+...passed (wrote 4096 bytes)
+closing 2...
+opening binary.out...
+2
+...passed (fd = 2)
+reading binary.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+writed 768 bytes 
+writed 1792 bytes 
+
+nachos.machine.AssertionFailureError
+	at nachos.machine.Lib.assertTrue(Lib.java:77)
+	at nachos.vm.VMProcess.writeVirtualMemory(VMProcess.java:285)
+	at nachos.vm.VMProcess.writeVirtualMemory(VMProcess.java:236)
+	at nachos.userprog.UserProcess.handleRead(UserProcess.java:623)
+	at nachos.userprog.UserProcess.handleSyscall(UserProcess.java:807)
+	at nachos.userprog.UserProcess.handleException(UserProcess.java:831)
+	at nachos.vm.VMProcess.handleException(VMProcess.java:78)
+	at nachos.userprog.UserKernel.exceptionHandler(UserKernel.java:93)
+	at nachos.userprog.UserKernel$1.run(UserKernel.java:38)
+	at nachos.machine.Processor$MipsException.handle(Processor.java:620)
+	at nachos.machine.Processor.run(Processor.java:101)
+	at nachos.userprog.UThread.runProgram(UThread.java:31)
+	at nachos.userprog.UThread.access$000(UThread.java:11)
+	at nachos.userprog.UThread$1.run(UThread.java:20)
+	at nachos.threads.KThread.runThread(KThread.java:172)
+	at nachos.threads.KThread.access$000(KThread.java:41)
+	at nachos.threads.KThread$1.run(KThread.java:161)
+	at nachos.machine.TCB.threadroot(TCB.java:246)
+	at nachos.machine.TCB.access$100(TCB.java:25)
+	at nachos.machine.TCB$1.run(TCB.java:99)
+	at java.lang.Thread.run(Thread.java:745)
+
+--[ execsw4: swap4 x3;swap5 x3 (m=32) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+execsw4.coff
+
+success
+
+--[ execsw5: swap4 x3;swap5 x3;write11 (m=32) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+execsw5.coff
+creating write.out...
+2
+...passed (fd = 2)
+writing 59 bytes to file, 59 bytes at a time...
+...passed (wrote 59 bytes)
+closing 2...
+opening write.out...
+2
+...passed (fd = 2)
+reading write.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+...success
+validating write.out...
+...passed
+closing 2...
+creating write.out...
+2
+...passed (fd = 2)
+writing 59 bytes to file, 8 bytes at a time...
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 3 bytes)
+closing 2...
+opening write.out...
+2
+...passed (fd = 2)
+reading write.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+...success
+validating write.out...
+...passed
+closing 2...
+creating write.out...
+2
+...passed (fd = 2)
+writing 59 bytes to file, 1 bytes at a time...
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+closing 2...
+opening write.out...
+2
+...passed (fd = 2)
+reading write.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+...success
+validating write.out...
+...passed
+closing 2...
+creating binary.out...
+2
+...passed (fd = 2)
+writing 4096 bytes to file, 4096 bytes at a time...
+...passed (wrote 4096 bytes)
+closing 2...
+opening binary.out...
+2
+...passed (fd = 2)
+reading binary.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+writed 768 bytes 
+writed 1792 bytes 
+writed 2816 bytes 
+writed 3840 bytes 
+...success
+validating binary.out...
+...passed
+closing 2...
+creating binary.out...
+2
+...passed (fd = 2)
+writing 4096 bytes to file, 128 bytes at a time...
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+closing 2...
+opening binary.out...
+2
+...passed (fd = 2)
+reading binary.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+writed 768 bytes 
+writed 1792 bytes 
+writed 2816 bytes 
+
+nachos.machine.AssertionFailureError
+	at nachos.machine.Lib.assertTrue(Lib.java:77)
+	at nachos.vm.VMProcess.writeVirtualMemory(VMProcess.java:285)
+	at nachos.vm.VMProcess.writeVirtualMemory(VMProcess.java:236)
+	at nachos.userprog.UserProcess.handleRead(UserProcess.java:623)
+	at nachos.userprog.UserProcess.handleSyscall(UserProcess.java:807)
+	at nachos.userprog.UserProcess.handleException(UserProcess.java:831)
+	at nachos.vm.VMProcess.handleException(VMProcess.java:78)
+	at nachos.userprog.UserKernel.exceptionHandler(UserKernel.java:93)
+	at nachos.userprog.UserKernel$1.run(UserKernel.java:38)
+	at nachos.machine.Processor$MipsException.handle(Processor.java:620)
+	at nachos.machine.Processor.run(Processor.java:101)
+	at nachos.userprog.UThread.runProgram(UThread.java:31)
+	at nachos.userprog.UThread.access$000(UThread.java:11)
+	at nachos.userprog.UThread$1.run(UThread.java:20)
+	at nachos.threads.KThread.runThread(KThread.java:172)
+	at nachos.threads.KThread.access$000(KThread.java:41)
+	at nachos.threads.KThread$1.run(KThread.java:161)
+	at nachos.machine.TCB.threadroot(TCB.java:246)
+	at nachos.machine.TCB.access$100(TCB.java:25)
+	at nachos.machine.TCB$1.run(TCB.java:99)
+	at java.lang.Thread.run(Thread.java:745)
+
+--[ execsw1: swap4;swap4 (no rVM/wVM) (m=16) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+execsw1.coff
+
+success
+
+--[ execsw2: swap4;swap5 (no rVM/wVM) (m=16) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+execsw2.coff
+
+success
+
+--[ execsw3: swap4;write11 (m=16) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+execsw3.coff
+creating write.out...
+2
+...passed (fd = 2)
+writing 59 bytes to file, 59 bytes at a time...
+...passed (wrote 59 bytes)
+closing 2...
+opening write.out...
+2
+...passed (fd = 2)
+reading write.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+...success
+validating write.out...
+...passed
+closing 2...
+creating write.out...
+2
+...passed (fd = 2)
+writing 59 bytes to file, 8 bytes at a time...
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 3 bytes)
+closing 2...
+opening write.out...
+2
+...passed (fd = 2)
+reading write.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+...success
+validating write.out...
+...passed
+closing 2...
+creating write.out...
+2
+...passed (fd = 2)
+writing 59 bytes to file, 1 bytes at a time...
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+closing 2...
+opening write.out...
+2
+...passed (fd = 2)
+reading write.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+...success
+validating write.out...
+...passed
+closing 2...
+creating binary.out...
+2
+...passed (fd = 2)
+writing 4096 bytes to file, 4096 bytes at a time...
+...passed (wrote 4096 bytes)
+closing 2...
+opening binary.out...
+2
+...passed (fd = 2)
+reading binary.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+writed 768 bytes 
+writed 1792 bytes 
+writed 2816 bytes 
+writed 3840 bytes 
+...success
+validating binary.out...
+...passed
+closing 2...
+creating binary.out...
+2
+...passed (fd = 2)
+writing 4096 bytes to file, 128 bytes at a time...
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+closing 2...
+opening binary.out...
+2
+...passed (fd = 2)
+reading binary.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+writed 768 bytes 
+writed 1792 bytes 
+writed 2816 bytes 
+writed 3840 bytes 
+...success
+validating binary.out...
+...passed
+closing 2...
+writing to an invalid fd (-10)...
+...passed (r = -1)
+writing to an invalid fd (256)...
+...passed (r = -1)
+writing to an unopened fd (8)...
+...passed (r = -1)
+creating bad.out...
+2
+...passed (fd = 2)
+writing count = 0 bytes...
+...passed
+writing with an invalid buffer (should not crash, only return an error)...
+...passed (r = -1)
+writing with an invalid count (should not crash, only return an error)...
+...passed (r = -1)
+writing with a buffer that extends beyond the end of the
+address space.  write should return an error.
+...passed (r = -1)
+
+success
+
+--[ execsw2: swap4;swap5 (no rVM/wVM) (m=4) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+execsw2.coff
+
+success
+
+--[ execsw3: swap4; write11 (m=4) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+execsw3.coff
+creating write.out...
+2
+...passed (fd = 2)
+writing 59 bytes to file, 59 bytes at a time...
+...passed (wrote 59 bytes)
+closing 2...
+opening write.out...
+2
+...passed (fd = 2)
+reading write.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+...success
+validating write.out...
+...passed
+closing 2...
+creating write.out...
+2
+...passed (fd = 2)
+writing 59 bytes to file, 8 bytes at a time...
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 8 bytes)
+...passed (wrote 3 bytes)
+closing 2...
+opening write.out...
+2
+...passed (fd = 2)
+reading write.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+...success
+validating write.out...
+...passed
+closing 2...
+creating write.out...
+2
+...passed (fd = 2)
+writing 59 bytes to file, 1 bytes at a time...
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+...passed (wrote 1 bytes)
+closing 2...
+opening write.out...
+2
+...passed (fd = 2)
+reading write.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+...success
+validating write.out...
+...passed
+closing 2...
+creating binary.out...
+2
+...passed (fd = 2)
+writing 4096 bytes to file, 4096 bytes at a time...
+...passed (wrote 4096 bytes)
+closing 2...
+opening binary.out...
+2
+...passed (fd = 2)
+reading binary.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+writed 768 bytes 
+writed 1792 bytes 
+writed 2816 bytes 
+writed 3840 bytes 
+...success
+validating binary.out...
+...passed
+closing 2...
+creating binary.out...
+2
+...passed (fd = 2)
+writing 4096 bytes to file, 128 bytes at a time...
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+...passed (wrote 128 bytes)
+closing 2...
+opening binary.out...
+2
+...passed (fd = 2)
+reading binary.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+writed 768 bytes 
+writed 1792 bytes 
+writed 2816 bytes 
+writed 3840 bytes 
+...success
+validating binary.out...
+...passed
+closing 2...
+writing to an invalid fd (-10)...
+...passed (r = -1)
+writing to an invalid fd (256)...
+...passed (r = -1)
+writing to an unopened fd (8)...
+...passed (r = -1)
+creating bad.out...
+2
+...passed (fd = 2)
+writing count = 0 bytes...
+...passed
+writing with an invalid buffer (should not crash, only return an error)...
+...passed (r = -1)
+writing with an invalid count (should not crash, only return an error)...
+...passed (r = -1)
+writing with a buffer that extends beyond the end of the
+address space.  write should return an error.
+...passed (r = -1)
+
+success
+
+--[ execsw4: swap4 x3;swap5 x3 (m=16) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+execsw4.coff
+
+success
+
+--[ execsw5: swap4 x3;swap5 x3;write11 (m=16) ]--
+nachos 5.0j initializing... configinterrupt timer processor console user-check grader
+execsw5.coff
+creating write.out...
+2
+...passed (fd = 2)
+writing 59 bytes to file, 59 bytes at a time...
+...passed (wrote 59 bytes)
+closing 2...
+opening write.out...
+2
+...passed (fd = 2)
+reading write.out into buffer...
+writing ppn..................
+ begin to write virtual 
+writed 0 bytes 
+
+nachos.machine.AssertionFailureError
+	at nachos.machine.Lib.assertTrue(Lib.java:77)
+	at nachos.vm.VMProcess.writeVirtualMemory(VMProcess.java:285)
+	at nachos.vm.VMProcess.writeVirtualMemory(VMProcess.java:236)
+	at nachos.userprog.UserProcess.handleRead(UserProcess.java:623)
+	at nachos.userprog.UserProcess.handleSyscall(UserProcess.java:807)
+	at nachos.userprog.UserProcess.handleException(UserProcess.java:831)
+	at nachos.vm.VMProcess.handleException(VMProcess.java:78)
+	at nachos.userprog.UserKernel.exceptionHandler(UserKernel.java:93)
+	at nachos.userprog.UserKernel$1.run(UserKernel.java:38)
+	at nachos.machine.Processor$MipsException.handle(Processor.java:620)
+	at nachos.machine.Processor.run(Processor.java:101)
+	at nachos.userprog.UThread.runProgram(UThread.java:31)
+	at nachos.userprog.UThread.access$000(UThread.java:11)
+	at nachos.userprog.UThread$1.run(UThread.java:20)
+	at nachos.threads.KThread.runThread(KThread.java:172)
+	at nachos.threads.KThread.access$000(KThread.java:41)
+	at nachos.threads.KThread$1.run(KThread.java:161)
+	at nachos.machine.TCB.threadroot(TCB.java:246)
+	at nachos.machine.TCB.access$100(TCB.java:25)
+	at nachos.machine.TCB$1.run(TCB.java:99)
+	at java.lang.Thread.run(Thread.java:745)
+
